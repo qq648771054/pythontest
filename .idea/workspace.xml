@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,7 +24,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1n0lumLshTd5t3edHTsZRQkY7ec" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -174,20 +187,45 @@
       <workItem from="1611541184248" duration="24763000" />
       <workItem from="1611749827294" duration="15311000" />
       <workItem from="1611834749140" duration="3747000" />
+      <workItem from="1612143501787" duration="1341000" />
     </task>
+    <task id="LOCAL-00001" summary="add readme">
+      <created>1612144585810</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1612144585810</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="add readme" />
   </component>
   <component name="WindowStateProjectService">
     <state width="1758" height="466" key="DebuggerActiveHint" timestamp="1611819153362">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1758" height="466" key="DebuggerActiveHint/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611819153362" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1611883655145">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1612144795588">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612144795588" />
     <state x="-1180" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1610679123220" />
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611883655145" />
     <state width="1877" height="293" key="GridCell.Tab.0.bottom" timestamp="1611883656086">
@@ -234,9 +272,14 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1611641593423" />
-    <state x="-1609" y="78" width="1355" height="892" key="dock-window-1" timestamp="1611834857338">
-      <screen x="-1920" y="0" width="1920" height="1040" />
+    <state x="735" y="545" width="413" height="173" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1612144837854">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="735" y="545" width="413" height="173" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612144837854" />
+    <state x="250" y="86" width="1355" height="892" key="dock-window-1" timestamp="1612143925103">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="250" y="86" width="1355" height="892" key="dock-window-1/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612143925103" />
     <state x="-1609" y="78" width="1355" height="892" key="dock-window-1/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611834857338" />
     <state x="899" y="360" width="621" height="536" key="find.popup" timestamp="1611045980405">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -248,15 +291,6 @@
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611753352960" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/spider/web.py</url>
-          <line>44</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="t.find('publish')" language="Python" />
