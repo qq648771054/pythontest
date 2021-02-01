@@ -3,7 +3,10 @@ from lib import *
 import os
 
 class BQKan(object):
-    '''笔趣看'''
+    '''
+    笔趣看
+    url:https://www.bqkan.com
+    '''
     url = 'https://www.bqkan.com'
 
     @staticmethod
