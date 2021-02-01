@@ -7,4 +7,5 @@ winpcap 4.1.3
 
 结构:
 spider:爬虫
-socket:抓包
+pcap:抓包
+translation:翻译
