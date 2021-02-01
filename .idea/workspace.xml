@@ -11,19 +11,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add readme">
-      <change afterPath="$PROJECT_DIR$/lib.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pcap/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pcap/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spider/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/translation/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider/lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/lib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider/translation.py" beforeDir="false" afterPath="$PROJECT_DIR$/translation/YouDao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider/web.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/BQKan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/Lib.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translation/YouDao.py" beforeDir="false" afterPath="$PROJECT_DIR$/translation/YouDao.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,7 +195,7 @@
       <workItem from="1611541184248" duration="24763000" />
       <workItem from="1611749827294" duration="15311000" />
       <workItem from="1611834749140" duration="3747000" />
-      <workItem from="1612143501787" duration="15537000" />
+      <workItem from="1612143501787" duration="15904000" />
     </task>
     <task id="LOCAL-00001" summary="add readme">
       <created>1612144585810</created>
@@ -237,6 +226,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="add readme" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1612180434119">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612180434119" />
     <state width="1758" height="466" key="DebuggerActiveHint" timestamp="1612164603109">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

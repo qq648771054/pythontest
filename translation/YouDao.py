@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from lib import *
+from Lib import *
 import random
 import hashlib
 import json
