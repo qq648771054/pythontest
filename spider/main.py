@@ -8,3 +8,4 @@ import translation
 if __name__ == '__main__':
     web.BQKan.downloadAllTexts('0_790/', dirpath=r'C:\Users\wb.zhangshenglong\Desktop\test')
     # print web.BQKan.downloadText('0_790/36873824.html')
+

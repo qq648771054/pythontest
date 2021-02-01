@@ -15,13 +15,10 @@ def minInterval(interval):
         return f1
     return f
 
-def getWebDatas(url, *elements, **kwargs):
+def getWebDatas(url, *elements):
     strhtml = requests.get(url)
-    content = strhtml.content
-    charset = kwargs.get('charset', None)
-    if charset:
-        content = content.decode(charset)
-    soup = BeautifulSoup(content, 'lxml')
+    strhtml.encoding = strhtml.apparent_encoding
+    soup = BeautifulSoup(strhtml.content, 'lxml')
     res = []
     for ele in elements:
         res.append(soup.select(ele))

@@ -7,6 +7,15 @@ class BQKan(object):
     url = 'https://www.bqkan.com'
 
     @staticmethod
+    def getUrl(url):
+        if url.startswith('http://') or url.startswith('https://'):
+            return url
+        elif not url.startswith('/'):
+            return BQKan.url + '/' + url
+        else:
+            return BQKan.url + url
+
+    @staticmethod
     def downloadText(url):
         class Visitor(DataVistor):
             def __init__(self):
@@ -22,15 +31,14 @@ class BQKan(object):
 
             def getText(self):
                 return ''.join(self.texts)
-        if not url.startswith('/'):
-            url = '/' + url
-        (datas, ) = getWebDatas(BQKan.url + url, '#content')
+
+        (datas, ) = getWebDatas(BQKan.getUrl(url), '#content')
         visitor = Visitor()
         visitor.visit(datas)
         return visitor.getText()
 
     @staticmethod
-    def downloadAllTexts(url, filepath=None, dirpath=None):
+    def downloadAllTexts(url, dirpath):
         class Visitor(DataVistor):
             def __init__(self):
                 super(Visitor, self).__init__()
@@ -41,26 +49,23 @@ class BQKan(object):
                 if data.name == 'dt':
                     self.tag += 1
                 elif data.name == 'dd' and data.next.name == 'a':
-                    if self.tag == 1:
+                    if self.tag == 2:
                         data = data.next
                         href = data.get('href')
-                        title = data.get_text().encode('utf-8')
+                        title = data.get_text()
                         self.texts.append({'href': href, 'title': title})
 
             def downloadInDir(self, dirpath):
                 if not os.path.exists(dirpath):
                     os.mkdir(dirpath)
-                for text in self.texts:
+                print 'download to {}:\n'.format(dirpath)
+                for i, text in enumerate(self.texts):
+                    print '{}/{}:{}'.format(i + 1, len(self.texts), text['title'].encode('utf-8'))
                     with open(os.path.join(dirpath, text['title'] + '.txt'), 'w') as f:
                         f.write(BQKan.downloadText(text['href']))
 
-            def downloadInFile(self, filepath):
-                pass
-
-        (datas, ) = getWebDatas(url, 'body > div.listmain > dl', charset='gbk')
+        (datas, ) = getWebDatas(BQKan.getUrl(url), 'body > div.listmain > dl')
         visitor = Visitor()
         visitor.visit(datas)
-        if dirpath:
-            visitor.downloadInDir(dirpath)
-        elif filepath:
-            visitor.downloadInFile(filepath)
+        visitor.downloadInDir(dirpath)
+

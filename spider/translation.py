@@ -2,6 +2,8 @@
 from lib import *
 import random
 import hashlib
+import json
+import traceback
 
 @minInterval(0.1)
 def translateFromYouDao(word):
