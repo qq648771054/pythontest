@@ -11,10 +11,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add readme">
+      <change afterPath="$PROJECT_DIR$/data/knn-Helen.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/knn-classic_movie.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/machine-learning/knn.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/knn.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/pandas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/Lib.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translation/YouDao.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/YouDao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translation/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcap/demo.pcap" beforeDir="false" afterPath="$PROJECT_DIR$/pcap/demo.pcap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcap/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pcap/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spider/BQKan.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/BQKan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spider/YouDao.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/YouDao.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,24 +49,26 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/spider" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../h35/client/script" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\workspace\pythontest" />
-      <recent name="D:\workspace\pythontest\translation" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\workspace\pythontest\spider" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workspace\pythontest\test" />
+      <recent name="D:\workspace\pythontest" />
+      <recent name="D:\workspace\pythontest\translation" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.main (3)">
-    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.knn">
+    <configuration name="Lib" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -64,12 +76,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/spider" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/spider/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Lib.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -78,7 +90,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="knn" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -86,12 +98,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/socket" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/socket/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/knn.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -144,7 +156,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="publishOneKey" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="pandas" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -152,12 +164,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../h35time/doc/uiproject" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../h35time/doc/uiproject/publishOneKey.py" />
+      <option name="SCRIPT_NAME" value="D:\workspace\pythontest\test\pandas.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -168,14 +180,14 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.knn" />
+        <item itemvalue="Python.Lib" />
         <item itemvalue="Python.main (3)" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.main (2)" />
-        <item itemvalue="Python.main (1)" />
-        <item itemvalue="Python.publishOneKey" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -197,7 +209,26 @@
       <workItem from="1611541184248" duration="24763000" />
       <workItem from="1611749827294" duration="15311000" />
       <workItem from="1611834749140" duration="3747000" />
-      <workItem from="1612143501787" duration="16773000" />
+      <workItem from="1612143501787" duration="18240000" />
+      <workItem from="1612229430087" duration="13936000" />
+      <workItem from="1612322715883" duration="30252000" />
+      <workItem from="1613874030231" duration="27189000" />
+      <workItem from="1614310641453" duration="617000" />
+      <workItem from="1614562558876" duration="637000" />
+      <workItem from="1614563583340" duration="50000" />
+      <workItem from="1614563652567" duration="24000" />
+      <workItem from="1614563682305" duration="83000" />
+      <workItem from="1614650917603" duration="36132000" />
+      <workItem from="1615291273815" duration="600000" />
+      <workItem from="1615341299938" duration="11129000" />
+      <workItem from="1615514824102" duration="809000" />
+      <workItem from="1615771935979" duration="596000" />
+      <workItem from="1615772779261" duration="31000" />
+      <workItem from="1615772820421" duration="3000" />
+      <workItem from="1615772847061" duration="5933000" />
+      <workItem from="1615978103243" duration="1487000" />
+      <workItem from="1616033681333" duration="19814000" />
+      <workItem from="1616149760489" duration="381000" />
     </task>
     <task id="LOCAL-00001" summary="add readme">
       <created>1612144585810</created>
@@ -210,7 +241,7 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -222,115 +253,38 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add readme" />
     <option name="LAST_COMMIT_MESSAGE" value="add readme" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1612180434119">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612180434119" />
-    <state width="1758" height="466" key="DebuggerActiveHint" timestamp="1612164603109">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1758" height="466" key="DebuggerActiveHint/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612164603109" />
-    <state width="1758" height="466" key="DebuggerActiveHint/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611819153362" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1612144795588">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612144795588" />
-    <state x="-1180" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1610679123220" />
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611883655145" />
-    <state width="1877" height="307" key="GridCell.Tab.0.bottom" timestamp="1612181728336">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="307" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612181728336" />
-    <state width="1877" height="261" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1611642443123" />
-    <state width="1877" height="293" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611883656086" />
-    <state width="1877" height="307" key="GridCell.Tab.0.center" timestamp="1612181728336">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="307" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612181728336" />
-    <state width="1877" height="261" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1611642443122" />
-    <state width="1877" height="293" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611883656086" />
-    <state width="1877" height="307" key="GridCell.Tab.0.left" timestamp="1612181728336">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="307" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612181728336" />
-    <state width="1877" height="261" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1611642443122" />
-    <state width="1877" height="293" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611883656086" />
-    <state width="1877" height="307" key="GridCell.Tab.0.right" timestamp="1612181728336">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="307" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612181728336" />
-    <state width="1877" height="261" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1611642443123" />
-    <state width="1877" height="293" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611883656086" />
-    <state width="1877" height="293" key="GridCell.Tab.1.bottom" timestamp="1612180024661">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="293" key="GridCell.Tab.1.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612180024661" />
-    <state width="1877" height="261" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1611642443634" />
-    <state width="1877" height="293" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611883656086" />
-    <state width="1877" height="293" key="GridCell.Tab.1.center" timestamp="1612180024660">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="293" key="GridCell.Tab.1.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612180024660" />
-    <state width="1877" height="261" key="GridCell.Tab.1.center/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1611642443634" />
-    <state width="1877" height="293" key="GridCell.Tab.1.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611883656086" />
-    <state width="1877" height="293" key="GridCell.Tab.1.left" timestamp="1612180024660">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="293" key="GridCell.Tab.1.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612180024660" />
-    <state width="1877" height="261" key="GridCell.Tab.1.left/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1611642443634" />
-    <state width="1877" height="293" key="GridCell.Tab.1.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611883656086" />
-    <state width="1877" height="293" key="GridCell.Tab.1.right" timestamp="1612180024661">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="293" key="GridCell.Tab.1.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612180024661" />
-    <state width="1877" height="261" key="GridCell.Tab.1.right/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1611642443634" />
-    <state width="1877" height="293" key="GridCell.Tab.1.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611883656086" />
-    <state x="461" y="164" key="SettingsEditor" timestamp="1612170942369">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="461" y="164" key="SettingsEditor/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612170942369" />
-    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1611641593423">
-      <screen x="-1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1611641593423" />
-    <state x="735" y="545" width="413" height="173" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1612144837854">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="735" y="545" width="413" height="173" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612144837854" />
-    <state x="250" y="86" width="1355" height="892" key="dock-window-1" timestamp="1612143925103">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="250" y="86" width="1355" height="892" key="dock-window-1/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1612143925103" />
-    <state x="-1609" y="78" width="1355" height="892" key="dock-window-1/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611834857338" />
-    <state x="899" y="360" width="621" height="536" key="find.popup" timestamp="1611045980405">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="899" y="360" width="621" height="536" key="find.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611045980405" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1611753352960">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611753352960" />
-  </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test/knn.py</url>
+          <line>18</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="t.find('publish')" language="Python" />
+        <watch expression="t." language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/pythontest$spider_test.coverage" NAME="spider_test Coverage Results" MODIFIED="1611818082777" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pythontest$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1612181728331" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pythontest$publishOneKey.coverage" NAME="publishOneKey Coverage Results" MODIFIED="1611837593199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../h35time/doc/uiproject" />
-    <SUITE FILE_PATH="coverage/pythontest$web.coverage" NAME="web Coverage Results" MODIFIED="1611822761632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
+    <SUITE FILE_PATH="coverage/pythontest$pandastest.coverage" NAME="pandastest Coverage Results" MODIFIED="1613963197088" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythontest$main.coverage" NAME="main Coverage Results" MODIFIED="1612318947340" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pcap" />
     <SUITE FILE_PATH="coverage/pythontest$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1612172544461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/socket" />
-    <SUITE FILE_PATH="coverage/pythontest$main.coverage" NAME="main Coverage Results" MODIFIED="1612180024653" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pcap" />
+    <SUITE FILE_PATH="coverage/pythontest$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1616123627900" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythontest$Lib.coverage" NAME="Lib Coverage Results" MODIFIED="1616136880427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythontest$web.coverage" NAME="web Coverage Results" MODIFIED="1611822761632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
+    <SUITE FILE_PATH="coverage/pythontest$publishOneKey.coverage" NAME="publishOneKey Coverage Results" MODIFIED="1611837593199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../h35time/doc/uiproject" />
     <SUITE FILE_PATH="coverage/pythontest$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1612170308341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
+    <SUITE FILE_PATH="coverage/pythontest$knn.coverage" NAME="knn Coverage Results" MODIFIED="1616146691447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
   </component>
 </project>

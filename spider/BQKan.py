@@ -2,17 +2,17 @@
 from lib import *
 import os
 
-
-NAME = '笔趣看'
-URL = 'https://www.bqkan.com'
+class BQKan():
+    name = '笔趣看'
+    url = 'https://www.bqkan.com'
 
 def getUrl(url):
     if url.startswith('http://') or url.startswith('https://'):
         return url
     elif not url.startswith('/'):
-        return URL + '/' + url
+        return BQKan.url + '/' + url
     else:
-        return URL + url
+        return BQKan.url + url
 
 class Visitor_downloadText(DataVistor):
     def __init__(self):
@@ -67,3 +67,6 @@ def downloadAllTexts(url, dirpath):
     visitor.visit(datas)
     visitor.downloadInDir(dirpath)
 
+if __name__ == '__main__':
+    downloadAllTexts('0_790/', dirpath=r'C:\Users\wb.zhangshenglong\Desktop\test')
+    print downloadText('0_790/36873824.html')

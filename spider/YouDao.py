@@ -6,9 +6,9 @@ import json
 import traceback
 import requests
 
-
-NAME = '有道翻译'
-URL = 'http://fanyi.youdao.com'
+class YouDao():
+    name = '有道翻译'
+    url = 'http://fanyi.youdao.com'
 
 @minInterval(0.1)
 def translate(word, fromLan='AUTO', toLan='AUTO'):
@@ -46,3 +46,6 @@ def translate(word, fromLan='AUTO', toLan='AUTO'):
     except:
         print traceback.print_exc()
         return None
+
+if __name__ == '__main__':
+    print translate(raw_input('翻译内容:'), fromLan='zh-CHS', toLan='ja')

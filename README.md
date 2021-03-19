@@ -1,6 +1,11 @@
 依赖库:
 requests
 bs4
+numpy
+pandas
+matplotlib
+IPYTHON
+SciPy
 
 环境:
 winpcap 4.1.3

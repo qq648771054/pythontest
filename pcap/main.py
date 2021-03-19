@@ -3,29 +3,18 @@
 import dpkt
 import socket
 import datetime
-def printPcap(pcap):
-    try:
-        for timestamp, buf in pcap:
-            eth = dpkt.ethernet.Ethernet(buf) #获得以太包，即数据链路层包
-            print("ip layer:"+eth.data.__class__.__name__) #以太包的数据既是网络层包
-            print("tcp layer:"+eth.data.data.__class__.__name__) #网络层包的数据既是传输层包
-            print("http layer:" + eth.data.data.data.__class__.__name__) #传输层包的数据既是应用层包
-            print('Timestamp: ', str(datetime.datetime.utcfromtimestamp(timestamp))) #打印出包的抓取时间
-            if not isinstance(eth.data, dpkt.ip.IP):
-                print('Non IP Packet type not supported %s' % eth.data.__class__.__name__)
-                continue
-            ip = eth.data
-            do_not_fragment = bool(ip.off & dpkt.ip.IP_DF)
-            more_fragments = bool(ip.off & dpkt.ip.IP_MF)
-            fragment_offset = ip.off & dpkt.ip.IP_OFFMASK
-            print 'IP: %s -> %s (len=%d ttl=%d DF=%d MF=%d offset=%d)' \
-                  % (socket.inet_ntoa(ip.src), socket.inet_ntoa(ip.dst), ip.len, ip.ttl, do_not_fragment, more_fragments, fragment_offset)
-    except:
-        pass
-def main():
-    f = open('demo.pcap', 'rb')
-    pcap = dpkt.pcap.Reader(f)
-    printPcap(pcap)
+from scapy.sendrecv import sniff
+from scapy.utils import wrpcap
 
-if __name__ =='__main__':
-     main()
+from winpcapy import WinPcapUtils
+
+# Example Callback function to parse IP packets
+def packet_callback(win_pcap, param, header, pkt_data):
+    # Assuming IP (for real parsing use modules like dpkt)
+    ip_frame = pkt_data[14:]
+    # Parse ips
+    src_ip = ".".join([str(ord(b)) for b in ip_frame[0xc:0x10]])
+    dst_ip = ".".join([str(ord(b)) for b in ip_frame[0x10:0x14]])
+    print "%d: %s -> %s" % (len(pkt_data), src_ip, dst_ip)
+
+WinPcapUtils.capture_on("*Ethernet*", packet_callback)
