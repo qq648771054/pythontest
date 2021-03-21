@@ -6,7 +6,7 @@ import os
 from collections import deque
 
 def minInterval(interval):
-    '''最小调用间隔时间'''
+    """最小调用间隔时间"""
     lastCall = [0]
     def f(func):
         def f1(*args, **kwargs):
@@ -17,12 +17,21 @@ def minInterval(interval):
         return f1
     return f
 
+def calculateTime(func):
+    """打印函数锁花费的时间"""
+    def f(*args, **kwargs):
+        start = time.time()
+        ret = func(*args, **kwargs)
+        print 'run method {} takes {} seconds'.format(func.__name__, time.time() - start)
+        return ret
+    return f
+
 class pattern_input(object):
-    '''格式化输入'''
+    """格式化输入"""
     def __init__(self):
         self.input = self.readFromInput()
-        self.input.next()
         self.buffers = deque()
+        self.break_in = False
 
     def pushStr(self, s):
         self.buffers.append({'type': str, 'val': s})
@@ -30,13 +39,19 @@ class pattern_input(object):
     def pushFile(self, f):
         self.buffers.append({'type': file, 'val': f})
 
+    def pushStdIn(self):
+        self.buffers.append({'type': sys.stdin})
+
+    def breakStdIn(self):
+        self.break_in = True
+
     def empty(self):
         return len(self.buffers) == 0
 
     def genNewLine(self):
         while True:
             if len(self.buffers) > 0:
-                s = self.buffers[0]
+                s = self.buffers.popleft()
                 if s['type'] == file:
                     f = open(s['val'], 'r')
                     while True:
@@ -44,47 +59,60 @@ class pattern_input(object):
                         if not line: break
                         yield line
                     f.close()
-                else:
+                elif s['type'] == str:
                     yield str(s['val'])
-                self.buffers.popleft()
+                elif s['type'] == sys.stdin:
+                    while not self.break_in:
+                        yield sys.stdin.readline()
+                    self.break_in = False
             else:
                 yield None
 
     def readFromInput(self):
-        yield 0
         newline = self.genNewLine()
-        readOnly = False
         while True:
             s = newline.next()
             if s is None:
-                if readOnly:
-                    yield None
-                    continue
-                else:
-                    s = raw_input()
+                yield None
+                continue
             stt = 0
             for i, c in enumerate(s):
                 if c in [' ', '\n', '\r', '\t']:
                     if i != stt:
-                        readOnly = yield s[stt: i]
+                        yield s[stt: i]
                     stt = i + 1
             if stt != len(s):
-                readOnly = yield s[stt: len(s)]
+                yield s[stt: len(s)]
 
-    def readInput(self, T, count=None):
-        return T(self.input.send(False)) if count is None else [T(self.input.send(False)) for i in xrange(count)]
+    def get(self, T, count=None):
+        return T(self.input.next()) if count is None else [T(self.input.next()) for i in xrange(count)]
 
-    def read(self, T, count=None):
-        if count is None:
-            r = self.input.send(True)
-            return r if r is None else T(r)
-        else:
-            r = [self.input.send(True) for i in xrange(count)]
-            for i, t in enumerate(r):
-                r[i] = r[i] if r[i] is None else T(r[i])
-            return r
+    def generateData(self, *args):
+        data = [[] for i in xrange(len(args))]
+        try:
+            while True:
+                for i, arg in enumerate(args):
+                    if isinstance(arg, (list, tuple)):
+                        data[i].append([self.get(a) for a in arg])
+                    else:
+                        data[i].append(self.get(arg))
+        finally:
+            return data
 
 std_input = pattern_input()
 
 def getDataFilePath(name):
+    """返回数据的绝对路径"""
     return os.path.join(os.path.split(os.path.abspath(__file__))[0], 'data', name)
+
+def countArr(arr):
+    """给数组元素计数"""
+    r = {}
+    for a in arr:
+        r[a] = r.get(a, 0) + 1
+    return r
+
+def transform(arr, func):
+    """用规则将数组转换成新数组"""
+    return [func(a) for a in arr]
+
