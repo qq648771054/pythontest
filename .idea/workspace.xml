@@ -10,7 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add readme">
+    <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add knn">
       <change afterPath="$PROJECT_DIR$/data/knn-testDigits/0_0.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/knn-testDigits/0_1.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/knn-testDigits/0_10.txt" afterDir="false" />
@@ -3110,7 +3110,7 @@
       <workItem from="1616149760489" duration="381000" />
       <workItem from="1616164139894" duration="6929000" />
       <workItem from="1616227752338" duration="23536000" />
-      <workItem from="1616291038241" duration="7676000" />
+      <workItem from="1616291038241" duration="7743000" />
     </task>
     <task id="LOCAL-00001" summary="add readme">
       <created>1612144585810</created>
@@ -3139,7 +3139,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="add readme" />
+    <MESSAGE value="add knn" />
+    <option name="LAST_COMMIT_MESSAGE" value="add knn" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
