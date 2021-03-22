@@ -11,20 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add readme">
-      <change afterPath="$PROJECT_DIR$/data/knn-Helen.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/knn-classic_movie.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/machine-learning/knn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/knn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/pandas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/Lib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcap/demo.pcap" beforeDir="false" afterPath="$PROJECT_DIR$/pcap/demo.pcap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcap/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/pcap/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider/BQKan.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/BQKan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider/YouDao.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/YouDao.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,7 +215,7 @@
       <workItem from="1615772847061" duration="5933000" />
       <workItem from="1615978103243" duration="1487000" />
       <workItem from="1616033681333" duration="19814000" />
-      <workItem from="1616149760489" duration="381000" />
+      <workItem from="1616149760489" duration="597000" />
     </task>
     <task id="LOCAL-00001" summary="add readme">
       <created>1612144585810</created>
