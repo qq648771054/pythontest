@@ -1,7 +1,7 @@
 # -*- coding: utf-*-
 import numpy as np
 from numpy.random.mtrand import randn
-import matplot.pyplot as plt
+import matplotlib.pyplot as plt
 if __name__ == '__main__':
     points = np.arange(-5, 5, 0.01)
     xs, ys = np.meshgrid(points, points)

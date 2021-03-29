@@ -22,7 +22,7 @@ def calculateTime(func):
     def f(*args, **kwargs):
         start = time.time()
         ret = func(*args, **kwargs)
-        print 'run method {} takes {} seconds'.format(func.__name__, time.time() - start)
+        print('run method {} takes {} seconds'.format(func.__name__, time.time() - start))
         return ret
     return f
 
@@ -34,13 +34,13 @@ class pattern_input(object):
         self.break_in = False
 
     def pushStr(self, s):
-        self.buffers.append({'type': str, 'val': s})
+        self.buffers.append({'type': 'str', 'val': s})
 
     def pushFile(self, f):
-        self.buffers.append({'type': file, 'val': f})
+        self.buffers.append({'type': 'file', 'val': f})
 
     def pushStdIn(self):
-        self.buffers.append({'type': sys.stdin})
+        self.buffers.append({'type': 'in'})
 
     def breakStdIn(self):
         self.break_in = True
@@ -52,16 +52,16 @@ class pattern_input(object):
         while True:
             if len(self.buffers) > 0:
                 s = self.buffers.popleft()
-                if s['type'] == file:
-                    f = open(s['val'], 'r')
+                if s['type'] == 'file':
+                    f = open(s['val'], 'r', encoding='utf-8')
                     while True:
                         line = f.readline()
                         if not line: break
                         yield line
                     f.close()
-                elif s['type'] == str:
+                elif s['type'] == 'str':
                     yield str(s['val'])
-                elif s['type'] == sys.stdin:
+                elif s['type'] == 'in':
                     while not self.break_in:
                         yield sys.stdin.readline()
                     self.break_in = False
@@ -71,7 +71,7 @@ class pattern_input(object):
     def readFromInput(self):
         newline = self.genNewLine()
         while True:
-            s = newline.next()
+            s = next(newline)
             if s is None:
                 yield None
                 continue
@@ -85,17 +85,19 @@ class pattern_input(object):
                 yield s[stt: len(s)]
 
     def get(self, T, count=None):
-        return T(self.input.next()) if count is None else [T(self.input.next()) for i in xrange(count)]
+        return T(next(self.input)) if count is None else [T(next(self.input)) for i in range(count)]
 
-    def generateData(self, *args):
-        data = [[] for i in xrange(len(args))]
+    def generateData(self, *args, limit=None):
+        data = [[] for i in range(len(args))]
         try:
-            while True:
+            lines = 0
+            while limit == None or lines < limit:
                 for i, arg in enumerate(args):
                     if isinstance(arg, (list, tuple)):
                         data[i].append([self.get(a) for a in arg])
                     else:
                         data[i].append(self.get(arg))
+                lines += 1
         finally:
             return data
 
@@ -112,7 +114,10 @@ def countArr(arr):
         r[a] = r.get(a, 0) + 1
     return r
 
-def transform(arr, func):
+def transform(arr, func=None, dict=None):
     """用规则将数组转换成新数组"""
-    return [func(a) for a in arr]
+    if func:
+        return [func(a) for a in arr]
+    elif dict:
+        return [dict[a] for a in arr]
 

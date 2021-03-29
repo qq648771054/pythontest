@@ -55,9 +55,9 @@ class Visitor_downloadAllTexts(DataVistor):
     def downloadInDir(self, dirpath):
         if not os.path.exists(dirpath):
             os.mkdir(dirpath)
-        print 'download to {}:\n'.format(dirpath)
+        print('download to {}:\n'.format(dirpath))
         for i, text in enumerate(self.texts):
-            print '{}/{}:{}'.format(i + 1, len(self.texts), text['title'].encode('utf-8'))
+            print('{}/{}:{}'.format(i + 1, len(self.texts), text['title'].encode('utf-8')))
             with open(os.path.join(dirpath, text['title'] + '.txt'), 'w') as f:
                 f.write(downloadText(text['href']))
 
@@ -69,4 +69,4 @@ def downloadAllTexts(url, dirpath):
 
 if __name__ == '__main__':
     downloadAllTexts('0_790/', dirpath=r'C:\Users\wb.zhangshenglong\Desktop\test')
-    print downloadText('0_790/36873824.html')
+    print(downloadText('0_790/36873824.html'))

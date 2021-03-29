@@ -44,8 +44,8 @@ def translate(word, fromLan='AUTO', toLan='AUTO'):
         content = json.loads(response.text)
         return content['translateResult'][0][0]['tgt']
     except:
-        print traceback.print_exc()
+        print(traceback.print_exc())
         return None
 
 if __name__ == '__main__':
-    print translate(raw_input('翻译内容:'), fromLan='zh-CHS', toLan='ja')
+    print(translate(raw_input('翻译内容:'), fromLan='zh-CHS', toLan='ja'))
