@@ -116,8 +116,13 @@ def countArr(arr):
 
 def transform(arr, func=None, dict=None):
     """用规则将数组转换成新数组"""
-    if func:
-        return [func(a) for a in arr]
-    elif dict:
-        return [dict[a] for a in arr]
-
+    if hasattr(arr, '__iter__'):
+        if func:
+            return [func(a) for a in arr]
+        elif dict:
+            return [dict[a] for a in arr]
+    else:
+        if func:
+            return func(arr)
+        elif dict:
+            return dict[arr]
