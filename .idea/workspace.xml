@@ -11,8 +11,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add knn">
-      <change afterPath="$PROJECT_DIR$/machine-learning/Tensorflow.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/happy-or-sad.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/machine-learning/convolution.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/machine-learning/Tensorflow.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/Tensorflow.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/test/Tensorflow.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +56,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/machine-learning" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
@@ -64,6 +67,7 @@
       <recent name="D:\workspace\pythontest\spider" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workspace\pythontest\data" />
       <recent name="D:\workspace\pythontest\test" />
       <recent name="D:\workspace\pythontest\machine-learning\Tensorflow" />
       <recent name="D:\workspace\pythontest" />
@@ -253,6 +257,13 @@
       <workItem from="1617242344778" duration="269000" />
       <workItem from="1617242623377" duration="2547000" />
       <workItem from="1617356128443" duration="559000" />
+      <workItem from="1617672498935" duration="193000" />
+      <workItem from="1617672723372" duration="23000" />
+      <workItem from="1617672763962" duration="4932000" />
+      <workItem from="1617694147509" duration="5830000" />
+      <workItem from="1617706150586" duration="5383000" />
+      <workItem from="1617712322991" duration="21000" />
+      <workItem from="1617712380056" duration="2081000" />
     </task>
     <task id="LOCAL-00001" summary="add readme">
       <created>1612144585810</created>
@@ -286,6 +297,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>9</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -295,18 +313,15 @@
       </default-breakpoints>
     </breakpoint-manager>
     <watches-manager>
-      <configuration name="Tensorflow">
-        <watch expression="isinstance(arr, (list, tuple))" language="Python" />
-        <watch expression="hasattr(arr, '__iter__')" language="Python" />
-      </configuration>
       <configuration name="PythonConfigurationType">
         <watch expression="a.T" language="Python" />
+        <watch expression="currentTime" />
       </configuration>
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/pythontest$spider_test.coverage" NAME="spider_test Coverage Results" MODIFIED="1611818082777" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pythontest$main.coverage" NAME="main Coverage Results" MODIFIED="1617193203952" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythontest$main.coverage" NAME="main Coverage Results" MODIFIED="1617692479854" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythontest$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1612172544461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/socket" />
     <SUITE FILE_PATH="coverage/pythontest$kNN_test02.coverage" NAME="kNN_test02 Coverage Results" MODIFIED="1616252587255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Machine-Learning/kNN/2.海伦约会" />
     <SUITE FILE_PATH="coverage/pythontest$Tensorflow__1_.coverage" NAME="Tensorflow (1) Coverage Results" MODIFIED="1616576407961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
