@@ -1,22 +1,23 @@
 import numpy as np
 import pandas as pd
+import time
 
 EPSILON = 0.9 # 贪婪因子
 ALPHA = 0.1 # 学习率
-GAMMA = 0.9 # 衰减因子
+GAMMA = 0.99 # 衰减因子
 
 ACTIONS = [[0, 1], [1, 0], [0, -1], [-1, 0]]
 MAP = [
-    '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
-    '.', 'o', '.', '.', '.', '.', '.', '.', '.', '.',
-    '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
-    '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
-    '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
-    '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
-    '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
-    '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
-    '.', '.', '.', '.', '.', '.', '.', '.', 'i', '.',
-    '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
+    ['.', '.', '*', '.', '.', '.', '.', '.', '.', '.'],
+    ['.', 'o', '*', '.', '.', '.', '.', '.', '.', '.'],
+    ['.', '.', '*', '.', '.', '.', '.', '.', '.', '.'],
+    ['.', '*', '*', '.', '*', '.', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+    ['*', '*', '*', '*', '.', '*', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.', '*', '*', '.'],
+    ['.', '.', '.', '.', '.', '.', '.', '*', 'i', '.'],
+    ['.', '.', '.', '.', '.', '.', '.', '*', '*', '.'],
     ]
 
 def analyzeMap(map):
@@ -32,28 +33,55 @@ def analyzeMap(map):
 
 def genNextStep(map, q_table, width, height, x, y):
     if np.random.uniform() >= EPSILON:
-        a = np.random.randint(0, len(ACTIONS))
+        return np.random.randint(0, len(ACTIONS))
     else:
         idx = width * y + x
-        a = q_table.iloc[idx, :].idxmax()
+        return q_table.iloc[idx, :].idxmax()
+
+def getNextState(map, q_table, width, height, x, y, a):
     tx, ty = x + ACTIONS[a][0], y + ACTIONS[a][1]
-    if tx < 0 or ty < 0 or tx >= width or ty >= height:
-        return genNextStep(map, q_table, width, height, x, y)
+    if tx < 0 or ty < 0 or tx >= width or ty >= height or map[ty][tx] == '*':
+        return x, y, -100
     else:
-        if map[y][x] == 'i':
-            return a, 100
+        if map[ty][tx] == 'i':
+            return tx, ty, 1000
+        elif map[ty][tx] == '#':
+            map[ty][tx] = '.'
+            return tx, ty, 1000
         else:
-            return a, 0
+            return tx, ty, -1
+
+def showMap(map, width, height, x, y):
+    s = ''
+    for i in range(height):
+        for j in range(width):
+            if i == y and j == x:
+                s += 'o'
+            else:
+                s += map[i][j]
+        s += '\n'
+    print(s)
 
 def run():
-    width, height, x, y = analyzeMap(MAP)
-    q_table = pd.DataFrame(np.zeros(width * height, len(ACTIONS)))
-    while MAP[y][x] != 'i':
-        a, r = genNextStep(MAP, q_table, width, height, x, y)
-        q_predict = q_table.loc[y * width + x, a]
-        x, y = x + ACTIONS[a][0], y + ACTIONS[a][1]
-        q_target = r + GAMMA * q_table.iloc[y * width + x, :].max()
-        
+    width, height, sy, sx = analyzeMap(MAP)
+    q_table = pd.DataFrame(np.zeros([width * height, len(ACTIONS)]))
+    epoch = 0
+    while True:
+        step = []
+        x, y = sy, sx
+        epoch += 1
+        MAP[6][3] = '#'
+        while MAP[y][x] != 'i':
+            a = genNextStep(MAP, q_table, width, height, x, y)
+            tx, ty, r = getNextState(MAP, q_table, width, height, x, y, a)
+            q_predict = q_table.loc[y * width + x, a]
+            q_target = r + GAMMA * q_table.iloc[ty * width + tx, :].max()
+            q_table.loc[y * width + x, a] += ALPHA * (q_target - q_predict)
+            x, y = tx, ty
+            # showMap(MAP, width, height, x, y)
+            step.append([x, y])
+            # time.sleep(1)
+        print('epoch {} :use {} steps to arrive\n{}'.format(epoch, len(step), step))
 
 if __name__ == '__main__':
     print(run())
