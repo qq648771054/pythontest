@@ -45,9 +45,6 @@ def getNextState(map, q_table, width, height, x, y, a):
     else:
         if map[ty][tx] == 'i':
             return tx, ty, 1000
-        elif map[ty][tx] == '#':
-            map[ty][tx] = '.'
-            return tx, ty, 1000
         else:
             return tx, ty, -1
 
@@ -70,7 +67,6 @@ def run():
         step = []
         x, y = sy, sx
         epoch += 1
-        MAP[6][3] = '#'
         while MAP[y][x] != 'i':
             a = genNextStep(MAP, q_table, width, height, x, y)
             tx, ty, r = getNextState(MAP, q_table, width, height, x, y, a)
