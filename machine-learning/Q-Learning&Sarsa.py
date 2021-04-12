@@ -6,6 +6,7 @@ import tkinter as tk
 import threading
 
 class Agent(object):
+
     def __init__(self, env, learning_rate=0.1, reward_decay=0.9, e_greedy=0.9):
         self.env = env
         self.learning_rate, self.reward_decay, self.e_greddy = learning_rate, reward_decay, e_greedy
@@ -54,21 +55,8 @@ class Agent(object):
 
 class Agent_Q(Agent):
     __name__ = 'Q'
-    def choose_action(self, isOpponent=False):
-        return self._select_max_table_idx(isOpponent)
-
-    def _select_max_table_idx(self, isOpponent):
-        if np.random.uniform() >= self.e_greddy:
-            return np.random.choice(range(len(self.env.ACTION)))
-        elif not isOpponent:
-            self.check_state_exist(self.idx)
-            line = self.q_table.loc[self.idx, :]
-            return np.random.choice(line[line == line.max()].index)
-        else:
-            self.check_state_exist(self.idx)
-            line = self.q_table.loc[self.idx, :]
-            return np.random.choice(line[line == line.min()].index)
-
+    def choose_action(self):
+        return self._select_max_table_idx()
 
     def learn(self, action, reward, lastIdx):
         self.check_state_exist(self.idx)
@@ -306,15 +294,6 @@ class Jing(Env):
     def getIdx(self):
         return self.idx
 
-    def step(self, next_state):
-        if next_state is None:
-            return
-        x, y = next_state
-        self.map[y][x] = self.player
-        self.idx += 3 ** (y * Jing.SIZE + x) * self.player
-        self.player = Jing.TYPE.BLACK if self.player == Jing.TYPE.RED else Jing.TYPE.RED
-        self._updateGrid(x, y)
-
     def evaluate(self, action):
         x, y = Jing.ACTION[action][0], Jing.ACTION[action][1]
         if self.map[y][x] == Jing.TYPE.EMPTY:
@@ -323,7 +302,7 @@ class Jing(Env):
             if state == Jing.STATE.NONE:
                 ret = (x, y), 0, False
             elif state == Jing.STATE.DRAW:
-                ret = (x, y), 0, True
+                ret = (x, y), -1, True
             elif state == Jing.STATE.SUCCESS:
                 ret = (x, y), 1, True
             else:
@@ -332,6 +311,15 @@ class Jing(Env):
             return ret
         else:
             return None, -1 if self.player == Jing.TYPE.BLACK else 1, True
+
+    def step(self, next_state):
+        if next_state is None:
+            return
+        x, y = next_state
+        self.map[y][x] = self.player
+        self.idx += 3 ** (y * Jing.SIZE + x) * self.player
+        self.player = Jing.TYPE.BLACK if self.player == Jing.TYPE.RED else Jing.TYPE.RED
+        self._updateGrid(x, y)
 
     def checkState(self):
         def checkFull():
@@ -357,6 +345,20 @@ class Jing(Env):
                     continue
                 for i in range(1, Jing.SIZE):
                     if self.map[i][j] != c:
+                        break
+                else:
+                    return c
+            c = self.map[0][0]
+            if c != Jing.TYPE.EMPTY:
+                for i in range(Jing.SIZE):
+                    if self.map[i][i] != c:
+                        break
+                else:
+                    return c
+            c = self.map[0][Jing.SIZE - 1]
+            if c != Jing.TYPE.EMPTY:
+                for i in range(Jing.SIZE):
+                    if self.map[i][Jing.SIZE - 1 - i] != c:
                         break
                 else:
                     return c
@@ -418,18 +420,18 @@ class ThreadBase(threading.Thread):
             while True:
                 action = self.env.agent.choose_action()
                 next_state, reward, ter = self.env.evaluate(action)
-                if next_state is None:
-                    continue
                 lastIdx = self.env.agent.idx
-                self.env.step(next_state)
-                self.env.agent.learn(action, reward, lastIdx)
-                terminate = terminate or ter
-                isSuccess = reward == 1
-                step += 1
-                self.showProcess and self.env.render(0.5)
+                if next_state:
+                    self.env.step(next_state)
+                    self.env.agent.learn(action, reward, lastIdx)
+                    terminate = terminate or ter
+                    step += 1
+                    self.showProcess and self.env.render(0.5)
+                else:
+                    self.env.agent.learn(action, reward, lastIdx)
                 if terminate:
                     break
-            print('episode {}, result {}, takes {} steps {} second'.format(episode, isSuccess, step, time.time() - startTime))
+            print('episode {}, result {}, takes {} steps {} second'.format(episode, reward == 1, step, time.time() - startTime))
 
     def createEnv(self):
         raise NotImplementedError
