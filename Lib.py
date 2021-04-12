@@ -107,6 +107,11 @@ def getDataFilePath(name):
     """返回数据的绝对路径"""
     return os.path.join(os.path.split(os.path.abspath(__file__))[0], 'data', name)
 
+def readFile(fileName):
+    with open(fileName, 'r', encoding='utf-8') as f:
+        texts = f.read()
+    return texts
+
 def countArr(arr):
     """给数组元素计数"""
     r = {}
