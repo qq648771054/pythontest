@@ -5,8 +5,7 @@ import time
 import tkinter as tk
 import threading
 
-class Agent(object):
-
+class Agent_Single(object):
     def __init__(self, env, learning_rate=0.1, reward_decay=0.9, e_greedy=0.9):
         self.env = env
         self.learning_rate, self.reward_decay, self.e_greddy = learning_rate, reward_decay, e_greedy
@@ -53,7 +52,7 @@ class Agent(object):
             line = self.q_table.loc[self.idx, :]
             return np.random.choice(line[line == line.max()].index)
 
-class Agent_Q(Agent):
+class Agent_Q(Agent_Single):
     __name__ = 'Q'
     def choose_action(self):
         return self._select_max_table_idx()
@@ -65,7 +64,7 @@ class Agent_Q(Agent):
         q_target = reward + self.reward_decay * self.q_table.loc[self.idx, :].max()
         self.q_table.loc[lastIdx, action] += self.learning_rate * (q_target - q_predict)
 
-class Agent_Sarsa(Agent):
+class Agent_Sarsa(Agent_Single):
     __name__ = 'Sarsa'
     def __init__(self, *args, **kwargs):
         super(Agent_Sarsa, self).__init__(*args, **kwargs)
@@ -257,151 +256,6 @@ class Maze(Env):
             fill=Maze.TYPE2COLOR.get(self.map[y][x])
         )
 
-class Jing(Env):
-    class TYPE(object):
-        EMPTY = 0
-        BLACK = 1
-        RED = 2
-
-    class STATE(object):
-        NONE = 0
-        SUCCESS = 1
-        FAILED = 2
-        DRAW = 3
-
-    TYPE2COLOR = {
-        TYPE.EMPTY: 'white',
-        TYPE.BLACK: 'black',
-        TYPE.RED: 'red',
-    }
-    SIZE = 3
-    ACTION = [[j, i] for i in range(3) for j in range(3)]
-    MAZE_W, MAZE_H = 40, 40
-    GRID_W, GRID_H = 30, 30
-    def buildMap(self):
-        self.agent = Agent_Q(self)
-        self.map = [[Jing.TYPE.EMPTY] * Jing.SIZE for i in range(Jing.SIZE)]
-        self.idx = 0
-        self.player = Jing.TYPE.BLACK
-        self._createMap()
-
-    def reset(self):
-        self.map = [[Jing.TYPE.EMPTY] * Jing.SIZE for i in range(Jing.SIZE)]
-        self.idx = 0
-        self.player = Jing.TYPE.BLACK
-        self._createMap()
-
-    def getIdx(self):
-        return self.idx
-
-    def evaluate(self, action):
-        x, y = Jing.ACTION[action][0], Jing.ACTION[action][1]
-        if self.map[y][x] == Jing.TYPE.EMPTY:
-            self.map[y][x] = self.player
-            state = self.checkState()
-            if state == Jing.STATE.NONE:
-                ret = (x, y), 0, False
-            elif state == Jing.STATE.DRAW:
-                ret = (x, y), -1, True
-            elif state == Jing.STATE.SUCCESS:
-                ret = (x, y), 1, True
-            else:
-                ret = (x, y), -1, True
-            self.map[y][x] = Jing.TYPE.EMPTY
-            return ret
-        else:
-            return None, -1 if self.player == Jing.TYPE.BLACK else 1, True
-
-    def step(self, next_state):
-        if next_state is None:
-            return
-        x, y = next_state
-        self.map[y][x] = self.player
-        self.idx += 3 ** (y * Jing.SIZE + x) * self.player
-        self.player = Jing.TYPE.BLACK if self.player == Jing.TYPE.RED else Jing.TYPE.RED
-        self._updateGrid(x, y)
-
-    def checkState(self):
-        def checkFull():
-            for i in range(Jing.SIZE):
-                for j in range(Jing.SIZE):
-                    if self.map[i][j] == Jing.TYPE.EMPTY:
-                        return False
-            return True
-
-        def checkLine():
-            for i in range(Jing.SIZE):
-                c = self.map[i][0]
-                if c == Jing.TYPE.EMPTY:
-                    continue
-                for j in range(1, Jing.SIZE):
-                    if self.map[i][j] != c:
-                        break
-                else:
-                    return c
-            for j in range(Jing.SIZE):
-                c = self.map[0][j]
-                if c == Jing.TYPE.EMPTY:
-                    continue
-                for i in range(1, Jing.SIZE):
-                    if self.map[i][j] != c:
-                        break
-                else:
-                    return c
-            c = self.map[0][0]
-            if c != Jing.TYPE.EMPTY:
-                for i in range(Jing.SIZE):
-                    if self.map[i][i] != c:
-                        break
-                else:
-                    return c
-            c = self.map[0][Jing.SIZE - 1]
-            if c != Jing.TYPE.EMPTY:
-                for i in range(Jing.SIZE):
-                    if self.map[i][Jing.SIZE - 1 - i] != c:
-                        break
-                else:
-                    return c
-            return None
-
-        line = checkLine()
-        if line is not None:
-            return Jing.STATE.SUCCESS if line == Jing.TYPE.BLACK else Jing.STATE.FAILED
-        if checkFull():
-            return Jing.STATE.DRAW
-        return Jing.STATE.NONE
-
-    def _createMap(self):
-        if not hasattr(self, 'canvas'):
-            self.canvas = tk.Canvas(self, bg='white', height=Jing.MAZE_H * Jing.SIZE, width=Jing.MAZE_W * Jing.SIZE)
-            # create lines
-            right, bottom = Jing.MAZE_W * Jing.SIZE, Jing.MAZE_H * Jing.SIZE
-            for c in range(0, right, Jing.MAZE_W):
-                self.canvas.create_line(c, 0, c, bottom)
-            for r in range(0, bottom, Jing.MAZE_H):
-                self.canvas.create_line(0, r, right, r)
-            self.canvas.pack()
-        else:
-            for r in self.grids:
-                for c in r:
-                    self.canvas.delete(c)
-        # create grids
-        self.grids = []
-        for i in range(Jing.SIZE):
-            self.grids.append([0] * Jing.SIZE)
-            for j in range(Jing.SIZE):
-                self._updateGrid(j, i)
-
-    def _updateGrid(self, x, y):
-        if self.grids[y][x]:
-            self.canvas.delete(self.grids[y][x])
-        self.grids[y][x] = self.canvas.create_rectangle(
-            (x + 0.5) * Jing.MAZE_W - 0.5 * Jing.GRID_W, (y + 0.5) * Jing.MAZE_H - 0.5 * Jing.GRID_H,
-            (x + 0.5) * Jing.MAZE_W + 0.5 * Jing.GRID_W, (y + 0.5) * Jing.MAZE_H + 0.5 * Jing.GRID_H,
-            fill=Jing.TYPE2COLOR.get(self.map[y][x])
-        )
-
-
 class ThreadBase(threading.Thread):
     def __init__(self, showProcess=True, *args, **kwargs):
         threading.Thread.__init__(self, *args, **kwargs)
@@ -441,14 +295,9 @@ class ThreadMaze(ThreadBase):
         self.env = Maze()
         self.env.buildMap(readFile(getDataFilePath('Q&S-SimpleMaze.txt')))
 
-class ThreadJing(ThreadBase):
-    def createEnv(self):
-        self.env = Jing()
-        self.env.buildMap()
-
 if __name__ == '__main__':
     # thread = ThreadMaze(showProcess=False)
-    thread = ThreadJing(showProcess=True)
+    thread = ThreadMaze(showProcess=True)
     thread.start()
     while True:
         thread.showProcess = input().strip() != '0'
