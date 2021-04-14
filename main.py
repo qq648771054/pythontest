@@ -9,7 +9,7 @@ import copy
 # import io
 import os
 import tensorflow.keras as keras
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 gpus= tf.config.list_physical_devices('GPU')
 if len(gpus) > 0: tf.config.experimental.set_memory_growth(gpus[0], True)
 
@@ -45,7 +45,7 @@ class DQNAgent(object):
     def _build_model(self):
         model = tf.keras.Sequential()
         # 输入为4，3层128券链接，输出为2线性  2是因为控制为左右
-        model.add(tf.keras.layers.Dense(128, input_dim=4, activation='tanh'))
+        model.add(tf.keras.layers.Dense(10, activation='relu', input_shape=(4, )))
         # model.add(tf.keras.layers.Dense(128, activation='tanh'))
         # model.add(tf.keras.layers.Dense(128, activation='tanh'))
         model.add(tf.keras.layers.Dense(2, activation='linear'))
@@ -142,10 +142,11 @@ if __name__ == "__main__":
             _action = agent.act(state)
             # 输入行为，并获取结果，包括状态、奖励和游戏是否结束  返回游戏下一针的数据 done：是否游戏结束，reward：分数  nextstate，新状态
             _next_state, _reward, _done, _ = env.step(_action)
+            x, x_dot, theta, theta_dot = _next_state
+            r1 = (env.x_threshold - abs(x)) / env.x_threshold - 0.8
+            r2 = (env.theta_threshold_radians - abs(theta)) / env.theta_threshold_radians - 0.5
+            _reward = r1 + r2
             _next_state = np.reshape(_next_state, [1, 4])
-
-            # 在每一个agent完成了目标的帧agent都会得到回报值1  如果失败得到-100
-            _reward = -100 if _done else _reward
 
             # 记忆先前的状态，行为，回报与下一个状态   #  将当前状态，于执行动作后的状态，存入经验池
             agent.save_exp(state, _action, _reward, _next_state, _done)
@@ -160,9 +161,8 @@ if __name__ == "__main__":
                 print("episode: {}/{}, score: {}"
                       .format(e, episodes, time_t))
                 break
-
         # 通过之前的经验训练模型
+        agent.train_exp(32)
         if e % 5 == 0:
-            agent.train_exp(32)
             print("saving model")
             agent.model.save('dqn.h5')

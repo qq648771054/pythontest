@@ -3,6 +3,7 @@
 import time
 import sys
 import os
+import numpy as np
 from collections import deque
 
 def minInterval(interval):
@@ -131,3 +132,6 @@ def transform(arr, func=None, dict=None):
             return func(arr)
         elif dict:
             return dict[arr]
+
+def addAixs(arr):
+    return arr.reshape((1, ) + arr.shape)

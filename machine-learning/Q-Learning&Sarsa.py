@@ -11,7 +11,7 @@ class Agent_Single(object):
         self.learning_rate, self.reward_decay, self.e_greddy = learning_rate, reward_decay, e_greedy
         self._idxs = {}
         self.tables = []
-        q_table = pd.DataFrame(columns=range(len(self.env.ACTION)), dtype=np.float64)
+        q_table = pd.DataFrame(columns=range(self.env.actionLen), dtype=np.float64)
         self.tables.append(q_table)
 
     @property
@@ -32,7 +32,7 @@ class Agent_Single(object):
             for i, table in enumerate(self.tables):
                 self.tables[i] = table.append(
                     pd.Series(
-                        [0] * len(self.env.ACTION),
+                        [0] * self.env.actionLen,
                         index=table.columns,
                         name=state,
                     )
@@ -46,7 +46,7 @@ class Agent_Single(object):
 
     def _select_max_table_idx(self):
         if np.random.uniform() >= self.e_greddy:
-            return np.random.choice(range(len(self.env.ACTION)))
+            return np.random.choice(range(self.env.actionLen))
         else:
             self.check_state_exist(self.idx)
             line = self.q_table.loc[self.idx, :]
@@ -68,9 +68,9 @@ class Agent_Sarsa(Agent_Single):
     __name__ = 'Sarsa'
     def __init__(self, *args, **kwargs):
         super(Agent_Sarsa, self).__init__(*args, **kwargs)
-        eligibility_trace = pd.DataFrame(columns=range(len(self.env.ACTION)), dtype=np.float64)
+        eligibility_trace = pd.DataFrame(columns=range(self.env.actionLen), dtype=np.float64)
         self.tables.append(eligibility_trace)
-        self.next_action = np.random.choice(range(len(self.env.ACTION)))
+        self.next_action = np.random.choice(range(self.env.actionLen))
 
     @property
     def eligibility_trace(self):
@@ -117,6 +117,12 @@ class MyDict(dict):
             return self['DEFAULT']
 
 class Env(tk.Tk):
+    ACTION = []
+
+    @property
+    def actionLen(self):
+        return len(self.ACTION)
+
     def buildMap(self, *args, **kwargs):
         raise NotImplementedError
 
@@ -124,9 +130,6 @@ class Env(tk.Tk):
         raise NotImplementedError
 
     def getIdx(self):
-        raise NotImplementedError
-
-    def evaluate(self, action):
         raise NotImplementedError
 
     def step(self, next_state):
@@ -212,19 +215,17 @@ class Maze(Env):
     def getIdx(self):
         return self.width * self.agent.y + self.agent.x
 
-    def evaluate(self, action):
-        tx, ty = self.agent.x + Maze.ACTION[action][0], self.agent.y + Maze.ACTION[action][1]
-        if tx < 0 or ty < 0 or tx >= self.width or ty >= self.height:
-            return None, -1, True
+    def step(self, action):
+        x, y = self.agent.x + Maze.ACTION[action][0], self.agent.y + Maze.ACTION[action][1]
+        if x < 0 or y < 0 or x >= self.width or y >= self.height:
+            return (self.agent.x, self.agent.y), -1, False
         else:
-            return (tx, ty), Maze.TREASURE.get(self.map[ty][tx]), Maze.ISEND.get(self.map[ty][tx])
-
-    def step(self, next_state):
-        x, y = next_state
-        self.map[self.agent.y][self.agent.x], self.map[y][x] = Maze.TYPE.GROUND, Maze.TYPE.AGENT
-        self._updateGrid(self.agent.x, self.agent.y)
-        self._updateGrid(x, y)
-        self.agent.x, self.agent.y = x, y
+            treasure, isend = Maze.TREASURE.get(self.map[y][x]), Maze.ISEND.get(self.map[y][x])
+            self.map[self.agent.y][self.agent.x], self.map[y][x] = Maze.TYPE.GROUND, Maze.TYPE.AGENT
+            self._updateGrid(self.agent.x, self.agent.y)
+            self._updateGrid(x, y)
+            self.agent.x, self.agent.y = x, y
+            return (x, y), treasure, isend
 
     def _createMap(self):
         if not hasattr(self, 'canvas'):
@@ -268,21 +269,15 @@ class ThreadBase(threading.Thread):
             self.env.reset()
             self.showProcess and self.env.render()
             episode += 1
-            terminate = False
             startTime = time.time()
             step = 0
             while True:
                 action = self.env.agent.choose_action()
-                next_state, reward, ter = self.env.evaluate(action)
                 lastIdx = self.env.agent.idx
-                if next_state:
-                    self.env.step(next_state)
-                    self.env.agent.learn(action, reward, lastIdx)
-                    terminate = terminate or ter
-                    step += 1
-                    self.showProcess and self.env.render(0.5)
-                else:
-                    self.env.agent.learn(action, reward, lastIdx)
+                next_state, reward, terminate = self.env.step(action)
+                self.env.agent.learn(action, reward, lastIdx)
+                step += 1
+                self.showProcess and self.env.render(0.5)
                 if terminate:
                     break
             print('episode {}, result {}, takes {} steps {} second'.format(episode, reward == 1, step, time.time() - startTime))
@@ -297,7 +292,7 @@ class ThreadMaze(ThreadBase):
 
 if __name__ == '__main__':
     # thread = ThreadMaze(showProcess=False)
-    thread = ThreadMaze(showProcess=True)
+    thread = ThreadMaze(showProcess=False)
     thread.start()
     while True:
         thread.showProcess = input().strip() != '0'
