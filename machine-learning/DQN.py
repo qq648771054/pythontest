@@ -67,7 +67,7 @@ class EnvNN(object):
     def stateShape(self):
         raise NotImplementedError
 
-    def reset(self):
+    def reset(self, *args, **kwargs):
         raise NotImplementedError
 
     def render(self):
@@ -112,17 +112,13 @@ class CartPole_v0(EnvOpenAI):
 class EnvTk(EnvNN, tk.Tk):
     ACTION = []
 
-    def __init__(self, map, agentType):
+    def __init__(self, agentType):
         tk.Tk.__init__(self)
-        self._buildMap(map)
         EnvNN.__init__(self, agentType)
 
     @property
     def actionLen(self):
         return len(self.ACTION)
-
-    def _buildMap(self, map):
-        raise NotImplementedError
 
     def render(self, sleepTime=0.5):
         self.update()
@@ -164,26 +160,16 @@ class Maze(EnvTk):
     MAZE_W, MAZE_H = 30, 30
     GRID_W, GRID_H = 25, 25
 
+    def __init__(self, width, height, agentType):
+        self.width, self.height = width, height
+        super(Maze, self).__init__(agentType)
+
     @property
     def stateShape(self):
         return self.height, self.width
 
-    def _buildMap(self, map):
-        map = [m.strip() for m in map.split('\n') if len(m.strip()) > 0]
-        self.rawMap = map
-        self.width = len(map[0])
-        self.height = len(map)
-        self.map = []
-        for i in range(self.height):
-            self.map.append([])
-            for j in range(self.width):
-                self.map[i].append(self.TYPE2ID[map[i][j]])
-                if self.map[i][j] == self.TYPE.START:
-                    self.x, self.y = j, i
-        self._createMap()
-
-    def reset(self):
-        map = self.rawMap
+    def reset(self, mapData):
+        map = [m.strip() for m in mapData.split('\n') if len(m.strip()) > 0]
         self.map = []
         for i in range(self.height):
             self.map.append([])
@@ -211,7 +197,7 @@ class Maze(EnvTk):
     def _buildModel(self, learning_rate=0.01):
         model = tf.keras.Sequential([
             tf.keras.layers.Flatten(input_shape=self.stateShape),
-            tf.keras.layers.Dense(20, activation='relu'),
+            tf.keras.layers.Dense(128, activation='relu'),
             tf.keras.layers.Dense(self.actionLen, activation='linear')
         ])
         model.compile(
@@ -253,40 +239,52 @@ class ThreadBase(threading.Thread):
         self.savePath = savePath
         self.args = kwargs
 
+class ThreadMaze(ThreadBase):
+    WIDTH, HEIGHT = 5, 5
     def run(self):
-        self.createEnv()
-        if self.savepath and os.path.exists(self.savepath):
-            self.env.agent.model = tf.keras.models.load_model(self.savepath)
+        mapDatas = []
+        mapIter = 0
+        dir = getDataFilePath('DQN_Maze')
+        for file in os.listdir(dir):
+            file = os.path.join(dir, file)
+            mapDatas.append(readFile(file))
+        env = Maze(self.WIDTH, self.WIDTH, Agent_DQN)
+        agent = env.agent
+        if self.savePath and os.path.exists(self.savePath):
+            agent.model = tf.keras.models.load_model(self.savePath)
         episode = 0
+        record = [0] * 50
+        success = 0
         while True:
-            state = self.env.reset()
-            self.showProcess and self.env.render()
+            state = env.reset(mapDatas[mapIter])
+            self.showProcess and env.render()
             episode += 1
             startTime = time.time()
             step = 0
             while True:
-                action = self.env.agent.choose_action(state)
-                state, action, reward, next_state, done = self.env.step(action)
-                self.env.agent.save_exp(state, action, reward, next_state)
+                action = agent.choose_action(state)
+                state, action, reward, next_state, done = env.step(action)
+                agent.save_exp(state, action, reward, next_state)
                 step += 1
                 state = next_state
-                self.showProcess and self.env.render(0.05)
+                self.showProcess and env.render(0.05)
                 if done:
                     break
-            print('episode {}, result {}, takes {} steps {} second'.format(episode, reward == 1, step, time.time() - startTime))
-            self.env.agent.learn()
-            if self.savepath:
-                self.env.agent.model.save(self.savepath)
-
-    def createEnv(self):
-        raise NotImplementedError
-
-class ThreadMaze(ThreadBase):
-    def createEnv(self):
-        self.env = Maze(readFile(getDataFilePath('DQN_SimpleMaze.txt')), Agent_DQN)
+            isSuccess = int(reward == 1)
+            print('episode {}, mapIter {}, result {}, takes {} steps {} second'.format(episode, mapIter, isSuccess, step, time.time() - startTime))
+            success += isSuccess - record[episode % 50]
+            record[episode % 50] = isSuccess
+            agent.learn()
+            if self.savePath:
+                agent.model.save(self.savePath)
+            if success >= 40:
+                record = [0] * 50
+                success = 0
+                mapIter = (mapIter + 1) % len(mapDatas)
+                print('switch mapIter to {}'.format(mapIter))
 
 if __name__ == '__main__':
-    thread = ThreadMaze(showProcess=False, savePath=getDataFilePath('dqn.h4'))
+    thread = ThreadMaze(showProcess=False, savePath=getDataFilePath('dqn_record'))
     thread.start()
     while True:
         cmd = input()

@@ -11,13 +11,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add knn">
-      <change afterPath="$PROJECT_DIR$/data/DQN_SimpleMaze.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/machine-learning/DQN.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/10.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/11.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/12.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/3.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/4.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/5.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/6.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/7.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/8.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/9.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/Lib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dqn.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/machine-learning/Q-Learning&amp;Sarsa.py" beforeDir="false" afterPath="$PROJECT_DIR$/machine-learning/Q-Learning&amp;Sarsa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/DQN_SimpleMaze.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/DQN_Maze/1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dqn.h4/saved_model.pb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dqn.h4/variables/variables.data-00000-of-00001" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dqn.h4/variables/variables.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/machine-learning/DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/machine-learning/DQN.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,22 +68,23 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../h35/client/script" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/data/DQN_Maze" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\workspace\pythontest\data\DQN_Maze" />
       <recent name="D:\workspace\pythontest\machine-learning" />
       <recent name="E:\workspace\pythontest\data" />
       <recent name="D:\workspace\pythontest\spider" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\workspace\pythontest\data\DQN_Maze" />
       <recent name="D:\workspace\pythontest\data" />
       <recent name="D:\workspace\pythontest\test" />
       <recent name="D:\workspace\pythontest\machine-learning\Tensorflow" />
       <recent name="D:\workspace\pythontest" />
-      <recent name="D:\workspace\pythontest\translation" />
     </key>
   </component>
   <component name="RunManager" selected="Python.DQN">
@@ -173,12 +184,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="E:/python36/Lib/site-packages/tensorflow/python/keras/saving" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../python36/Lib/site-packages/tensorflow/python/keras/saving" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="E:/python36/Lib/site-packages/tensorflow/python/keras/saving/save.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../python36/Lib/site-packages/tensorflow/python/keras/saving/save.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -281,6 +292,7 @@
       <workItem from="1618314593268" duration="553000" />
       <workItem from="1618315156103" duration="1230000" />
       <workItem from="1618316402342" duration="33199000" />
+      <workItem from="1618407283947" duration="7464000" />
     </task>
     <task id="LOCAL-00001" summary="add readme">
       <created>1612144585810</created>
@@ -351,32 +363,32 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/pythontest$main.coverage" NAME="main Coverage Results" MODIFIED="1618387111477" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pythontest$kNN_test02.coverage" NAME="kNN_test02 Coverage Results" MODIFIED="1616252587255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Machine-Learning/kNN/2.海伦约会" />
-    <SUITE FILE_PATH="coverage/pythontest$treasure_on_right.coverage" NAME="treasure_on_right Coverage Results" MODIFIED="1617880563209" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/1_command_line_reinforcement_learning" />
-    <SUITE FILE_PATH="coverage/pythontest$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1616123627900" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pythontest$web.coverage" NAME="web Coverage Results" MODIFIED="1611822761632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
-    <SUITE FILE_PATH="coverage/pythontest$Matplotlib.coverage" NAME="Matplotlib Coverage Results" MODIFIED="1617952085433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/pythontest$matplot__1_.coverage" NAME="matplot (1) Coverage Results" MODIFIED="1616243135493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/pythontest$knn.coverage" NAME="knn Coverage Results" MODIFIED="1616296580590" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/pythontest$spider_test.coverage" NAME="spider_test Coverage Results" MODIFIED="1611818082777" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythontest$pandastest.coverage" NAME="pandastest Coverage Results" MODIFIED="1613963197088" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythontest$Q_Learning.coverage" NAME="Q-Learning Coverage Results" MODIFIED="1617932639213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/machine-learning" />
+    <SUITE FILE_PATH="coverage/pythontest$save.coverage" NAME="save Coverage Results" MODIFIED="1618315942736" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../python36/Lib/site-packages/tensorflow/python/keras/saving" />
+    <SUITE FILE_PATH="coverage/pythontest$Matplotlib.coverage" NAME="Matplotlib Coverage Results" MODIFIED="1617952085433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/pythontest$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1612172544461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/socket" />
+    <SUITE FILE_PATH="coverage/pythontest$RL_brain.coverage" NAME="RL_brain Coverage Results" MODIFIED="1618392698780" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/6_OpenAI_gym" />
+    <SUITE FILE_PATH="coverage/pythontest$Numpy.coverage" NAME="Numpy Coverage Results" MODIFIED="1616569363046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/pythontest$matplot__1_.coverage" NAME="matplot (1) Coverage Results" MODIFIED="1616243135493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/pythontest$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1612170308341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
     <SUITE FILE_PATH="coverage/pythontest$run_Pendulum.coverage" NAME="run_Pendulum Coverage Results" MODIFIED="1618198727388" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/5.1_Double_DQN" />
     <SUITE FILE_PATH="coverage/pythontest$Tensorflow__1_.coverage" NAME="Tensorflow (1) Coverage Results" MODIFIED="1616576407961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/pythontest$Numpy.coverage" NAME="Numpy Coverage Results" MODIFIED="1616569363046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/pythontest$Q_Learning.coverage" NAME="Q-Learning Coverage Results" MODIFIED="1617932639213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/machine-learning" />
-    <SUITE FILE_PATH="coverage/pythontest$save.coverage" NAME="save Coverage Results" MODIFIED="1618315942736" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="E:/python36/Lib/site-packages/tensorflow/python/keras/saving" />
-    <SUITE FILE_PATH="coverage/pythontest$Q_Learning_Sarsa__1_.coverage" NAME="Q-Learning&amp;Sarsa (1) Coverage Results" MODIFIED="1618389533799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/machine-learning" />
-    <SUITE FILE_PATH="coverage/pythontest$RL_brain.coverage" NAME="RL_brain Coverage Results" MODIFIED="1618392698780" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/6_OpenAI_gym" />
     <SUITE FILE_PATH="coverage/pythontest$maze_env.coverage" NAME="maze_env Coverage Results" MODIFIED="1618054973246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/2_Q_Learning_maze" />
+    <SUITE FILE_PATH="coverage/pythontest$web.coverage" NAME="web Coverage Results" MODIFIED="1611822761632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
     <SUITE FILE_PATH="coverage/pythontest$run_this.coverage" NAME="run_this Coverage Results" MODIFIED="1617952323478" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/2_Q_Learning_maze" />
-    <SUITE FILE_PATH="coverage/pythontest$pandastest.coverage" NAME="pandastest Coverage Results" MODIFIED="1613963197088" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pythontest$kNN_test04.coverage" NAME="kNN_test04 Coverage Results" MODIFIED="1616294914231" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Machine-Learning/kNN/3.数字识别" />
-    <SUITE FILE_PATH="coverage/pythontest$tensorflow.coverage" NAME="tensorflow Coverage Results" MODIFIED="1616467346337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/pythontest$matplotlib.coverage" NAME="matplotlib Coverage Results" MODIFIED="1616235793119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/pythontest$DQN.coverage" NAME="DQN Coverage Results" MODIFIED="1618405555912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/machine-learning" />
-    <SUITE FILE_PATH="coverage/pythontest$Lib.coverage" NAME="Lib Coverage Results" MODIFIED="1616470794495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythontest$main.coverage" NAME="main Coverage Results" MODIFIED="1618387111477" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythontest$publishOneKey.coverage" NAME="publishOneKey Coverage Results" MODIFIED="1611837593199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../h35time/doc/uiproject" />
-    <SUITE FILE_PATH="coverage/pythontest$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1612170308341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
+    <SUITE FILE_PATH="coverage/pythontest$kNN_test02.coverage" NAME="kNN_test02 Coverage Results" MODIFIED="1616252587255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Machine-Learning/kNN/2.海伦约会" />
+    <SUITE FILE_PATH="coverage/pythontest$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1616123627900" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythontest$DQN.coverage" NAME="DQN Coverage Results" MODIFIED="1618413615897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/machine-learning" />
+    <SUITE FILE_PATH="coverage/pythontest$tensorflow.coverage" NAME="tensorflow Coverage Results" MODIFIED="1616467346337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/pythontest$Q_Learning_Sarsa__1_.coverage" NAME="Q-Learning&amp;Sarsa (1) Coverage Results" MODIFIED="1618389533799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/machine-learning" />
+    <SUITE FILE_PATH="coverage/pythontest$treasure_on_right.coverage" NAME="treasure_on_right Coverage Results" MODIFIED="1617880563209" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/1_command_line_reinforcement_learning" />
+    <SUITE FILE_PATH="coverage/pythontest$kNN_test04.coverage" NAME="kNN_test04 Coverage Results" MODIFIED="1616294914231" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Machine-Learning/kNN/3.数字识别" />
+    <SUITE FILE_PATH="coverage/pythontest$Lib.coverage" NAME="Lib Coverage Results" MODIFIED="1616470794495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
