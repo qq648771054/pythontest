@@ -11,22 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add knn">
-      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/10.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/11.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/12.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/5.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/6.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/7.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/8.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/DQN_Maze/9.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/DQN_SimpleMaze.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/DQN_Maze/1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dqn.h4/saved_model.pb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dqn.h4/variables/variables.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dqn.h4/variables/variables.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/DQN_Maze/3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/DQN_Maze/3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dqn_record/saved_model.pb" beforeDir="false" afterPath="$PROJECT_DIR$/data/dqn_record/saved_model.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dqn_record/variables/variables.data-00000-of-00001" beforeDir="false" afterPath="$PROJECT_DIR$/data/dqn_record/variables/variables.data-00000-of-00001" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dqn_record/variables/variables.index" beforeDir="false" afterPath="$PROJECT_DIR$/data/dqn_record/variables/variables.index" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/machine-learning/DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/machine-learning/DQN.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -292,7 +280,7 @@
       <workItem from="1618314593268" duration="553000" />
       <workItem from="1618315156103" duration="1230000" />
       <workItem from="1618316402342" duration="33199000" />
-      <workItem from="1618407283947" duration="7464000" />
+      <workItem from="1618407283947" duration="9072000" />
     </task>
     <task id="LOCAL-00001" summary="add readme">
       <created>1612144585810</created>
