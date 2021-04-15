@@ -81,8 +81,8 @@ class EnvNN(object):
 
 class EnvOpenAI(EnvNN):
     def __init__(self, env, agentType):
-        super(EnvOpenAI, self).__init__(agentType)
         self._env = env
+        super(EnvOpenAI, self).__init__(agentType)
 
     @property
     def actionLen(self):
@@ -99,15 +99,28 @@ class EnvOpenAI(EnvNN):
         self._env.render()
 
     def step(self, action):
-        return self._env.step(action)
+        return self._env.step(action)[: 3]
 
 class CartPole_v0(EnvOpenAI):
-    def _buildModel(self):
+    def _buildModel(self, learning_rate=0.01):
         model = tf.keras.Sequential([
             tf.keras.layers.Dense(20, activation='relu', input_shape=self.stateShape),
             tf.keras.layers.Dense(self.actionLen, activation='linear')
         ])
+        model.compile(
+            loss=tf.keras.losses.mse,
+            optimizer=tf.keras.optimizers.RMSprop(lr=learning_rate)
+        )
         return model
+
+    def step(self, action):
+        next_state, reward, done = super(CartPole_v0, self).step(action)
+        x, x_dot, theta, theta_dot = next_state
+        env = self._env
+        r1 = (env.x_threshold - abs(x)) / env.x_threshold - 0.8
+        r2 = (env.theta_threshold_radians - abs(theta)) / env.theta_threshold_radians - 0.5
+        reward = r1 + r2
+        return next_state, reward, done
 
 class EnvTk(EnvNN, tk.Tk):
     ACTION = []
@@ -120,9 +133,8 @@ class EnvTk(EnvNN, tk.Tk):
     def actionLen(self):
         return len(self.ACTION)
 
-    def render(self, sleepTime=0.5):
+    def render(self):
         self.update()
-        time.sleep(sleepTime)
 
 class Maze(EnvTk):
     class TYPE:
@@ -181,10 +193,9 @@ class Maze(EnvTk):
         return np.array(self.map)
 
     def step(self, action):
-        state = np.array(self.map)
         x, y = self.x + self.ACTION[action][0], self.y + self.ACTION[action][1]
         if x < 0 or y < 0 or x >= self.width or y >= self.height:
-            return state, action, -1, np.array(self.map), True
+            return np.array(self.map), -1, True
         else:
             nextPath = self.map[y][x]
             self.map[y][x], self.map[self.y][self.x] = self.TYPE.START, self.TYPE.GROUND
@@ -192,7 +203,7 @@ class Maze(EnvTk):
             self._updateGrid(self.x, self.y)
             self.y, self.x = y, x
             reward, done = self.TYPE2REWARD[nextPath], self.TYPE2DONE[nextPath]
-            return state, action, reward, np.array(self.map), done
+            return np.array(self.map), reward, done
 
     def _buildModel(self, learning_rate=0.01):
         model = tf.keras.Sequential([
@@ -239,6 +250,20 @@ class ThreadBase(threading.Thread):
         self.savePath = savePath
         self.args = kwargs
 
+    def loadModel(self, agent):
+        if self.savePath and os.path.exists(self.savePath):
+            agent.model = tf.keras.models.load_model(self.savePath)
+
+    def saveModel(self, agent):
+        if self.savePath:
+            agent.model.save(self.savePath)
+
+    def render(self, env, sleepTime=None):
+        if self.showProcess:
+            env.render()
+            if sleepTime:
+                time.sleep(sleepTime)
+
 class ThreadMaze(ThreadBase):
     WIDTH, HEIGHT = 5, 5
     def run(self):
@@ -250,24 +275,23 @@ class ThreadMaze(ThreadBase):
             mapDatas.append(readFile(file))
         env = Maze(self.WIDTH, self.WIDTH, Agent_DQN)
         agent = env.agent
-        if self.savePath and os.path.exists(self.savePath):
-            agent.model = tf.keras.models.load_model(self.savePath)
+        self.loadModel(agent)
         episode = 0
         record = [0] * 50
         success = 0
         while True:
             state = env.reset(mapDatas[mapIter])
-            self.showProcess and env.render()
+            self.render(env)
             episode += 1
             startTime = time.time()
             step = 0
             while True:
                 action = agent.choose_action(state)
-                state, action, reward, next_state, done = env.step(action)
+                next_state, reward, done = env.step(action)
                 agent.save_exp(state, action, reward, next_state)
                 step += 1
                 state = next_state
-                self.showProcess and env.render(0.05)
+                self.render(env, 0.05)
                 if done:
                     break
             isSuccess = int(reward == 1)
@@ -275,16 +299,40 @@ class ThreadMaze(ThreadBase):
             success += isSuccess - record[episode % 50]
             record[episode % 50] = isSuccess
             agent.learn()
-            if self.savePath:
-                agent.model.save(self.savePath)
-            if success >= 40:
+            self.saveModel(agent)
+            if success >= 30:
                 record = [0] * 50
                 success = 0
                 mapIter = (mapIter + 1) % len(mapDatas)
                 print('switch mapIter to {}'.format(mapIter))
 
+class ThreadCartPole(ThreadBase):
+    def run(self):
+        env = CartPole_v0(gym.make('CartPole-v0'), Agent_DQN)
+        agent = env.agent
+        self.loadModel(agent)
+        episode = 0
+        while True:
+            state = env.reset()
+            self.render(env, 0.5)
+            episode += 1
+            step = 0
+            while True:
+                action = agent.choose_action(state)
+                next_state, reward, done = env.step(action)
+                agent.save_exp(state, action, reward, next_state)
+                step += 1
+                state = next_state
+                self.render(env)
+                if done:
+                    break
+            agent.learn()
+            print('episode {}, steps {}'.format(episode, step))
+            self.saveModel(agent)
+
 if __name__ == '__main__':
-    thread = ThreadMaze(showProcess=False, savePath=getDataFilePath('dqn_record'))
+    # thread = ThreadMaze(showProcess=False, savePath=getDataFilePath('dqn_maze_record.h5'))
+    thread = ThreadCartPole(showProcess=True, savePath=getDataFilePath('dqn_cartPole_record.h5'))
     thread.start()
     while True:
         cmd = input()
