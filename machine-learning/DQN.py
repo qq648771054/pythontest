@@ -1,12 +1,7 @@
-from Lib import *
-import numpy as np
-import pandas as pd
-import time
+from lib import *
 import tkinter as tk
 import threading
-import tensorflow as tf
 import gym
-import copy
 
 
 # os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
@@ -14,41 +9,53 @@ gpus= tf.config.list_physical_devices('GPU')
 if len(gpus) > 0: tf.config.experimental.set_memory_growth(gpus[0], True)
 
 class Agent_NN(object):
-    def __init__(self, env, model, reward_decay=0.9, e_greedy=0.9):
+    def __init__(self, env, model):
         self.env = env
         self.model = model
-        self.reward_decay, self.e_greddy = reward_decay, e_greedy
         self.memory = []
         self.memory_size = 1000
         self.memory_iter = 0
         self.batch_size = 32
 
-    def save_exp(self, state, action, reward, next_state):
+    def save_exp(self, state, action, reward, next_state, done):
         if len(self.memory) < self.memory_size:
-            self.memory.append((state, action, reward, next_state))
+            self.memory.append((state, action, reward, next_state, done))
         else:
-            self.memory[self.memory_iter] = state, action, reward, next_state
+            self.memory[self.memory_iter] = state, action, reward, next_state, done
             self.memory_iter = (self.memory_iter + 1) % self.memory_size
 
-    def learn(self):
+    def learn(self, reward_decay=0.9):
         raise NotImplementedError
 
-    def choose_action(self, state):
-        if np.random.rand() >= self.e_greddy:
+    def choose_action(self, state, e_greddy=0.9):
+        if np.random.rand() >= e_greddy:
             return np.random.randint(0, self.env.actionLen)
         else:
             act_values = self.model.predict(addAixs(state))
             return np.argmax(act_values[0])
 
 class Agent_DQN(Agent_NN):
-    def learn(self):
+    def __init__(self, *args, **kwargs):
+        super(Agent_DQN, self).__init__(*args, **kwargs)
+        self.bak_model = copyModel(self.model)
+        self.learnTime = 0
+        self.learnCycle = 10
+
+    def learn(self, reward_decay=0.9):
         if len(self.memory) < self.batch_size:
             return
+        self.learnTime += 1
+        if self.learnTime % self.learnCycle == 0:
+            self.bak_model = copyModel(self.model)
         batches = np.random.choice(len(self.memory), self.batch_size)
         xs, ys = [], []
         for i in batches:
-            state, action, reward, next_state = self.memory[i]
-            q_target = reward + self.reward_decay * self.model.predict(addAixs(next_state))[0].max()
+            state, action, reward, next_state, done = self.memory[i]
+            if done:
+                q_target = reward
+            else:
+                idx = self.model.predict(addAixs(next_state))[0].argmax()
+                q_target = reward + reward_decay * self.bak_model.predict(addAixs(next_state))[0][idx]
             q_predict = self.model.predict(addAixs(state))
             q_predict[0][action] = q_target
             xs.append(state)
@@ -320,7 +327,7 @@ class ThreadCartPole(ThreadBase):
             while True:
                 action = agent.choose_action(state)
                 next_state, reward, done = env.step(action)
-                agent.save_exp(state, action, reward, next_state)
+                agent.save_exp(state, action, reward, next_state, done)
                 step += 1
                 state = next_state
                 self.render(env)
@@ -332,7 +339,7 @@ class ThreadCartPole(ThreadBase):
 
 if __name__ == '__main__':
     # thread = ThreadMaze(showProcess=False, savePath=getDataFilePath('dqn_maze_record.h5'))
-    thread = ThreadCartPole(showProcess=True, savePath=getDataFilePath('dqn_cartPole_record.h5'))
+    thread = ThreadCartPole(showProcess=True, savePath=getDataFilePath('dqn_cartPole_record1.h5'))
     thread.start()
     while True:
         cmd = input()
