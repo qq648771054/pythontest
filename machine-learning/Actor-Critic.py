@@ -19,15 +19,16 @@ class Agent_Actor_Critic(object):
         self._exp = (state, action, reward, next_state, done)
 
     def learn(self):
+        import copy
         state, action, reward, next_state, done = self._exp
         state, next_state = addAixs(state), addAixs(next_state)
-        q_predict = self.critic.predict(addAixs(state))[0][0]
+        q_predict = self.critic.predict(state)[0][0]
         if done:
             td_error = reward - q_predict
         else:
             td_error = reward + self.critic.predict(next_state)[0][0] - q_predict
         self.critic.fit(state, np.array([td_error]), verbose=0)
-        self.actor.fit(state, np.array([action]), sample_weight=np.array(td_error), verbose=0)
+        self.actor.fit(copy.deepcopy(state), np.array([action]), sample_weight=np.array([td_error]), verbose=0)
 
     def choose_action(self, state):
         prop = self.actor.predict(addAixs(state))[0]
@@ -161,15 +162,15 @@ class ThreadCartPole(ThreadBase):
                 step += 1
                 state = next_state
                 self.render(env)
+                agent.learn()
                 if done:
                     break
-            agent.learn()
             print('episode {}, steps {}'.format(episode, step))
             self.saveModel(agent)
 
 if __name__ == '__main__':
     # thread = ThreadMaze(showProcess=False, savePath=getDataFilePath('dqn_maze_record.h5'))
-    thread = ThreadCartPole(showProcess=True, savePath=getDataFilePath('dqn_cartPole_record.h5'))
+    thread = ThreadCartPole(showProcess=True)
     thread.start()
     while True:
         cmd = input()
