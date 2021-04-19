@@ -1,168 +1,111 @@
-# -*- coding: utf-*-
-# Deep-Q learning Agent
+from collections import deque
+
+import matplotlib.pyplot as plt
 import tensorflow as tf
-import gym.envs as envs
-# 需要安装这个来获取游戏环境
-import gym
 import numpy as np
+import random
 import copy
-# import io
-import os
-import tensorflow.keras as keras
-# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-gpus= tf.config.list_physical_devices('GPU')
-if len(gpus) > 0: tf.config.experimental.set_memory_growth(gpus[0], True)
+import gym
 
-# 查看所有游戏列表
-# print(envs.registry.all())
-# env = gym.make('CartPole-v0')
-# env.reset()
-#
-# while True:
-#     env.render()
-#     env.action_space(1)
+class ActorCritic:
+    def __init__(self, actor_model, critic_model):
+        self.actor_model = actor_model
+        self.critic_model = critic_model
+        actor_optimizer = tf.keras.optimizers.Adam(1e-3)
+        critic_optimizer = tf.keras.optimizers.Adam(1e-3)
+        self.actor_model.compile(
+            loss='categorical_crossentropy',
+            optimizer=actor_optimizer
+        )
+        self.critic_model.compile(
+            loss='mse',
+            optimizer=critic_optimizer
+        )
 
-
-class DQNAgent(object):
-    def __init__(self, _env):
-        self.env = _env
-        # 经验池
-        self.memory = []
-        self.gamma = 0.9  # decay rate 奖励衰减
-
-        # 控制训练的随机干涉
-        self.epsilon = 1  # 随机干涉阈值 该值会随着训练减少
-        self.epsilon_decay = .995  # 每次随机衰减0.005
-        self.epsilon_min = 0.1  # 随机值干涉的最小值
-
-        self.learning_rate = 0.0001  # 学习率
-
-        self.memory_size = 1000
-        self.memory_iter = 0
-        self._build_model()
-
-    # 创建模型  输入4种状态，预测0/1两种行为分别带来到 奖励值
-    def _build_model(self):
-        model = tf.keras.Sequential()
-        # 输入为4，3层128券链接，输出为2线性  2是因为控制为左右
-        model.add(tf.keras.layers.Dense(10, activation='relu', input_shape=(4, )))
-        # model.add(tf.keras.layers.Dense(128, activation='tanh'))
-        # model.add(tf.keras.layers.Dense(128, activation='tanh'))
-        model.add(tf.keras.layers.Dense(2, activation='linear'))
-        # 这里虽然输出2，但第二个完全没用上
-        model.compile(loss='mse', optimizer=tf.keras.optimizers.RMSprop(lr=self.learning_rate))
-        self.model = model
-
-    # 记录经验 推进memory中
-    def save_exp(self, _state, _action, _reward, _next_state, _done):
-        # 将各种状态 存进memory中
-        if len(self.memory) < self.memory_size:
-            self.memory.append((_state, _action, _reward, _next_state, _done))
-        else:
-            self.memory[self.memory_iter] = (_state, _action, _reward, _next_state, _done)
-            self.memory_iter = (self.memory_iter + 1) % self.memory_size
-
-    # 经验池重放  根据尺寸获取  #  这里是训练数据的地方
-    def train_exp(self, batch_size):
-        # 这句的目的：确保每批返回的数量不会超出memory实际的存量，防止错误
-        batches = min(batch_size, len(self.memory))  # 返回不大于实际memory.len 的数
-        # 从len(self.memory）中随机选出batches个数
-        batches = np.random.choice(len(self.memory), batches)
-        xs, ys = [], []
-        for i in batches:
-            # 从经验数组中 取出相对的参数 状态，行为，奖励，即将发生的状态，结束状态
-            _state, _action, _reward, _next_state, _done = self.memory[i]
-
-            # 获取当前 奖励
-            y_reward = _reward
-            # 如果不是结束的状态，取得未来的折扣奖励
-            if not _done:
-                # _target = 经验池.奖励 + gamma衰退值 * (model根据_next_state预测的结果)[0]中最大（对比所有操作中，最大值）
-                # 根据_next_state  预测取得  当前的回报 + 未来的回报 * 折扣因子（gama）
-                y_reward = _reward + self.gamma * np.amax(self.model.predict(_next_state)[0])
-                # print('y_action', y_action)  # 1.5389154434204102
-
-            # 获取，根据当前状态推断的 行为 input 4,output 2
-            _y = self.model.predict(_state)
-            # print(_action, y_reward, _y[0][_action], '_y', _y)  # [[0.08838317 0.16991007]]
-            # 更新 将 某行为预测的 回报，分配到相应到 行为中  （_action = 1/0）
-            _y[0][_action] = y_reward
-            xs.append(_state.reshape(4))
-            ys.append(_y)
-            # 训练  x： 4 当前状态  _y[0]：2
-        self.model.fit(np.array(xs), np.array(ys), epochs=1, verbose=0)
-
-        # 随着训练的继续，每次被随机值干涉的几率减少 * epsilon_decay倍数(0.001)
-        if self.epsilon > self.epsilon_min:
-            self.epsilon *= self.epsilon_decay
-
-    # 输入状态，返回应该采取的动作。随机干涉会随着时间的推进，越来越少。
-    def act(self, _state):  # 返回回报最大的奖励值，或 随机数
-        # 随机返回0-1的数，
-        # 随着训练的增加，渐渐减少随机
-        if np.random.rand() <= self.epsilon:
-            # print('000000000',self.env.action_space.sample())
-            return self.env.action_space.sample()
-        else:
-            # 使用预测值    返回，回报最大到最大的那个
-            act_values = self.model.predict(_state)
-            return np.argmax(act_values[0])  # returns action
+        self.replay_buffer = deque(maxlen=int(1e6))
+        self.simple_size = 8192
+        self.gamma = 0.997
 
 
-if __name__ == "__main__":
-    # 为agent初始化gym环境参数
-    env = gym.make('CartPole-v0')
-    # 游戏结束规则：杆子角度为±12， car移动距离为±2.4，分数限制为最高200分
-    agent = DQNAgent(env)
-	# #保存模型到脚本所在目录，如果已有模型就加载，继续训练
-    # folder = os.getcwd()
-    # imageList = os.listdir(folder)
-    # for item in imageList:
-    #     if os.path.isfile(os.path.join(folder, item)):
-    #         if item == 'dqn.h5':
-    #             agent.model = tf.keras.models.load_model('dqn.h5')
-    # 训练主循环
-    episodes = 100000  # 循环次数
+    def save_memory(self, state, action_onehot, reward, next_state, done):
+
+        self.replay_buffer.append(
+            (
+                np.array([state], dtype=np.float64),
+                action_onehot, reward,
+                np.array([next_state], dtype=np.float64),
+                done
+            )
+        )
+
+    def choice_action(self, state):
+        prob = np.array(self.actor_model(np.array([state], dtype=np.float64))[0])
+        return np.random.choice(len(prob), p=prob)
+
+    def update_weights(self):
+        batch_size = min(self.simple_size, len(self.replay_buffer))
+        training_data = random.sample(self.replay_buffer, batch_size)
+
+        batch_states = []
+        batch_values = []
+        batch_policy = []
+        for data in training_data:
+            state, action_onehot, reward, next_state, done = data
+            batch_states.append(state[0])
+            value_target = reward if done else reward + self.gamma * np.array(self.critic_model(next_state))[0][0]
+
+            td_error = value_target - np.array(self.critic_model(state))[0][0]
+            batch_values.append([value_target])
+            policy_target = td_error * np.array(action_onehot)
+            batch_policy.append(policy_target)
+
+        batch_states = np.array(batch_states)
+        batch_values = np.array(batch_values)
+        batch_policy = np.array(batch_policy)
+
+        self.critic_model.fit(batch_states, batch_values, epochs=1, verbose=0)
+        self.actor_model.fit(batch_states, batch_policy, epochs=1, verbose=0)
+
+if __name__ == '__main__':
+    env = gym.make('CartPole-v1')
+    actor_model = tf.keras.Sequential([
+        tf.keras.layers.Dense(units=128, activation='relu'),
+        tf.keras.layers.Dense(units=2, activation='softmax'),
+    ])
+    actor_model.build(input_shape=(None, 4))
+    critic_model = tf.keras.Sequential([
+        tf.keras.layers.Dense(units=128, activation='relu'),
+        tf.keras.layers.Dense(units=1, activation='linear'),
+    ])
+    critic_model.build(input_shape=(None, 4))
+    agent = ActorCritic(actor_model, critic_model)
+
+    episodes = 200
+    all_rewards = []
+
     for e in range(episodes):
-        # 游戏复位  并获取状态4:
-        # 0	Cart Position	-2.4	2.4
-        # 1	Cart Velocity	-Inf	Inf
-        # 2	Pole Angle	~ -41.8°	~ 41.8°
-        # 3	Pole Velocity At Tip
+
         state = env.reset()
-        # 获取当前状态  每局的初始值为 state【0】的值±0.05
-        state = np.reshape(state, [1, 4])
-        # env.render()
-        # time_t 代表游戏的每一帧 由于每次的分数是+1 或-100所以这个时间坚持的越长分数越高
-        for time_t in range(5000):
-            # 如果想看游戏就开这个
-            # env.render()
-            # 选择行为 传入当前的游戏状态，获取行为 state 是在这里更新
-            # 从模型 获取行为的随机值 或 预测值
-            _action = agent.act(state)
-            # 输入行为，并获取结果，包括状态、奖励和游戏是否结束  返回游戏下一针的数据 done：是否游戏结束，reward：分数  nextstate，新状态
-            _next_state, _reward, _done, _ = env.step(_action)
-            x, x_dot, theta, theta_dot = _next_state
-            r1 = (env.x_threshold - abs(x)) / env.x_threshold - 0.8
-            r2 = (env.theta_threshold_radians - abs(theta)) / env.theta_threshold_radians - 0.5
-            _reward = r1 + r2
-            _next_state = np.reshape(_next_state, [1, 4])
 
-            # 记忆先前的状态，行为，回报与下一个状态   #  将当前状态，于执行动作后的状态，存入经验池
-            agent.save_exp(state, _action, _reward, _next_state, _done)
+        rewards = 0
 
-            # 训练
-            # 使下一个状态成为下一帧的新状态 #使下一状态/新状态，成为下一针的 当前状态
-            state = copy.deepcopy(_next_state)
-            # env.render()
-            # 如果游戏结束 done 被置为 ture
-            if _done:
-                # 打印分数并且跳出游戏循环
-                print("episode: {}/{}, score: {}"
-                      .format(e, episodes, time_t))
+        while True:
+            env.render()
+            action = agent.choice_action(state)
+            next_state, reward, done, _ = env.step(action)
+            action_onehot = [1 if i == action else 0 for i in range(2)]
+            agent.save_memory(state, action_onehot, reward, next_state, done)
+
+            state = copy.deepcopy(next_state)
+
+            rewards += reward
+
+            if done:
+                print("e: {}/{}, rewards: {}".format(e + 1, episodes, rewards))
+                all_rewards.append(rewards)
                 break
-        # 通过之前的经验训练模型
-        agent.train_exp(32)
-        if e % 5 == 0:
-            print("saving model")
-            agent.model.save('dqn.h5')
+
+        agent.update_weights()
+
+    plt.plot(all_rewards)
+    plt.show()
