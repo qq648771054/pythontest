@@ -1,6 +1,4 @@
-from Lib import *
-import numpy as np
-import pandas as pd
+from lib import *
 import time
 import tkinter as tk
 import threading

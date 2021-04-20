@@ -1,58 +1,6 @@
 from lib import *
-import tkinter as tk
-import threading
 import gym
-
-
-# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-gpus= tf.config.list_physical_devices('GPU')
-if len(gpus) > 0: tf.config.experimental.set_memory_growth(gpus[0], True)
-
-class Agent_Policy_Gradients(object):
-    def __init__(self, env):
-        self.env = env
-        self.model = self._buildModel(self.env.stateShape, self.env.actionLen)
-        self._ss = []
-        self._as = []
-        self._rs = []
-
-    def save_exp(self, state, action, reward, next_state, done):
-        self._ss.append(state)
-        self._as.append(action)
-        self._rs.append(reward)
-
-    def learn(self, reward_decay=0.9):
-        self.model.fit(np.array(self._ss), np.array(self._as),
-                       sample_weight=self._discount_rewards(reward_decay),
-                       verbose=0)
-        self._ss = []
-        self._as = []
-        self._rs = []
-
-    def choose_action(self, state):
-        prop = self.model.predict(addAixs(state))[0]
-        return np.random.choice(self.env.actionLen, p=prop)
-
-    def _discount_rewards(self, reward_decay=0.9):
-        """计算衰减reward的累加期望，并中心化和标准化处理"""
-        prior = 0
-        out = np.zeros_like(self._rs)
-        for i in range(len(self._rs) - 1, -1, -1):
-            prior = prior * reward_decay + self._rs[i]
-            out[i] = prior
-        return out / np.std(out - np.mean(out))
-
-    def _buildModel(self, stateShape, actionLen, learning_rate=0.001):
-        model = tf.keras.Sequential([
-            tf.keras.layers.Dense(128, activation='relu', input_shape=stateShape),
-            # tf.keras.layers.Dropout(0.1),
-            tf.keras.layers.Dense(actionLen, activation='softmax')
-        ])
-        model.compile(
-            loss=tf.losses.mse,
-            optimizer=tf.optimizers.RMSprop(learning_rate)
-        )
-        return model
+import tkinter as tk
 
 class EnvNN(object):
     def __init__(self, agentType):
@@ -98,6 +46,9 @@ class EnvOpenAI(EnvNN):
         return self._env.step(action)[: 3]
 
 class CartPole_v0(EnvOpenAI):
+    def __init__(self, agentType):
+        super(CartPole_v0, self).__init__(gym.make('CartPole-v0'), agentType)
+
     def step(self, action):
         next_state, reward, done = super(CartPole_v0, self).step(action)
         x, x_dot, theta, theta_dot = next_state
@@ -106,6 +57,10 @@ class CartPole_v0(EnvOpenAI):
         r2 = (env.theta_threshold_radians - abs(theta)) / env.theta_threshold_radians - 0.5
         reward = r1 + r2
         return next_state, reward, done
+
+
+
+
 
 class EnvTk(EnvNN, tk.Tk):
     ACTION = []
@@ -215,60 +170,3 @@ class Maze(EnvTk):
             (x + 0.5) * self.MAZE_W + 0.5 * self.GRID_W, (y + 0.5) * self.MAZE_H + 0.5 * self.GRID_H,
             fill=self.TYPE2COLOR[self.map[y][x]]
         )
-
-class ThreadBase(threading.Thread):
-    def __init__(self, showProcess=True, savePath='', **kwargs):
-        threading.Thread.__init__(self)
-        self.showProcess = showProcess
-        self.savePath = savePath
-        self.args = kwargs
-
-    def loadModel(self, agent):
-        if self.savePath and os.path.exists(self.savePath):
-            agent.model = tf.keras.models.load_model(self.savePath)
-
-    def saveModel(self, agent):
-        if self.savePath:
-            agent.model.save(self.savePath)
-
-    def render(self, env, sleepTime=None):
-        if self.showProcess:
-            env.render()
-            if sleepTime:
-                time.sleep(sleepTime)
-
-class ThreadCartPole(ThreadBase):
-    def run(self):
-        env = CartPole_v0(gym.make('CartPole-v0'), Agent_Policy_Gradients)
-        agent = env.agent
-        self.loadModel(agent)
-        episode = 0
-        while True:
-            state = env.reset()
-            self.render(env, 0.5)
-            episode += 1
-            step = 0
-            while True:
-                action = agent.choose_action(state)
-                next_state, reward, done = env.step(action)
-                agent.save_exp(state, action, reward, next_state, done)
-                step += 1
-                state = next_state
-                self.render(env)
-                if done:
-                    break
-            agent.learn()
-            print('episode {}, steps {}'.format(episode, step))
-            self.saveModel(agent)
-
-if __name__ == '__main__':
-    # thread = ThreadMaze(showProcess=False, savePath=getDataFilePath('dqn_maze_record.h5'))
-    thread = ThreadCartPole(showProcess=True, savePath=getDataFilePath('dqn_cartPole_record.h5'))
-    thread.start()
-    while True:
-        cmd = input()
-        if cmd == '0':
-            thread.showProcess = False
-        else:
-            thread.showProcess = True
-
