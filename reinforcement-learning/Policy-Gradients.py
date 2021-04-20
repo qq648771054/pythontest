@@ -1,5 +1,6 @@
 from lib import *
 import thread
+import envoriment
 
 class Agent_Policy_Gradients(object):
     def __init__(self, env):
@@ -47,8 +48,32 @@ class Agent_Policy_Gradients(object):
         )
         return model
 
+class ThreadCartPole(thread.ThreadBase):
+    def run(self):
+        env = envoriment.CartPole_v0(self.agentType)
+        agent = env.agent
+        self.loadModel(agent)
+        episode = 0
+        while True:
+            state = env.reset()
+            self.render(env, 0.5)
+            episode += 1
+            step = 0
+            while True:
+                action = agent.choose_action(state)
+                next_state, reward, done = env.step(action)
+                agent.save_exp(state, action, reward, next_state, done)
+                step += 1
+                state = next_state
+                self.render(env)
+                if done:
+                    break
+            agent.learn()
+            print('episode {}, steps {}'.format(episode, step))
+            self.saveModel(agent)
+
 if __name__ == '__main__':
-    thread = thread.ThreadCartPole(Agent_Policy_Gradients, showProcess=True)
+    thread = ThreadCartPole(Agent_Policy_Gradients, showProcess=True)
     thread.start()
     while True:
         cmd = input()

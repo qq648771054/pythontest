@@ -1,5 +1,6 @@
 from lib import *
 import thread
+import envoriment
 
 class Agent_Actor_Critic(object):
     def __init__(self, env):
@@ -40,7 +41,7 @@ class Agent_Actor_Critic(object):
 
     def _buildModelCritic(self, stateShape, actionLen, learning_rate=0.001):
         model = tf.keras.Sequential([
-            tf.keras.layers.Dense(128, activation='relu', input_shape=stateShape),
+            tf.keras.layers.Dense(10, activation='relu', input_shape=stateShape),
             tf.keras.layers.Dense(1, activation='linear')
         ])
         model.compile(
@@ -49,9 +50,33 @@ class Agent_Actor_Critic(object):
         )
         return model
 
+class ThreadCartPole(thread.ThreadBase):
+    def run(self):
+        env = envoriment.CartPole_v0(self.agentType)
+        agent = env.agent
+        self.loadModel(agent)
+        episode = 0
+        while True:
+            state = env.reset()
+            self.render(env, 0.5)
+            episode += 1
+            step = 0
+            while True:
+                action = agent.choose_action(state)
+                next_state, reward, done = env.step(action)
+                agent.save_exp(state, action, reward, next_state, done)
+                agent.learn()
+                step += 1
+                state = next_state
+                self.render(env)
+                if done:
+                    break
+
+            print('episode {}, steps {}'.format(episode, step))
+            self.saveModel(agent)
+
 if __name__ == '__main__':
-    # thread = ThreadMaze(showProcess=False, savePath=getDataFilePath('dqn_maze_record.h5'))
-    thread = thread.ThreadCartPole(Agent_Actor_Critic, showProcess=True)
+    thread = ThreadCartPole(Agent_Actor_Critic, showProcess=True)
     thread.start()
     while True:
         cmd = input()
