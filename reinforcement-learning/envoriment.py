@@ -170,3 +170,108 @@ class Maze(EnvTk):
             (x + 0.5) * self.MAZE_W + 0.5 * self.GRID_W, (y + 0.5) * self.MAZE_H + 0.5 * self.GRID_H,
             fill=self.TYPE2COLOR[self.map[y][x]]
         )
+
+
+class Jing(tk.Tk):
+    def __init__(self, agentType):
+        super(Jing, self).__init__()
+        self.agent = agentType(self)
+
+    MAZE_W, MAZE_H = 40, 40
+    GRID_W, GRID_H = 30, 30
+
+    TYPE2COLOR = {
+        0: 'white',
+        1: 'black',
+        2: 'red'
+    }
+
+    SIZE = 3
+
+    @property
+    def stateSize(self):
+        return self.SIZE * self.SIZE * self.actionSize
+
+    @property
+    def actionSize(self):
+        return 3
+
+    def validActions(self, idx):
+        res = []
+        for i in range(self.SIZE * self.SIZE):
+            if idx % self.actionSize == 0:
+                res.append(i)
+            idx //= self.actionSize
+        return res
+
+    def map2Idx(self, map):
+        idx = 0
+        for i in range(self.SIZE, -1, -1):
+            for j in range(self.SIZE, -1, -1):
+                idx = idx * 3 + map[i][j]
+        return idx
+
+    def idx2Map(self, idx):
+        map = [[0] * self.SIZE for i in range(self.SIZE)]
+        for i in range(self.SIZE):
+            for j in range(self.SIZE):
+                map[i][j] = idx % self.stateSize
+                idx //= self.stateSize
+        return map
+
+    def flipIdx(self, state):
+        idx = 0
+        while state:
+            p = state % self.stateSize
+            if p:
+                idx = idx * self.stateSize + self._otherPlayer(p)
+            state //= self.stateSize
+        return idx
+
+    def _otherPlayer(self, player):
+        return 1 if player == 2 else 2
+
+    def reset(self):
+        self.map = [[0] * self.SIZE for i in range(self.SIZE)]
+        self.player = 2
+        self._createMap()
+        return self.map2Idx(self.map)
+
+    def step(self, action):
+        x, y = action % self.stateSize, action // self.stateSize
+        self.player = self._otherPlayer(self.player)
+        self.map[y][x] = self.player
+        next_state = self.map2Idx(self.map)
+        next_state = next_state if self.player == 1 else self.flipIdx(next_state)
+        self._updateGrid(x, y)
+        return next_state, self.player, self.player if self.isDone() else 0
+
+    def _createMap(self):
+        if not hasattr(self, 'canvas'):
+            self.canvas = tk.Canvas(self, bg='white', height=self.MAZE_H * self.height, width=self.MAZE_W * self.width)
+            # create lines
+            right, bottom = self.MAZE_W * self.width, self.MAZE_H * self.height
+            for c in range(0, right, self.MAZE_W):
+                self.canvas.create_line(c, 0, c, bottom)
+            for r in range(0, bottom, self.MAZE_H):
+                self.canvas.create_line(0, r, right, r)
+            self.canvas.pack()
+        # create grids
+        self.grids = []
+        for i in range(self.SIZE):
+            self.grids.append([0] * self.SIZE)
+            for j in range(self.SIZE):
+                self._updateGrid(j, i)
+
+    def _updateGrid(self, x, y):
+        if self.grids[y][x]:
+            self.canvas.delete(self.grids[y][x])
+        self.grids[y][x] = self.canvas.create_rectangle(
+            (x + 0.5) * self.MAZE_W - 0.5 * self.GRID_W, (y + 0.5) * self.MAZE_H - 0.5 * self.GRID_H,
+            (x + 0.5) * self.MAZE_W + 0.5 * self.GRID_W, (y + 0.5) * self.MAZE_H + 0.5 * self.GRID_H,
+            fill=self.TYPE2COLOR.get(self.map[y][x])
+        )
+
+    def render(self, sleepTime=0.5):
+        self.update()
+        time.sleep(sleepTime)

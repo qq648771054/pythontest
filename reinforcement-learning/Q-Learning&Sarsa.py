@@ -107,37 +107,7 @@ class Agent_Sarsa_Lambda(Agent_Sarsa):
         self.q_table += self.learning_rate * error * self.eligibility_trace
         self.eligibility_trace *= self.reward_decay * self._lambda
 
-class MyDict(dict):
-    def get(self, item):
-        if item in self:
-            return self[item]
-        else:
-            return self['DEFAULT']
-
-class Env(tk.Tk):
-    ACTION = []
-
-    @property
-    def actionLen(self):
-        return len(self.ACTION)
-
-    def buildMap(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def reset(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def getIdx(self):
-        raise NotImplementedError
-
-    def step(self, next_state):
-        raise NotImplementedError
-
-    def render(self, sleepTime=0.5):
-        self.update()
-        time.sleep(sleepTime)
-
-class Maze(Env):
+class Maze(tk.Tk):
     class TYPE(object):
         AGENT = 'a'
         END = 'e'
@@ -147,36 +117,33 @@ class Maze(Env):
         AGENT_SARSA = 'S'
         AGENT_SARSA_LAMBDA = 'L'
 
-    TREASURE = MyDict({
+    TREASURE = {
         TYPE.AGENT: -1,
         TYPE.END: 1,
         TYPE.GROUND: -0.0001,
         TYPE.TRAP: -1,
         'DEFAULT': 0,
-    })
+    }
 
-    ISEND = MyDict({
+    ISEND = {
         TYPE.AGENT: True,
         TYPE.END: True,
         TYPE.GROUND: False,
         TYPE.TRAP: True,
-        'DEFAULT': False,
-    })
+    }
 
-    TYPE2COLOR = MyDict({
+    TYPE2COLOR = {
         TYPE.AGENT: 'black',
         TYPE.END: 'green',
         TYPE.GROUND: 'white',
         TYPE.TRAP: 'red',
-        'DEFAULT': 'blue',
-    })
+    }
 
-    AGENT2TYPE = MyDict({
+    AGENT2TYPE = {
         TYPE.AGENT_Q: Agent_Q,
         TYPE.AGENT_SARSA: Agent_Sarsa,
         TYPE.AGENT_SARSA_LAMBDA: Agent_Sarsa_Lambda,
-        'DEFAULT': Agent_Q
-    })
+    }
 
     ACTION = [[0, 1], [0, -1], [1, 0], [-1, 0]]
 
@@ -254,6 +221,10 @@ class Maze(Env):
             (x + 0.5) * Maze.MAZE_W + 0.5 * Maze.GRID_W, (y + 0.5) * Maze.MAZE_H + 0.5 * Maze.GRID_H,
             fill=Maze.TYPE2COLOR.get(self.map[y][x])
         )
+
+    def render(self, sleepTime=0.5):
+        self.update()
+        time.sleep(sleepTime)
 
 class ThreadBase(threading.Thread):
     def __init__(self, showProcess=True, *args, **kwargs):
