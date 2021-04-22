@@ -186,46 +186,43 @@ class Jing(tk.Tk):
         2: 'red'
     }
 
-    SIZE = 3
-
-    @property
-    def stateSize(self):
-        return self.SIZE * self.SIZE * self.actionSize
-
-    @property
-    def actionSize(self):
-        return 3
+    SIZE = 4
+    CLASS_SIZE = 3
+    ACTION_SIZE = SIZE * SIZE
+    STATE_SIZE = CLASS_SIZE ** ACTION_SIZE
 
     def validActions(self, idx):
         res = []
         for i in range(self.SIZE * self.SIZE):
-            if idx % self.actionSize == 0:
+            if idx % self.CLASS_SIZE == 0:
                 res.append(i)
-            idx //= self.actionSize
+            idx //= self.CLASS_SIZE
         return res
 
     def map2Idx(self, map):
         idx = 0
-        for i in range(self.SIZE, -1, -1):
-            for j in range(self.SIZE, -1, -1):
-                idx = idx * 3 + map[i][j]
+        for i in range(self.SIZE - 1, -1, -1):
+            for j in range(self.SIZE - 1, -1, -1):
+                idx = idx * self.CLASS_SIZE + map[i][j]
         return idx
 
     def idx2Map(self, idx):
         map = [[0] * self.SIZE for i in range(self.SIZE)]
         for i in range(self.SIZE):
             for j in range(self.SIZE):
-                map[i][j] = idx % self.stateSize
-                idx //= self.stateSize
+                map[i][j] = idx % self.CLASS_SIZE
+                idx //= self.CLASS_SIZE
         return map
 
     def flipIdx(self, state):
-        idx = 0
+        ids = []
         while state:
-            p = state % self.stateSize
-            if p:
-                idx = idx * self.stateSize + self._otherPlayer(p)
-            state //= self.stateSize
+            p = state % self.CLASS_SIZE
+            ids.append(self._otherPlayer(p) if p else 0)
+            state //= self.CLASS_SIZE
+        idx = 0
+        for i in reversed(ids):
+            idx = idx * self.CLASS_SIZE + i
         return idx
 
     def _otherPlayer(self, player):
@@ -238,19 +235,70 @@ class Jing(tk.Tk):
         return self.map2Idx(self.map)
 
     def step(self, action):
-        x, y = action % self.stateSize, action // self.stateSize
+        x, y = action % self.SIZE, action // self.SIZE
         self.player = self._otherPlayer(self.player)
         self.map[y][x] = self.player
         next_state = self.map2Idx(self.map)
         next_state = next_state if self.player == 1 else self.flipIdx(next_state)
         self._updateGrid(x, y)
-        return next_state, self.player, self.player if self.isDone() else 0
+        return next_state, self.player, self.getWiner()
+
+    def getWiner(self):
+        def checkLine():
+            for i in range(self.SIZE):
+                c = self.map[i][0]
+                if not c: continue
+                for j in range(1, self.SIZE):
+                    if self.map[i][j] != c:
+                        break
+                else:
+                    return c
+            return None
+        def checkColumn():
+            for j in range(self.SIZE):
+                c = self.map[0][j]
+                if not c: continue
+                for i in range(1, self.SIZE):
+                    if self.map[i][j] != c:
+                        break
+                else:
+                    return c
+            return None
+        def checkDiagonal():
+            c = self.map[0][0]
+            if c:
+                for i in range(1, self.SIZE):
+                    if self.map[i][i] != c:
+                        break
+                else:
+                    return c
+            c = self.map[0][self.SIZE - 1]
+            if c:
+                for i in range(1, self.SIZE):
+                    if self.map[i][self.SIZE - i - 1] != c:
+                        break
+                else:
+                    return c
+            return None
+        def checkFull():
+            for i in range(self.SIZE):
+                for j in range(self.SIZE):
+                    if self.map[i][j] == 0:
+                        return False
+            return True
+        winer = checkLine() or checkColumn() or checkDiagonal()
+        if winer:
+            return winer
+        elif checkFull():
+            return 2
+        else:
+            return None
 
     def _createMap(self):
         if not hasattr(self, 'canvas'):
-            self.canvas = tk.Canvas(self, bg='white', height=self.MAZE_H * self.height, width=self.MAZE_W * self.width)
+            self.canvas = tk.Canvas(self, bg='white', height=self.MAZE_H * self.SIZE, width=self.MAZE_W * self.SIZE)
             # create lines
-            right, bottom = self.MAZE_W * self.width, self.MAZE_H * self.height
+            right, bottom = self.MAZE_W * self.SIZE, self.MAZE_H * self.SIZE
             for c in range(0, right, self.MAZE_W):
                 self.canvas.create_line(c, 0, c, bottom)
             for r in range(0, bottom, self.MAZE_H):
@@ -272,6 +320,5 @@ class Jing(tk.Tk):
             fill=self.TYPE2COLOR.get(self.map[y][x])
         )
 
-    def render(self, sleepTime=0.5):
+    def render(self):
         self.update()
-        time.sleep(sleepTime)

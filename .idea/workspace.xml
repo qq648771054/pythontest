@@ -11,12 +11,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add knn">
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/Jing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/pythontest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pythontest.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/Q-Learning&amp;Sarsa.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/Q-Learning&amp;Sarsa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/Actor-Critic.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/Actor-Critic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/DQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/Jing.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/Jing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/Policy-Gradients.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/Policy-Gradients.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reinforcement-learning/envoriment.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/envoriment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/thread.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/Thread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Matplotlib.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Matplotlib.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +60,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../alpha-zero-general" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
@@ -99,7 +102,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="TF2_DDPG_Basic" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Jing" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -107,12 +110,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../TF2-RL/DDPG" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../TF2-RL/DDPG/TF2_DDPG_Basic.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/Jing.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -121,7 +124,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="TF2_DDPG_LSTM" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Matplotlib" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -129,12 +132,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../TF2-RL/DDPG" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../TF2-RL/DDPG/TF2_DDPG_LSTM.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/Matplotlib.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -143,7 +146,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="envoriment" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -151,12 +154,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../alpha-zero-general" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../alpha-zero-general/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/envoriment.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -190,10 +193,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.main (1)" />
-        <item itemvalue="Python.TF2_DDPG_Basic" />
-        <item itemvalue="Python.TF2_DDPG_LSTM" />
+        <item itemvalue="Python.Jing" />
+        <item itemvalue="Python.Matplotlib" />
         <item itemvalue="Python.Actor-Critic" />
+        <item itemvalue="Python.envoriment" />
       </list>
     </recent_temporary>
   </component>
@@ -283,7 +286,10 @@
       <workItem from="1618316402342" duration="33199000" />
       <workItem from="1618407283947" duration="9072000" />
       <workItem from="1618574244025" duration="12271000" />
-      <workItem from="1618905366190" duration="14484000" />
+      <workItem from="1618905366190" duration="16257000" />
+      <workItem from="1619056949859" duration="7807000" />
+      <workItem from="1619071330310" duration="8740000" />
+      <workItem from="1619080892827" duration="1270000" />
     </task>
     <task id="LOCAL-00001" summary="add readme">
       <created>1612144585810</created>
@@ -328,6 +334,26 @@
           <line>95</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/reinforcement-learning/Actor-Critic.py</url>
+          <line>54</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test/Matplotlib.py</url>
+          <line>15</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test/Matplotlib.py</url>
+          <line>7</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test/Matplotlib.py</url>
+          <line>30</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -337,26 +363,21 @@
         </breakpoint>
       </default-breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="y_true[0][0]" language="Python" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/pythontest$main.coverage" NAME="main Coverage Results" MODIFIED="1619006382969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythontest$main.coverage" NAME="main Coverage Results" MODIFIED="1619084853514" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythontest$kNN_test02.coverage" NAME="kNN_test02 Coverage Results" MODIFIED="1616252587255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Machine-Learning/kNN/2.海伦约会" />
     <SUITE FILE_PATH="coverage/pythontest$treasure_on_right.coverage" NAME="treasure_on_right Coverage Results" MODIFIED="1617880563209" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/1_command_line_reinforcement_learning" />
     <SUITE FILE_PATH="coverage/pythontest$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1616123627900" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythontest$web.coverage" NAME="web Coverage Results" MODIFIED="1611822761632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
-    <SUITE FILE_PATH="coverage/pythontest$Matplotlib.coverage" NAME="Matplotlib Coverage Results" MODIFIED="1617952085433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/pythontest$Matplotlib.coverage" NAME="Matplotlib Coverage Results" MODIFIED="1619071499164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/pythontest$matplot__1_.coverage" NAME="matplot (1) Coverage Results" MODIFIED="1616243135493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/pythontest$policy_gradient.coverage" NAME="policy_gradient Coverage Results" MODIFIED="1618814226770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../tensorflow-tutorial-samples/gym/CartPole-v0-policy-gradient" />
     <SUITE FILE_PATH="coverage/pythontest$knn.coverage" NAME="knn Coverage Results" MODIFIED="1616296580590" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/pythontest$spider_test.coverage" NAME="spider_test Coverage Results" MODIFIED="1611818082777" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythontest$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1612172544461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/socket" />
     <SUITE FILE_PATH="coverage/pythontest$run_Pendulum.coverage" NAME="run_Pendulum Coverage Results" MODIFIED="1618198727388" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/5.1_Double_DQN" />
-    <SUITE FILE_PATH="coverage/pythontest$Actor_Critic.coverage" NAME="Actor-Critic Coverage Results" MODIFIED="1618920852966" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/reinforcement-learning" />
+    <SUITE FILE_PATH="coverage/pythontest$Actor_Critic.coverage" NAME="Actor-Critic Coverage Results" MODIFIED="1619057322248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/reinforcement-learning" />
     <SUITE FILE_PATH="coverage/pythontest$Tensorflow__1_.coverage" NAME="Tensorflow (1) Coverage Results" MODIFIED="1616576407961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/pythontest$Numpy.coverage" NAME="Numpy Coverage Results" MODIFIED="1616569363046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/pythontest$Q_Learning.coverage" NAME="Q-Learning Coverage Results" MODIFIED="1617932639213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/machine-learning" />
@@ -365,6 +386,7 @@
     <SUITE FILE_PATH="coverage/pythontest$Q_Learning_Sarsa__1_.coverage" NAME="Q-Learning&amp;Sarsa (1) Coverage Results" MODIFIED="1618389533799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/machine-learning" />
     <SUITE FILE_PATH="coverage/pythontest$RL_brain.coverage" NAME="RL_brain Coverage Results" MODIFIED="1618392698780" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/6_OpenAI_gym" />
     <SUITE FILE_PATH="coverage/pythontest$TF2_DDPG_LSTM.coverage" NAME="TF2_DDPG_LSTM Coverage Results" MODIFIED="1618921995897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../TF2-RL/DDPG" />
+    <SUITE FILE_PATH="coverage/pythontest$Jing.coverage" NAME="Jing Coverage Results" MODIFIED="1619079671543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/reinforcement-learning" />
     <SUITE FILE_PATH="coverage/pythontest$maze_env.coverage" NAME="maze_env Coverage Results" MODIFIED="1618054973246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/2_Q_Learning_maze" />
     <SUITE FILE_PATH="coverage/pythontest$run_this.coverage" NAME="run_this Coverage Results" MODIFIED="1617952323478" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Reinforcement-learning-with-tensorflow/contents/2_Q_Learning_maze" />
     <SUITE FILE_PATH="coverage/pythontest$Policy_Gradients.coverage" NAME="Policy-Gradients Coverage Results" MODIFIED="1618883451942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/reinforcement-learning" />
@@ -375,6 +397,7 @@
     <SUITE FILE_PATH="coverage/pythontest$TF2_DDPG_Basic.coverage" NAME="TF2_DDPG_Basic Coverage Results" MODIFIED="1618922358260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../TF2-RL/DDPG" />
     <SUITE FILE_PATH="coverage/pythontest$DQN.coverage" NAME="DQN Coverage Results" MODIFIED="1618566492325" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/machine-learning" />
     <SUITE FILE_PATH="coverage/pythontest$Lib.coverage" NAME="Lib Coverage Results" MODIFIED="1616470794495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythontest$envoriment.coverage" NAME="envoriment Coverage Results" MODIFIED="1619056789006" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/reinforcement-learning" />
     <SUITE FILE_PATH="coverage/pythontest$publishOneKey.coverage" NAME="publishOneKey Coverage Results" MODIFIED="1611837593199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../h35time/doc/uiproject" />
     <SUITE FILE_PATH="coverage/pythontest$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1618923984507" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../alpha-zero-general" />
   </component>

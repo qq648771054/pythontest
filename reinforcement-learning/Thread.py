@@ -8,7 +8,8 @@ class ThreadBase(threading.Thread):
         self.agentType = agentType
         self.showProcess = showProcess
         self.savePath = savePath
-        self.args = kwargs
+        for k, v in kwargs.items():
+            setattr(self, k, v)
 
     def loadModel(self, agent):
         if self.savePath and os.path.exists(self.savePath):

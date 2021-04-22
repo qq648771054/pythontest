@@ -22,7 +22,7 @@ def init():
 
 fig, ax = plt.subplots()
 line, = ax.plot([], [], lw=2)
-ax.grid()
+# ax.grid()
 xdata, ydata = [], []
 
 
@@ -33,16 +33,16 @@ def run(data):
     ydata.append(y)
     xmin, xmax = ax.get_xlim()
 
-    if t >= xmax:
-        ax.set_xlim(xmin, 2*xmax)
-        ax.figure.canvas.draw()
+    # if t >= xmax:
+    #     ax.set_xlim(xmin, 2*xmax)
+    #     ax.figure.canvas.draw()
     line.set_data(xdata, ydata)
 
     return line,
 
 ani = animation.FuncAnimation(fig, run, data_gen, blit=True, interval=10,
                               repeat=False, init_func=init)
-plt.ion()
+
 plt.show()
 
 # if __name__ == '__main__':

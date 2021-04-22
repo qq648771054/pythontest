@@ -1,5 +1,5 @@
 from lib import *
-import thread
+import Thread
 import envoriment
 
 class Agent_Actor_Critic(object):
@@ -50,7 +50,7 @@ class Agent_Actor_Critic(object):
         )
         return model
 
-class ThreadCartPole(thread.ThreadBase):
+class ThreadCartPole(Thread.ThreadBase):
     def run(self):
         env = envoriment.CartPole_v0(self.agentType)
         agent = env.agent
