@@ -186,7 +186,7 @@ class Jing(tk.Tk):
         2: 'red'
     }
 
-    SIZE = 4
+    SIZE = 3
     CLASS_SIZE = 3
     ACTION_SIZE = SIZE * SIZE
     STATE_SIZE = CLASS_SIZE ** ACTION_SIZE
@@ -243,6 +243,11 @@ class Jing(tk.Tk):
         self._updateGrid(x, y)
         return next_state, self.player, self.getWiner()
 
+    def getNextState(self, state, action):
+        state = self.flipIdx(state)
+        state += self.CLASS_SIZE ** action
+        return state
+
     def getWiner(self):
         def checkLine():
             for i in range(self.SIZE):
@@ -290,7 +295,7 @@ class Jing(tk.Tk):
         if winer:
             return winer
         elif checkFull():
-            return 2
+            return 0
         else:
             return None
 

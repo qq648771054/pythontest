@@ -10,7 +10,7 @@ import math
 class Agent(object):
     def __init__(self, env):
         self.env = env
-        self.model = np.zeros((self.env.STATE_SIZE, self.env.ACTION_SIZE))
+        self.model = np.zeros(self.env.STATE_SIZE)
         self.memory = []
 
     def choose_action(self, state, e_greddy=0.9):
@@ -23,19 +23,22 @@ class Agent(object):
     def filter_action(self, state, actions, func):
         random.shuffle(actions)
         res = actions[0]
+        max_state = self.env.getNextState(state, res)
         for i in actions:
-            if func(self.model[state, i], self.model[state, res]):
+            next_state = self.env.getNextState(state, i)
+            if func(self.model[next_state], self.model[max_state]):
                 res = i
+                max_state = next_state
         return res
 
-    def save_exp(self, state, action, next_state, player):
-        self.memory.append((state, action, next_state, player))
+    def save_exp(self, state, player):
+        self.memory.append((state, player))
 
     def learn(self, winer, learning_rate=0.01):
-        for state, action, next_state, player in self.memory:
-            q_predict = self.model[state, action]
+        for state, player in self.memory:
+            q_predict = self.model[state]
             q_target = 1 if player == winer else -1
-            self.model[state, action] += learning_rate * (q_target - q_predict)
+            self.model[state] += learning_rate * (q_target - q_predict)
         self.memory = []
 
     def clear(self):
@@ -89,7 +92,7 @@ class ThreadJing(Thread.ThreadBase):
             while True:
                 action = agent.choose_action(state, 0.9 if self.mode == 0 else 1.0)
                 next_state, player, winer = env.step(action)
-                agent.save_exp(state, action, next_state, player)
+                agent.save_exp(next_state, player)
                 step += 1
                 state = next_state
                 self.render(env, 0.5)
@@ -105,7 +108,7 @@ class ThreadJing(Thread.ThreadBase):
             if winer != 0:
                 agent.learn(winer)
                 agent.clear()
-                # print('\repisode {}, winer {}, step {}'.format(episode, winer, step), end='')
+                print('episode {}, winer {}, step {}'.format(episode, winer, step))
             if episode % 1000 == 0:
                 self.saveModel(agent)
 
