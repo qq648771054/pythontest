@@ -1,3 +1,7 @@
+import copy
+
+import numpy as np
+
 from lib import *
 import gym
 import tkinter as tk
@@ -284,6 +288,145 @@ class Jing(tk.Tk):
                         break
                 else:
                     return c
+            return None
+        def checkFull():
+            for i in range(self.SIZE):
+                for j in range(self.SIZE):
+                    if self.map[i][j] == 0:
+                        return False
+            return True
+        winer = checkLine() or checkColumn() or checkDiagonal()
+        if winer:
+            return winer
+        elif checkFull():
+            return 0
+        else:
+            return None
+
+    def _createMap(self):
+        if not hasattr(self, 'canvas'):
+            self.canvas = tk.Canvas(self, bg='white', height=self.MAZE_H * self.SIZE, width=self.MAZE_W * self.SIZE)
+            # create lines
+            right, bottom = self.MAZE_W * self.SIZE, self.MAZE_H * self.SIZE
+            for c in range(0, right, self.MAZE_W):
+                self.canvas.create_line(c, 0, c, bottom)
+            for r in range(0, bottom, self.MAZE_H):
+                self.canvas.create_line(0, r, right, r)
+            self.canvas.pack()
+        # create grids
+        self.grids = []
+        for i in range(self.SIZE):
+            self.grids.append([0] * self.SIZE)
+            for j in range(self.SIZE):
+                self._updateGrid(j, i)
+
+    def _updateGrid(self, x, y):
+        if self.grids[y][x]:
+            self.canvas.delete(self.grids[y][x])
+        self.grids[y][x] = self.canvas.create_rectangle(
+            (x + 0.5) * self.MAZE_W - 0.5 * self.GRID_W, (y + 0.5) * self.MAZE_H - 0.5 * self.GRID_H,
+            (x + 0.5) * self.MAZE_W + 0.5 * self.GRID_W, (y + 0.5) * self.MAZE_H + 0.5 * self.GRID_H,
+            fill=self.TYPE2COLOR.get(self.map[y][x])
+        )
+
+    def render(self):
+        self.update()
+
+class Gobang(tk.Tk):
+    def __init__(self, agentType):
+        super(Gobang, self).__init__()
+        self.agent = agentType(self)
+
+    MAZE_W, MAZE_H = 40, 40
+    GRID_W, GRID_H = 30, 30
+
+    TYPE2COLOR = {
+        0: 'white',
+        1: 'black',
+        2: 'red'
+    }
+
+    SIZE = 15
+    CLASS_SIZE = 3
+    ACTION_SIZE = SIZE * SIZE
+    STATE_SIZE = CLASS_SIZE ** ACTION_SIZE
+    WIN_LENGTH = 5
+
+    def validActions(self, state):
+        return [i * self.SIZE + j for i in range(self.SIZE) for j in range(self.SIZE) if state[i][j] == 0]
+
+    def flip(self, state):
+        map = np.zeros((self.SIZE, self.SIZE), dtype=np.int)
+        for i in range(self.SIZE):
+            for j in range(self.SIZE):
+                if state[i, j]:
+                    map[i, j] = self._otherPlayer(state[i, j])
+        return map
+
+    def _otherPlayer(self, player):
+        return 1 if player == 2 else 2
+
+    def reset(self):
+        self.map = np.zeros((self.SIZE, self.SIZE), dtype=np.int)
+        self.player = 2
+        self._createMap()
+        return copy.deepcopy(self.map)
+
+    def step(self, action):
+        x, y = action % self.SIZE, action // self.SIZE
+        self.player = self._otherPlayer(self.player)
+        self.map[y, x] = self.player
+        next_state = copy.deepcopy(self.map) if self.player == 1 else self.flip(self.map)
+        self._updateGrid(x, y)
+        return next_state, self.player, self.getWiner()
+
+    def getNextState(self, state, action):
+        state = self.flip(state)
+        state[action // self.SIZE, action % self.SIZE] = 1
+        return state
+
+    def getWiner(self):
+        def checkLine():
+            for i in range(self.SIZE):
+                for j in range(self.SIZE - self.WIN_LENGTH + 1):
+                    c = self.map[i][j]
+                    if not c: continue
+                    for k in range(1, self.WIN_LENGTH):
+                        if self.map[i][j + k] != c:
+                            break
+                    else:
+                        return c
+            return None
+        def checkColumn():
+            for i in range(self.SIZE - self.WIN_LENGTH + 1):
+                for j in range(self.SIZE):
+                    c = self.map[i][j]
+                    if not c: continue
+                    for k in range(1, self.WIN_LENGTH):
+                        if self.map[i + k][j] != c:
+                            break
+                    else:
+                        return c
+            return None
+        def checkDiagonal():
+            for i in range(self.SIZE - self.WIN_LENGTH + 1):
+                for j in range(self.SIZE - self.WIN_LENGTH + 1):
+                    c = self.map[i][j]
+                    if not c: continue
+                    for k in range(1, self.WIN_LENGTH):
+                        if self.map[i + k][j + k] != c:
+                            break
+                    else:
+                        return c
+            for i in range(self.SIZE - self.WIN_LENGTH + 1):
+                for j in range(self.WIN_LENGTH - 1, self.SIZE):
+                    c = self.map[i][j]
+                    if not c: continue
+                    for k in range(1, self.WIN_LENGTH):
+                        if self.map[i + k][j - k] != c:
+                            break
+                    else:
+                        return c
             return None
         def checkFull():
             for i in range(self.SIZE):
