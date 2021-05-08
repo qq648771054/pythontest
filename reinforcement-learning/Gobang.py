@@ -1,3 +1,5 @@
+import json
+
 import numpy as np
 
 from lib import *
@@ -14,6 +16,10 @@ class Agent(object):
         self.env = env
         self.model = self._createModel(self.env.SIZE)
         self.memory = []
+        self.historySize = 5000
+        self.historyIter = 0
+        self.history = []
+        self.learnTime = 0
 
     def choose_action(self, state, e_greddy=0.9):
         actions = self.env.validActions(state)
@@ -27,21 +33,33 @@ class Agent(object):
             return actions[values.argmax()]
 
     def save_exp(self, state, player):
-        self.memory.append((state, player))
+        self.memory.append((self.addAixs(state), player))
+
+    def save_history(self, state, value):
+        if len(self.history) < self.historySize:
+            self.history.append((state, value))
+        else:
+            self.history[self.historyIter] = (state, value)
+            self.historyIter = (self.historyIter + 1) % self.historySize
+
+    def sample(self, batch=128):
+        if len(self.history) < batch:
+            return np.array([h[0] for h in self.history]), np.array([h[1] for h in self.history])
+        else:
+            idx = np.random.choice(len(self.history), size=batch)
+            return np.array([self.history[x][0] for x in idx]), np.array([self.history[x][1] for x in idx])
 
     def learn(self, winer):
-        xs, ys = [], []
+        self.learnTime += 1
         for state, player in self.memory:
-            xs.append(state)
-            ys.append(1 if player == winer else -1)
-        self.model.fit(self.addAixs(np.array(xs)), np.array(ys), epochs=1, verbose=0)
+            self.save_history(state, 1 if player == winer else -1)
         self.memory = []
+        if self.learnTime % 5 == 0:
+            xs, ys = self.sample(1024)
+            self.model.fit(xs, ys, epochs=1, verbose=1)
 
     def addAixs(self, data):
         return data.reshape(data.shape + (1, ))
-
-    def clear(self):
-        self.memory = []
 
     def _createModel(self, size, learning_rate=0.01):
         model = tf.keras.Sequential([
@@ -64,7 +82,6 @@ class Agent(object):
             loss=tf.losses.mse,
             optimizer=tf.optimizers.Adam(learning_rate=learning_rate)
         )
-        print(model.summary())
         return model
 
 class Image(object):
@@ -99,19 +116,34 @@ class Image(object):
         self.ax.figure.canvas.draw()
         return self.line,
 
-class ThreadJing(Thread.ThreadBase):
+class ThreadGobang(Thread.ThreadBase):
+    saveType = {
+        'episode': (str, int),
+        'winRate': (json.dumps, json.loads),
+    }
+    bakFrequence = 2000
     def run(self):
-        env = envoriment.Gobang(self.agentType)
-        agent = env.agent
-        self.loadModel(agent)
-        episode = 0
-        self.winRate = []
+        env = envoriment.Gobang()
+        self.env = env
+        agent = self.agentType(env)
+        config = self.load()
+        if config is not None:
+            agent.model = config['model']
+            episode = config['episode']
+            self.winRate = config['winRate']
+        else:
+            episode = 0
+            self.winRate = []
+        print(agent.model.summary())
+        agentPre = self.agentType(env)
+        agentPre.model = copyModel(agent.model)
         win, lose = 0, 0
         while True:
             state = env.reset()
             self.render(env, 0.5)
             episode += 1
             step = 0
+            startTime = time.time()
             while True:
                 action = agent.choose_action(state, 0.9 if self.mode == 0 else 1.0)
                 next_state, player, winer = env.step(action)
@@ -130,16 +162,78 @@ class ThreadJing(Thread.ThreadBase):
                 win, lose = 0, 0
             if winer != 0:
                 agent.learn(winer)
-                agent.clear()
-                print('episode {}, winer {}, step {}'.format(episode, winer, step))
-                if episode % 10 == 0:
-                    self.saveModel(agent)
+            if episode % 100 == 0:
+                result = self.battle(agent, agentPre)
+                if result == 1:
+                    agent.model = copyModel(agentPre.model)
+                    print('test train result: failed')
+                else:
+                    agentPre.model = copyModel(agent.model)
+                    print('test train result: success')
+                self.save(agent.model, episode=episode, winRate=self.winRate)
+            print('episode {}, winer {}, step {}, spend {} seconds'.format(episode, winer, step, time.time() - startTime))
+
+    def battle(self, agentPre, agent):
+        env = self.env
+        state = env.reset()
+        agents = [agent, agentPre]
+        player = 0
+        while True:
+            action = agents[player].choose_action(state, 1.0)
+            player = (player + 1) % 2
+            state, p, winer = env.step(action)
+            if winer is not None:
+                break
+        if winer == 2:
+            return 1
+        else:
+            return 0
+
+    def load(self):
+        config = None
+        if self.savePath and os.path.exists(self.savePath):
+            config = self.readConfig(os.path.join(self.savePath, 'config.txt'))
+            modelPath = os.path.join(self.savePath, 'model_{}-{}.h5'.format(
+                (config['episode'] // self.bakFrequence) * self.bakFrequence,
+                ((config['episode'] // self.bakFrequence) + 1) * self.bakFrequence,
+            ))
+            model = tf.keras.models.load_model(modelPath)
+            config['model'] = model
+        return config
+
+    def save(self, model, episode, **kwargs):
+        if self.savePath:
+            if not os.path.exists(self.savePath):
+                os.mkdir(self.savePath)
+            modelPath = os.path.join(self.savePath, 'model_{}-{}.h5'.format(
+                (episode // self.bakFrequence) * self.bakFrequence,
+                ((episode // self.bakFrequence) + 1) * self.bakFrequence,
+            ))
+            model.save(modelPath)
+            configPath = os.path.join(self.savePath, 'config.txt')
+            kwargs['episode'] = episode
+            with open(configPath, 'w') as f:
+                for k, v in kwargs.items():
+                    f.write('{}={}\n'.format(k, self.saveType[k][0](v)))
+
+    def readConfig(self, filePath):
+        config = {}
+        with open(filePath) as f:
+            line = f.readline().strip()
+            while line:
+                idx = line.find('=')
+                if idx != -1:
+                    name = line[:idx]
+                    data = line[idx + 1:]
+                    config[name] = self.saveType[name][1](data)
+                line = f.readline()
+        return config
 
     def showWinRate(self):
         Image(self.winRate)
 
 if __name__ == '__main__':
-    thread = ThreadJing(Agent, showProcess=False, mode=0, savePath=getDataFilePath('GoBang.h5'))
+    thread = ThreadGobang(Agent, showProcess=False, mode=0, savePath=getDataFilePath('GoBang'))
     thread.start()
     while True:
         cmd = input()

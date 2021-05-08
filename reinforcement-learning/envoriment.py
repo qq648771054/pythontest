@@ -333,9 +333,6 @@ class Jing(tk.Tk):
         self.update()
 
 class Gobang(tk.Tk):
-    def __init__(self, agentType):
-        super(Gobang, self).__init__()
-        self.agent = agentType(self)
 
     MAZE_W, MAZE_H = 40, 40
     GRID_W, GRID_H = 30, 30
@@ -351,6 +348,9 @@ class Gobang(tk.Tk):
     ACTION_SIZE = SIZE * SIZE
     STATE_SIZE = CLASS_SIZE ** ACTION_SIZE
     WIN_LENGTH = 5
+
+    def __init__(self):
+        super(Gobang, self).__init__()
 
     def validActions(self, state):
         return [i * self.SIZE + j for i in range(self.SIZE) for j in range(self.SIZE) if state[i][j] == 0]

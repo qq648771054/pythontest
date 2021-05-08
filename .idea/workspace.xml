@@ -12,7 +12,11 @@
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add knn">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/GoBang.h5" beforeDir="false" afterPath="$PROJECT_DIR$/data/GoBang.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/GoBang.h5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/Gobang.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/Gobang.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/envoriment.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/envoriment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/lib.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,13 +57,14 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/data" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace\pythontest\data" />
       <recent name="E:\workspace\pythontest\data\DQN_Maze" />
       <recent name="D:\workspace\pythontest\machine-learning" />
       <recent name="E:\workspace\pythontest\data" />
@@ -297,7 +302,8 @@
       <workItem from="1620281854109" duration="14543000" />
       <workItem from="1620352906898" duration="14846000" />
       <workItem from="1620379215699" duration="892000" />
-      <workItem from="1620383934009" duration="5276000" />
+      <workItem from="1620383934009" duration="6001000" />
+      <workItem from="1620437389729" duration="22474000" />
     </task>
     <task id="LOCAL-00001" summary="add readme">
       <created>1612144585810</created>
@@ -368,16 +374,14 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="values.argmax()" language="Python" />
-        <watch expression="self.mode" language="Python" />
-        <watch expression="data.reshape(data.shape + (1, ))" language="Python" />
+        <watch expression="self.saveType[k][0]" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/pythontest$main.coverage" NAME="main Coverage Results" MODIFIED="1620292321074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythontest$envoriment.coverage" NAME="envoriment Coverage Results" MODIFIED="1620355001349" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/reinforcement-learning" />
-    <SUITE FILE_PATH="coverage/pythontest$Gobang.coverage" NAME="Gobang Coverage Results" MODIFIED="1620392254035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/reinforcement-learning" />
+    <SUITE FILE_PATH="coverage/pythontest$Gobang.coverage" NAME="Gobang Coverage Results" MODIFIED="1620468181254" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/reinforcement-learning" />
     <SUITE FILE_PATH="coverage/pythontest$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1619404238924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../alpha-zero-general" />
   </component>
 </project>
