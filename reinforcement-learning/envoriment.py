@@ -343,11 +343,11 @@ class Gobang(tk.Tk):
         2: 'red'
     }
 
-    SIZE = 15
+    SIZE = 3
     CLASS_SIZE = 3
     ACTION_SIZE = SIZE * SIZE
     STATE_SIZE = CLASS_SIZE ** ACTION_SIZE
-    WIN_LENGTH = 5
+    WIN_LENGTH = 3
 
     def __init__(self):
         super(Gobang, self).__init__()
