@@ -19,44 +19,50 @@ class Agent(object):
         self.historySize = 5000
         self.historyIter = 0
         self.history = []
-        self.learnTime = 0
 
     def choose_action(self, state, e_greddy=0.9):
         actions = self.env.validActions(state)
         if np.random.uniform() > e_greddy:
             return np.random.choice(actions)
         else:
-            random.shuffle(actions)
-            next_states = np.array([self.env.getNextState(state, a) for a in actions])
-            next_states = self.addAixs(next_states)
-            values = self.model.predict(next_states)
-            return actions[values.argmax()]
+            values = self.model.predict(np.array([self.addAixs(state)]))[0]
+            maxi, maxv = actions[0], values[actions[0]]
+            for i, v in enumerate(values):
+                if i in actions and v > maxv:
+                    maxi, maxv = i, values[i]
+            return maxi
 
-    def save_exp(self, state, player):
-        self.memory.append((self.addAixs(state), player))
+    def save_exp(self, state, action, player):
+        self.memory.append((self.addAixs(state), action, player))
 
-    def save_history(self, state, value):
+    def save_history(self, state, action, value):
         if len(self.history) < self.historySize:
-            self.history.append((state, value))
+            self.history.append((state, action, value))
         else:
-            self.history[self.historyIter] = (state, value)
+            self.history[self.historyIter] = (state, action, value)
             self.historyIter = (self.historyIter + 1) % self.historySize
 
     def sample(self, batch=128):
         if len(self.history) < batch:
-            return np.array([h[0] for h in self.history]), np.array([h[1] for h in self.history])
+            return (np.array([h[i] for h in self.history]) for i in range(3))
         else:
             idx = np.random.choice(len(self.history), size=batch)
-            return np.array([self.history[x][0] for x in idx]), np.array([self.history[x][1] for x in idx])
+            return (np.array([self.history[x][i] for x in idx]) for i in range(3))
 
-    def learn(self, winer):
-        self.learnTime += 1
-        for state, player in self.memory:
-            self.save_history(state, 1 if player == winer else -1)
+    def learn(self):
+        states, actions, values = self.sample(1024)
+        predict = self.model.predict(states)
+        for p, a, v in zip(predict, actions, values):
+            p[a] = v
+        self.model.fit(states, predict, epochs=1, verbose=0)
+
+    def setWinner(self, winner):
+        for state, action, player in self.memory:
+            self.save_history(state, action, 1 if player == winner else -1)
         self.memory = []
-        if self.learnTime % 5 == 0:
-            xs, ys = self.sample(1024)
-            self.model.fit(xs, ys, epochs=1, verbose=1)
+
+    def clearMemory(self):
+        self.memory = []
 
     def addAixs(self, data):
         return data.reshape(data.shape + (1, ))
@@ -76,7 +82,7 @@ class Agent(object):
             tf.keras.layers.Dense(512, activation='relu'),
             tf.keras.layers.BatchNormalization(),
             tf.keras.layers.Dropout(0.1),
-            tf.keras.layers.Dense(1, activation='linear')
+            tf.keras.layers.Dense(size * size, activation='linear')
         ])
         model.compile(
             loss=tf.losses.mse,
@@ -141,50 +147,59 @@ class ThreadGobang(Thread.ThreadBase):
         while True:
             state = env.reset()
             self.render(env, 0.5)
-            episode += 1
             step = 0
-            startTime = time.time()
+            s1 = time.time()
             while True:
                 action = agent.choose_action(state, 0.9 if self.mode == 0 else 1.0)
-                next_state, player, winer = env.step(action)
-                agent.save_exp(next_state, player)
+                next_state, player, winner = env.step(action)
+                agent.save_exp(state, action, player)
                 step += 1
                 state = next_state
                 self.render(env, 0.5)
-                if winer is not None:
+                if winner is not None:
                     break
-            if winer == 1:
-                win += 1
-            elif winer == 2:
-                lose += 1
-            if win + lose == 100:
-                self.winRate.append(win)
-                win, lose = 0, 0
-            if winer != 0:
-                agent.learn(winer)
-            if episode % 100 == 0:
-                result = self.battle(agent, agentPre)
-                if result == 1:
-                    agent.model = copyModel(agentPre.model)
-                    print('test train result: failed')
-                else:
-                    agentPre.model = copyModel(agent.model)
-                    print('test train result: success')
-                self.save(agent.model, episode=episode, winRate=self.winRate)
-            print('episode {}, winer {}, step {}, spend {} seconds'.format(episode, winer, step, time.time() - startTime))
+            if winner != 0:
+                episode += 1
+                if winner == 1:
+                    win += 1
+                elif winner == 2:
+                    lose += 1
+                if episode % 100 == 0:
+                    self.winRate.append(win)
+                    win, lose = 0, 0
+                agent.setWinner(winner)
+                if episode % 5 == 0:
+                    s2 = time.time()
+                    agent.learn()
+                    print('learn spend {} seconds'.format(time.time() - s2))
+                    s3 = time.time()
+                    result = self.battle(agent, agentPre)
+                    if result == 0:
+                        agent.model = copyModel(agentPre.model)
+                    else:
+                        agentPre.model = copyModel(agent.model)
+                    print('test train result: {}, spend {} seconds'.format(result, time.time() - s3))
+                if episode % 50 == 0:
+                    self.save(agent.model, episode=episode, winRate=self.winRate)
+            else:
+                agent.clearMemory()
+            print('episode {}, winer {}, step {}, spend {} seconds'.format(episode, winner, step, time.time() - s1))
 
-    def battle(self, agentPre, agent):
+    def battle(self, agent, agentPre):
         env = self.env
         state = env.reset()
-        agents = [agent, agentPre]
-        player = 0
+        agentIdx = random.randint(1, 2)
+        agents = [None, None, None]
+        agents[agentIdx] = agent
+        agents[3 - agentIdx] = agentPre
+        player = 1
         while True:
             action = agents[player].choose_action(state, 1.0)
-            player = (player + 1) % 2
-            state, p, winer = env.step(action)
-            if winer is not None:
+            player = 3 - player
+            state, p, winner = env.step(action)
+            if winner is not None:
                 break
-        if winer == 2:
+        if winner == 0 or winner == agentIdx:
             return 1
         else:
             return 0
@@ -233,7 +248,7 @@ class ThreadGobang(Thread.ThreadBase):
         Image(self.winRate)
 
 if __name__ == '__main__':
-    thread = ThreadGobang(Agent, showProcess=False, mode=0, savePath=getDataFilePath('GoBang'))
+    thread = ThreadGobang(Agent, showProcess=True, mode=1, savePath=getDataFilePath('GoBang1'))
     thread.start()
     while True:
         cmd = input()
