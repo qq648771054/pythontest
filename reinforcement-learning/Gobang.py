@@ -1,3 +1,4 @@
+import copy
 import json
 
 import numpy as np
@@ -16,7 +17,7 @@ class Agent(object):
         self.env = env
         self.model = self._createModel(self.env.SIZE)
         self.memory = []
-        self.historySize = 5000
+        self.historySize = 1000
         self.historyIter = 0
         self.history = []
 
@@ -42,47 +43,67 @@ class Agent(object):
             self.history[self.historyIter] = (state, action, value)
             self.historyIter = (self.historyIter + 1) % self.historySize
 
-    def sample(self, batch=128):
+    def sample(self, batch):
         if len(self.history) < batch:
             return (np.array([h[i] for h in self.history]) for i in range(3))
         else:
             idx = np.random.choice(len(self.history), size=batch)
             return (np.array([self.history[x][i] for x in idx]) for i in range(3))
 
-    def learn(self):
-        states, actions, values = self.sample(1024)
+    def learn(self, batch=128):
+        states, actions, values = self.sample(batch)
         predict = self.model.predict(states)
-        for p, a, v in zip(predict, actions, values):
+        pp = copy.deepcopy(predict)
+        upOrDown = [0] * len(predict)
+        for i, p, a, v in zip(range(len(predict)), predict, actions, values):
+            upOrDown[i] = v > p[a]
             p[a] = v
-        self.model.fit(states, predict, epochs=1, verbose=0)
+        self.model.fit(states, predict, epochs=1000, verbose=0)
+        predict1 = self.model.predict(states)
+        error = 0
+        for i, a, p, p1 in zip(range(len(predict)), actions, pp, predict1):
+            if upOrDown[i] != (p1[a] > p[a]):
+                error += 1
+        print(error)
 
     def setWinner(self, winner):
         for state, action, player in self.memory:
-            self.save_history(state, action, 1 if player == winner else -1)
+            self.save_history(state, action, 1 if player == winner else 0)
         self.memory = []
 
     def clearMemory(self):
         self.memory = []
 
     def addAixs(self, data):
+        return data
         return data.reshape(data.shape + (1, ))
 
-    def _createModel(self, size, learning_rate=0.01):
+    def _createModel(self, size, learning_rate=0.001):
+        # model = tf.keras.Sequential([
+        #     tf.keras.layers.Conv2D(512, (3, 3), activation='relu', input_shape=(size, size, 1)),
+        #     tf.keras.layers.BatchNormalization(),
+        #     tf.keras.layers.Conv2D(512, (3, 3), activation='relu'),
+        #     tf.keras.layers.BatchNormalization(),
+        #     tf.keras.layers.Conv2D(512, (3, 3), activation='relu'),
+        #     tf.keras.layers.BatchNormalization(),
+        #     tf.keras.layers.Flatten(),
+        #     tf.keras.layers.Dense(1024, activation='relu'),
+        #     tf.keras.layers.BatchNormalization(),
+        #     tf.keras.layers.Dropout(0.3),
+        #     tf.keras.layers.Dense(512, activation='relu'),
+        #     tf.keras.layers.BatchNormalization(),
+        #     tf.keras.layers.Dropout(0.3),
+        #     tf.keras.layers.Dense(size * size, activation='linear')
+        # ])
         model = tf.keras.Sequential([
-            tf.keras.layers.Conv2D(16, (3, 3), activation='relu', input_shape=(size, size, 1)),
-            tf.keras.layers.BatchNormalization(),
-            tf.keras.layers.Conv2D(32, (3, 3), activation='relu'),
-            tf.keras.layers.BatchNormalization(),
-            tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
-            tf.keras.layers.BatchNormalization(),
-            tf.keras.layers.Flatten(),
-            tf.keras.layers.Dense(1024, activation='relu'),
-            tf.keras.layers.BatchNormalization(),
-            tf.keras.layers.Dropout(0.1),
-            tf.keras.layers.Dense(512, activation='relu'),
-            tf.keras.layers.BatchNormalization(),
-            tf.keras.layers.Dropout(0.1),
-            tf.keras.layers.Dense(size * size, activation='linear')
+            tf.keras.layers.Flatten(input_shape=(size, size)),
+            tf.keras.layers.Dense(128, activation='relu'),
+            # tf.keras.layers.BatchNormalization(),
+            tf.keras.layers.Dropout(0.3),
+            tf.keras.layers.Dense(128, activation='relu'),
+            # tf.keras.layers.BatchNormalization(),
+            tf.keras.layers.Dropout(0.3),
+            tf.keras.layers.Dense(size * size, activation='softmax')
         ])
         model.compile(
             loss=tf.losses.mse,
@@ -127,7 +148,7 @@ class ThreadGobang(Thread.ThreadBase):
         'episode': (str, int),
         'winRate': (json.dumps, json.loads),
     }
-    bakFrequence = 2000
+    bakFrequence = 500
     def run(self):
         env = envoriment.Gobang()
         self.env = env
@@ -158,6 +179,7 @@ class ThreadGobang(Thread.ThreadBase):
                 self.render(env, 0.5)
                 if winner is not None:
                     break
+            print('episode {}, winer {}, step {}, spend {} seconds'.format(episode, winner, step, time.time() - s1))
             if winner != 0:
                 episode += 1
                 if winner == 1:
@@ -168,41 +190,40 @@ class ThreadGobang(Thread.ThreadBase):
                     self.winRate.append(win)
                     win, lose = 0, 0
                 agent.setWinner(winner)
-                if episode % 5 == 0:
+                if episode % 1 == 0:
                     s2 = time.time()
-                    agent.learn()
+                    agent.learn(32)
                     print('learn spend {} seconds'.format(time.time() - s2))
+                    # self.save(agent.model, episode=episode, winRate=self.winRate)
+                if episode % 1 == 0:
                     s3 = time.time()
-                    result = self.battle(agent, agentPre)
-                    if result == 0:
-                        agent.model = copyModel(agentPre.model)
+                    improve = self.isImprove(agent, agentPre)
+                    if not improve:
+                        agent.model = self.save(agentPre.model, episode=episode, winRate=self.winRate)
                     else:
-                        agentPre.model = copyModel(agent.model)
-                    print('test train result: {}, spend {} seconds'.format(result, time.time() - s3))
-                if episode % 50 == 0:
-                    self.save(agent.model, episode=episode, winRate=self.winRate)
+                        agentPre.model = self.save(agent.model, episode=episode, winRate=self.winRate)
+                    print('test train result: {}, spend {} seconds'.format(int(improve), time.time() - s3))
             else:
                 agent.clearMemory()
-            print('episode {}, winer {}, step {}, spend {} seconds'.format(episode, winner, step, time.time() - s1))
 
-    def battle(self, agent, agentPre):
+    def isImprove(self, agent, agentPre):
         env = self.env
-        state = env.reset()
-        agentIdx = random.randint(1, 2)
-        agents = [None, None, None]
-        agents[agentIdx] = agent
-        agents[3 - agentIdx] = agentPre
-        player = 1
-        while True:
-            action = agents[player].choose_action(state, 1.0)
-            player = 3 - player
-            state, p, winner = env.step(action)
-            if winner is not None:
-                break
-        if winner == 0 or winner == agentIdx:
-            return 1
-        else:
-            return 0
+        res = 0
+        for agentIdx in range(1, 3):
+            state = env.reset()
+            agents = [None, None, None]
+            agents[agentIdx] = agent
+            agents[3 - agentIdx] = agentPre
+            player = 1
+            while True:
+                action = agents[player].choose_action(state, 1.0)
+                player = 3 - player
+                state, p, winner = env.step(action)
+                if winner is not None:
+                    break
+            if winner != 0:
+                res += 1 if winner == agentIdx else -1
+        return res > -2
 
     def load(self):
         config = None
@@ -230,6 +251,9 @@ class ThreadGobang(Thread.ThreadBase):
             with open(configPath, 'w') as f:
                 for k, v in kwargs.items():
                     f.write('{}={}\n'.format(k, self.saveType[k][0](v)))
+            return tf.keras.models.load_model(modelPath)
+        else:
+            return copyModel(model)
 
     def readConfig(self, filePath):
         config = {}
@@ -248,7 +272,7 @@ class ThreadGobang(Thread.ThreadBase):
         Image(self.winRate)
 
 if __name__ == '__main__':
-    thread = ThreadGobang(Agent, showProcess=True, mode=1, savePath=getDataFilePath('GoBang1'))
+    thread = ThreadGobang(Agent, showProcess=False, mode=0, savePath=getDataFilePath('GoBang'))
     thread.start()
     while True:
         cmd = input()
