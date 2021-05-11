@@ -351,6 +351,7 @@ class Gobang(tk.Tk):
 
     def __init__(self):
         super(Gobang, self).__init__()
+        self.calSameShape()
 
     def validActions(self, state):
         return [i * self.SIZE + j for i in range(self.SIZE) for j in range(self.SIZE) if state[i][j] == 0]
@@ -362,6 +363,31 @@ class Gobang(tk.Tk):
                 if state[i, j]:
                     map[i, j] = self._otherPlayer(state[i, j])
         return map
+
+    def calSameShape(self):
+        def rotate(board):
+            return np.transpose(board)[::-1]
+
+        def flipX(board):
+            return board[:, ::-1]
+
+        def flipY(board):
+            return board[::-1, :]
+
+        def sequence(board, *func):
+            res = [board]
+            for f in func:
+                board = f(board)
+                res.append(board)
+            return res
+
+        origin = np.array([[i + j for j in range(self.SIZE)] for i in range(0, self.ACTION_SIZE, self.SIZE)])
+        self.sameShapes = []
+        self.sameShapes.extend(sequence(origin, flipX, flipY, flipX))
+        self.sameShapes.extend(sequence(origin, rotate, flipX, flipY, flipX))
+        self.sameShapes.extend(sequence(origin, rotate, rotate, flipX, flipY, flipX))
+        self.sameShapes = distinct(self.sameShapes, lambda a, b: (a == b).all())
+
 
     def _otherPlayer(self, player):
         return 1 if player == 2 else 2
@@ -384,6 +410,20 @@ class Gobang(tk.Tk):
         state = self.flip(state)
         state[action // self.SIZE, action % self.SIZE] = 1
         return state
+
+    def extendState(self, state, action):
+        states, actions = [], []
+        for shape in self.sameShapes:
+            s = np.array([[0] * self.SIZE for i in range(self.SIZE)])
+            for i in range(self.SIZE):
+                for j in range(self.SIZE):
+                    idx = shape[i][j]
+                    x, y = idx % self.SIZE, idx // self.SIZE
+                    s[y][x] = state[i][j]
+            states.append(s)
+            actions.append(shape[action // self.SIZE][action % self.SIZE])
+        res = distinct(zip(states, actions), lambda a, b: (a[0] == b[0]).all() and a[1] == b[1])
+        return [r[0] for r in res], [r[1] for r in res]
 
     def getWiner(self):
         def checkLine():

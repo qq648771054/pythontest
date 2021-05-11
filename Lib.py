@@ -131,3 +131,26 @@ def transform(arr, func=None, dict=None):
             return func(arr)
         elif dict:
             return dict[arr]
+
+def normallize(arr):
+    total = 0
+    for a in arr:
+        total += a
+    if total > 0.0:
+        scale = 1.0 / total
+        n = []
+        for a in arr:
+            n.append(a * scale)
+        return n
+    else:
+        return [1.0 / len(arr)] * len(arr)
+
+def distinct(arr, eq=lambda a, b: a == b):
+    res = []
+    for a in arr:
+        for r in res:
+            if eq(a, r):
+                break
+        else:
+            res.append(a)
+    return res
