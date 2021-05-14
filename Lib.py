@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-
+import random
+import numpy as np
 import time
 import sys
 import os
@@ -154,3 +155,11 @@ def distinct(arr, eq=lambda a, b: a == b):
         else:
             res.append(a)
     return res
+
+
+def sample(arr, size):
+    if len(arr) <= size:
+        return [a for a in arr]
+    else:
+        idx = np.random.choice(len(arr), size=size)
+        return [arr[i] for i in idx]
