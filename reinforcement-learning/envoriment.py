@@ -343,18 +343,21 @@ class Gobang(tk.Tk):
         2: 'red'
     }
 
-    SIZE = 3
+    SIZE = 15
     CLASS_SIZE = 3
     ACTION_SIZE = SIZE * SIZE
     STATE_SIZE = CLASS_SIZE ** ACTION_SIZE
-    WIN_LENGTH = 3
+    WIN_LENGTH = 5
 
     def __init__(self):
         super(Gobang, self).__init__()
         self.calSameShape()
 
     def validActions(self, state):
-        return [i * self.SIZE + j for i in range(self.SIZE) for j in range(self.SIZE) if state[i][j] == 0]
+        try:
+            return [i * self.SIZE + j for i in range(self.SIZE) for j in range(self.SIZE) if state[i][j] == 0]
+        except:
+            print(1)
 
     def flip(self, state):
         map = np.zeros((self.SIZE, self.SIZE), dtype=np.int)
@@ -388,6 +391,22 @@ class Gobang(tk.Tk):
         self.sameShapes.extend(sequence(origin, rotate, rotate, flipX, flipY, flipX))
         self.sameShapes = distinct(self.sameShapes, lambda a, b: (a == b).all())
 
+    def board2Str(self, board):
+        k = 0
+        t = 0
+        res = []
+        for i in range(self.SIZE):
+            for j in range(self.SIZE):
+                t = t * 4 + board[i][j]
+                if k == 3:
+                    res.append(chr(t))
+                    k = 0
+                    t = 0
+                else:
+                    k += 1
+        if k > 0:
+            res.append(chr(t))
+        return ''.join(res)
 
     def _otherPlayer(self, player):
         return 1 if player == 2 else 2
@@ -404,7 +423,7 @@ class Gobang(tk.Tk):
         self.map[y, x] = self.player
         next_state = copy.deepcopy(self.map) if self.player == 1 else self.flip(self.map)
         self._updateGrid(x, y)
-        return next_state, self.player, self.getWiner()
+        return next_state, self.player, self.getWiner(self.map)
 
     def getNextState(self, state, action):
         state = self.flip(state)
@@ -425,14 +444,14 @@ class Gobang(tk.Tk):
         res = distinct(zip(states, actions), lambda a, b: (a[0] == b[0]).all() and a[1] == b[1])
         return [r[0] for r in res], [r[1] for r in res]
 
-    def getWiner(self):
+    def getWiner(self, board):
         def checkLine():
             for i in range(self.SIZE):
                 for j in range(self.SIZE - self.WIN_LENGTH + 1):
-                    c = self.map[i][j]
+                    c = board[i][j]
                     if not c: continue
                     for k in range(1, self.WIN_LENGTH):
-                        if self.map[i][j + k] != c:
+                        if board[i][j + k] != c:
                             break
                     else:
                         return c
@@ -440,10 +459,10 @@ class Gobang(tk.Tk):
         def checkColumn():
             for i in range(self.SIZE - self.WIN_LENGTH + 1):
                 for j in range(self.SIZE):
-                    c = self.map[i][j]
+                    c = board[i][j]
                     if not c: continue
                     for k in range(1, self.WIN_LENGTH):
-                        if self.map[i + k][j] != c:
+                        if board[i + k][j] != c:
                             break
                     else:
                         return c
@@ -451,19 +470,19 @@ class Gobang(tk.Tk):
         def checkDiagonal():
             for i in range(self.SIZE - self.WIN_LENGTH + 1):
                 for j in range(self.SIZE - self.WIN_LENGTH + 1):
-                    c = self.map[i][j]
+                    c = board[i][j]
                     if not c: continue
                     for k in range(1, self.WIN_LENGTH):
-                        if self.map[i + k][j + k] != c:
+                        if board[i + k][j + k] != c:
                             break
                     else:
                         return c
             for i in range(self.SIZE - self.WIN_LENGTH + 1):
                 for j in range(self.WIN_LENGTH - 1, self.SIZE):
-                    c = self.map[i][j]
+                    c = board[i][j]
                     if not c: continue
                     for k in range(1, self.WIN_LENGTH):
-                        if self.map[i + k][j - k] != c:
+                        if board[i + k][j - k] != c:
                             break
                     else:
                         return c
@@ -471,7 +490,7 @@ class Gobang(tk.Tk):
         def checkFull():
             for i in range(self.SIZE):
                 for j in range(self.SIZE):
-                    if self.map[i][j] == 0:
+                    if board[i][j] == 0:
                         return False
             return True
         winer = checkLine() or checkColumn() or checkDiagonal()

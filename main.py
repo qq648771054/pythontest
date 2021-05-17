@@ -1,26 +1,25 @@
 import numpy as np
 arr = np.array([
-    [1, 2, 3, 4],
-    [5, 6, 7, 8],
-    [9, 10, 11, 12],
-    [13, 14, 15, 16],
+    [0, 0, 0, 0],
+    [0, 0, 1, 0],
+    [0, 2, 2, 0],
+    [1, 1, 0, 0],
 ])
 
 
-def rotate(board):
-    return np.transpose(board)[::-1]
+def board2Str(board, size):
+    k = 0
+    t = 0
+    res = []
+    for i in range(size):
+        for j in range(size):
+            t = t * 4 + board[i][j]
+            if k == 3:
+                res.append(chr(t))
+                t = 0
+                k = 0
+            else:
+                k += 1
+    return ''.join(res)
 
-
-def flipX(board):
-    return board[:, ::-1]
-
-
-def flipY(board):
-    return board[::-1, :]
-
-print(arr)
-print((flipX(flipX(arr)) == arr).all())
-print(flipY(arr))
-# print(rotate(arr))
-# print(rotate(rotate(arr)))
-# print(rotate(rotate(rotate(arr))))
+print(board2Str(arr, 4))

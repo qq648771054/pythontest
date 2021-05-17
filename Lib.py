@@ -163,3 +163,6 @@ def sample(arr, size):
     else:
         idx = np.random.choice(len(arr), size=size)
         return [arr[i] for i in idx]
+
+def clamp(x, l, r):
+    return min(max(x, l), r)
