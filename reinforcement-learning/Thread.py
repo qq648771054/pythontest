@@ -10,6 +10,7 @@ class ThreadBase(threading.Thread):
         self.savePath = savePath
         for k, v in kwargs.items():
             setattr(self, k, v)
+        self.env = None
 
     def loadModel(self, agent):
         if self.savePath and os.path.exists(self.savePath):
@@ -19,8 +20,8 @@ class ThreadBase(threading.Thread):
         if self.savePath:
             agent.model.save(self.savePath)
 
-    def render(self, env, sleepTime=None):
+    def render(self, sleepTime=None):
         if self.showProcess:
-            env.render()
+            self.env.render()
             if sleepTime:
                 time.sleep(sleepTime)

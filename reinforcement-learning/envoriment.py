@@ -349,15 +349,23 @@ class Gobang(tk.Tk):
     STATE_SIZE = CLASS_SIZE ** ACTION_SIZE
     WIN_LENGTH = 5
 
-    def __init__(self):
+    def __init__(self, onGridClick=None):
         super(Gobang, self).__init__()
         self.calSameShape()
+        self.onGridClick = onGridClick
 
-    def validActions(self, state):
-        try:
-            return [i * self.SIZE + j for i in range(self.SIZE) for j in range(self.SIZE) if state[i][j] == 0]
-        except:
-            print(1)
+    def reshape(self, size=15, winLength=5):
+        Gobang.SIZE = size
+        Gobang.CLASS_SIZE = 3
+        Gobang.ACTION_SIZE = Gobang.SIZE * Gobang.SIZE
+        Gobang.STATE_SIZE = Gobang.CLASS_SIZE ** Gobang.ACTION_SIZE
+        Gobang.WIN_LENGTH = winLength
+        self.calSameShape()
+
+    def validActions(self, state=None):
+        if state is None:
+            state = self.map
+        return [i * self.SIZE + j for i in range(self.SIZE) for j in range(self.SIZE) if state[i][j] == 0]
 
     def flip(self, state):
         map = np.zeros((self.SIZE, self.SIZE), dtype=np.int)
@@ -430,19 +438,20 @@ class Gobang(tk.Tk):
         state[action // self.SIZE, action % self.SIZE] = 1
         return state
 
-    def extendState(self, state, action):
-        states, actions = [], []
+    def extendState(self, state, prop):
+        states, props = [], []
         for shape in self.sameShapes:
-            s = np.array([[0] * self.SIZE for i in range(self.SIZE)])
+            s = [[0] * self.SIZE for i in range(self.SIZE)]
+            p = [0] * (self.SIZE * self.SIZE)
             for i in range(self.SIZE):
                 for j in range(self.SIZE):
                     idx = shape[i][j]
                     x, y = idx % self.SIZE, idx // self.SIZE
-                    s[y][x] = state[i][j]
+                    s[i][j] = state[y][x]
+                    p[i * self.SIZE + j] = prop[y * self.SIZE + x]
             states.append(s)
-            actions.append(shape[action // self.SIZE][action % self.SIZE])
-        res = distinct(zip(states, actions), lambda a, b: (a[0] == b[0]).all() and a[1] == b[1])
-        return [r[0] for r in res], [r[1] for r in res]
+            props.append(p)
+        return states, props
 
     def getWiner(self, board):
         def checkLine():
@@ -503,14 +512,16 @@ class Gobang(tk.Tk):
 
     def _createMap(self):
         if not hasattr(self, 'canvas'):
-            self.canvas = tk.Canvas(self, bg='white', height=self.MAZE_H * self.SIZE, width=self.MAZE_W * self.SIZE)
+            width, height = self.MAZE_W * self.SIZE, self.MAZE_H * self.SIZE
+            right, bottom = width, height
+            self.canvas = tk.Canvas(self, bg='white', height=height, width=width)
             # create lines
-            right, bottom = self.MAZE_W * self.SIZE, self.MAZE_H * self.SIZE
             for c in range(0, right, self.MAZE_W):
                 self.canvas.create_line(c, 0, c, bottom)
             for r in range(0, bottom, self.MAZE_H):
                 self.canvas.create_line(0, r, right, r)
             self.canvas.pack()
+            self.canvas.bind('<Button-1>', self.onClick)
         # create grids
         self.grids = []
         for i in range(self.SIZE):
@@ -529,3 +540,7 @@ class Gobang(tk.Tk):
 
     def render(self):
         self.update()
+
+    def onClick(self, event):
+        x, y = event.x // self.MAZE_W, event.y // self.MAZE_H
+        self.onGridClick and self.onGridClick(x, y)
