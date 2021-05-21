@@ -122,7 +122,7 @@ class Agent(object):
     def chooseAction(self, state, mode=0, mcts=None):
         if mode == 2:
             actions = self.env.validActions(state)
-            prop = self.model.predict(np.array([state]))
+            prop = self.model.predict(np.array([state]))[0][0]
             maxa = actions[0]
             for a in actions:
                 if maxa < prop[a]:
@@ -290,9 +290,12 @@ class ThreadGobang(Thread.ThreadBase):
         else:
             episode = 0
             self.winRate = []
-        print(agent.model.summary())
+        self.log(agent.model.summary())
         agentPre = self.agentType(env, memorySize)
         agentPre.model = copyModel(agent.model)
+        if self.savePath and hasattr(self, 'logName'):
+            self.logFile = open(os.path.join(self.savePath, self.logName), 'a')
+            self.logs = []
         win, lose, draw = 0, 0, 0
         while True:
             state = env.reset()
@@ -313,12 +316,12 @@ class ThreadGobang(Thread.ThreadBase):
                 state = next_state
                 currentPlayer = 3 - currentPlayer
                 path.append(action)
-                print('\rpath {}'.format(path), end='')
                 self.render(0.5)
                 if winner is not None:
                     break
             episode += 1
-            print('\nepisode {}, winner {}, step {}, spend {} seconds'.format(episode, winner, step, time.time() - s1))
+            self.log('path {}'.format(path))
+            self.log('episode {}, winner {}, step {}, spend {} seconds'.format(episode, winner, step, time.time() - s1))
             agent.setWinner(winner)
             if winner == 1:
                 win += 1
@@ -332,15 +335,15 @@ class ThreadGobang(Thread.ThreadBase):
                 for i in range(5):
                     s2 = time.time()
                     agent.learn(batchSize)
-                    print('learn spend {} seconds'.format(time.time() - s2))
+                    self.log('learn spend {} seconds'.format(time.time() - s2))
                     s3 = time.time()
                     rate = self.comapreWithPre(agent, agentPre)
                     if rate < 0.55:
                         agent.model = self.save(agentPre.model, episode=episode, winRate=self.winRate)
-                        print('train result: {}, spend {} seconds'.format(0, time.time() - s3))
+                        self.log('train result: {}, spend {} seconds'.format(0, time.time() - s3))
                     else:
                         agentPre.model = self.save(agent.model, episode=episode, winRate=self.winRate)
-                        print('train result: {}, spend {} seconds'.format(1, time.time() - s3))
+                        self.log('train result: {}, spend {} seconds'.format(1, time.time() - s3))
                         break
 
     def onGridClick(self, x, y):
@@ -389,23 +392,31 @@ class ThreadGobang(Thread.ThreadBase):
                 else:
                     lose += 1
                 episode += 1
-                print('self battle {}: path {}, expect {}, winer {}'.format(episode, step, agentIdx, winner))
-        print('self battle win rate: {}:'.format(win / (win + lose) if win + lose > 0 else 0))
+                self.log('self battle {}: path {}, expect {}, winner {}'.format(episode, step, agentIdx, winner))
+        self.log('self battle win rate: {}'.format(win / (win + lose) if win + lose > 0 else 0))
         return win / (win + lose) >= 0.55 if win + lose > 0 else 0
 
     def load(self):
         config = None
-        if self.savePath and os.path.exists(self.savePath):
-            config = self.readConfig(os.path.join(self.savePath, 'config.txt'))
-            modelPath = os.path.join(self.savePath, 'model_{}-{}.h5'.format(
-                (config['episode'] // self.bakFrequence) * self.bakFrequence,
-                ((config['episode'] // self.bakFrequence) + 1) * self.bakFrequence,
-            ))
-            model = tf.keras.models.load_model(modelPath)
-            config['model'] = model
+        if self.savePath:
+            if os.path.exists(self.savePath):
+                config = self.readConfig(os.path.join(self.savePath, 'config.txt'))
+                modelPath = os.path.join(self.savePath, 'model_{}-{}.h5'.format(
+                    (config['episode'] // self.bakFrequence) * self.bakFrequence,
+                    ((config['episode'] // self.bakFrequence) + 1) * self.bakFrequence,
+                ))
+                model = tf.keras.models.load_model(modelPath)
+                config['model'] = model
+            else:
+                os.mkdir(self.savePath)
         return config
 
     def save(self, model, episode, **kwargs):
+        if hasattr(self, 'logFile') and len(self.logs) > 0:
+            for log in self.logs:
+                self.logFile.write(log)
+            self.logFile.flush()
+            self.logs = []
         if self.savePath:
             if not os.path.exists(self.savePath):
                 os.mkdir(self.savePath)
@@ -439,10 +450,21 @@ class ThreadGobang(Thread.ThreadBase):
     def showWinRate(self):
         Image(self.winRate)
 
+    def log(self, s):
+        print(s)
+        if hasattr(self, 'logFile'):
+            self.logs.append(s)
+            self.logs.append('\n')
+
+
 if __name__ == '__main__':
+    # thread = ThreadGobang(Agent, showProcess=False, player=1, mode=1,
+    #                       boardSize=3, boardWin=3,
+    #                       savePath=getDataFilePath('GoBang_3_3'), logName='log.txt')
+
     thread = ThreadGobang(Agent, showProcess=False, player=0, mode=0,
-                          boardSize=5, boardWin=4, savePath=getDataFilePath('GoBang_5_4'))
-    # thread = ThreadGobang(Agent, showProcess=False, mode=0)
+                          boardSize=5, boardWin=4,
+                          savePath=getDataFilePath('GoBang_5_4'), logName='log.txt')
     thread.start()
     while True:
         cmd = input()
