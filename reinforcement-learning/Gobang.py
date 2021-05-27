@@ -21,12 +21,13 @@ class MCTS(object):
         self.Ns = {}        # stores #times board s was visited
         self.Ps = {}        # stores initial policy (returned by neural net)
         self.Es = {}        # stores end state values
+        self.As = {}        # stores valid actions
 
-    def chooseAction(self, state, selectMax=False, episode=20):
+    def chooseAction(self, state, selectMax=False, cpuct=1.0, episode=20):
         s = self.env.board2Str(state)
         for i in range(episode):
-            self.search(state)
-        actions = self.env.validActions(state)
+            self.search(state, cpuct)
+        actions = self.env.validActions(state, player=1)
         counts = [self.Nsa[s].get(i, 0) if i in actions else 0 for i in range(self.env.ACTION_SIZE)]
         counts = normallize(counts)
         if selectMax:
@@ -38,7 +39,7 @@ class MCTS(object):
         else:
             return np.random.choice(self.env.ACTION_SIZE, p=counts), counts
 
-    def search(self, state):
+    def search(self, state, cpuct=1.0):
         s = self.env.board2Str(state)
         if s not in self.Es:
             winner = self.env.getWiner(state)
@@ -50,12 +51,15 @@ class MCTS(object):
                 self.Es[s] = 0.5
         if self.Es[s] != 0:
             return self.Es[s]
-        actions = self.env.validActions(state)
+        if s not in self.As:
+            self.As[s] = self.env.validActions(state, player=1)
+        actions = self.As[s]
         if s not in self.Ps:
             self.Ps[s], v = self.agent.model.predict(self.agent.addAixs(np.array([state])))
             self.Ps[s], v = self.Ps[s][0], clamp(v[0][0], 0, 1)
             self.Ps[s] = [self.Ps[s][i] if i in actions else 0 for i in range(self.env.ACTION_SIZE)]
             self.Ps[s] = normallize(self.Ps[s])
+            # print('value\n', state, '\n', v)
             return v
         if s not in self.Ns:
             self.Ns[s] = 0
@@ -64,14 +68,15 @@ class MCTS(object):
         bu, ba = -float('inf'), -1
         for a in actions:
             if a in self.Qsa[s]:
-                u = self.Qsa[s][a] + self.Ps[s][a] * math.sqrt(self.Ns[s]) / (1 + self.Nsa[s][a])
+                u = self.Qsa[s][a] + cpuct * self.Ps[s][a] * math.sqrt(self.Ns[s]) / (1 + self.Nsa[s][a])
             else:
-                u = self.Ps[s][a] * math.sqrt(self.Ns[s] + 1e-6)
+                u = 0.5 + cpuct * self.Ps[s][a] * math.sqrt(self.Ns[s] + 1e-6)
             if u > bu:
                 bu = u
                 ba = a
         next_state = self.env.getNextState(state, ba)
-        v = self.search(next_state)
+        # print('choose action', ba, bu)
+        v = self.search(next_state, cpuct)
         if ba in self.Qsa[s]:
             self.Qsa[s][ba] = (self.Nsa[s][ba] * self.Qsa[s][ba] + v) / (self.Nsa[s][ba] + 1)
             self.Nsa[s][ba] += 1
@@ -122,29 +127,15 @@ class Agent(object):
         return [[self.memory[i][j] for i in idx] for j in range(3)]
 
     def setWinner(self, winner, resultState):
-        for state, prop, player in self.temp_exp:
+        for state, prop, player in reversed(self.temp_exp):
             if winner == 0:
                 self.exp.append(((state, prop, 0.5), resultState))
             else:
                 self.exp.append(((state, prop, 1.0 if winner == player else 0.0), resultState))
         self.temp_exp = []
 
-    def chooseAction(self, state, mode=0, mcts=None):
-        if mode == 2:
-            actions = self.env.validActions(state)
-            prop = self.model.predict(np.array([state]))[0][0]
-            maxa = actions[0]
-            for a in actions:
-                if maxa < prop[a]:
-                    maxa = a
-            return maxa, [0.0 if i != maxa else 1.0 for i in range(self.env.ACTION_SIZE)]
-        else:
-            if mcts is None:
-                mcts = self.mcts
-            if mode == 0:
-                return mcts.chooseAction(state, False)
-            elif mode == 1:
-                return mcts.chooseAction(state, True)
+    def chooseAction(self, state, mode=0):
+        return self.mcts.chooseAction(state, bool(mode), cpuct=0.000001 if mode == 1 else 0.2)
 
     def learn(self, batch):
         S, P, V = self.sampleMemory(batch)
@@ -167,14 +158,14 @@ class Agent(object):
         return data.reshape(data.shape + (1, ))
 
     def _createModel(self, size, learning_rate=0.001):
-        model = self.modelDic(size)
+        model = self.modelDict(size)
         model.compile(
             loss=tf.losses.mse,
             optimizer=tf.optimizers.Adam(learning_rate=learning_rate)
         )
         return model
 
-    def modelDic(self, size):
+    def modelDict(self, size):
         if size == 15:
             inputs = tf.keras.Input(shape=(size, size, 1))
             outputs = tf.keras.layers.Conv2D(512, (3, 3), activation='relu')(inputs)
@@ -197,26 +188,34 @@ class Agent(object):
             return tf.keras.Model(inputs=inputs, outputs=[output1, output2])
         elif size == 3:
             inputs = tf.keras.Input(shape=(size, size, 1))
-            outputs = tf.keras.layers.Conv2D(8, (3, 3), activation='relu', padding='same')(inputs)
+            outputs = tf.keras.layers.Conv2D(32, (3, 3), activation='relu', padding='same')(inputs)
+            outputs = tf.keras.layers.BatchNormalization()(outputs)
+            outputs = tf.keras.layers.Conv2D(32, (3, 3), activation='relu', padding='same')(outputs)
             outputs = tf.keras.layers.BatchNormalization()(outputs)
             outputs = tf.keras.layers.Flatten()(outputs)
-            outputs = tf.keras.layers.Dense(32, activation='relu')(outputs)
-            outputs = tf.keras.layers.Dropout(0.2)(outputs)
-            outputs = tf.keras.layers.Dense(32, activation='relu')(outputs)
-            outputs = tf.keras.layers.Dropout(0.2)(outputs)
+            outputs = tf.keras.layers.Dense(64, activation='relu')(outputs)
+            outputs = tf.keras.layers.BatchNormalization()(outputs)
+            outputs = tf.keras.layers.Dropout(0.3)(outputs)
+            outputs = tf.keras.layers.Dense(64, activation='relu')(outputs)
+            outputs = tf.keras.layers.BatchNormalization()(outputs)
+            outputs = tf.keras.layers.Dropout(0.3)(outputs)
             output1 = tf.keras.layers.Dense(size * size, activation='softmax')(outputs)
             output2 = tf.keras.layers.Dense(1, activation='linear')(outputs)
             return tf.keras.Model(inputs=inputs, outputs=[output1, output2])
         elif size == 5:
             inputs = tf.keras.Input(shape=(size, size, 1))
-            outputs = tf.keras.layers.Conv2D(16, (3, 3), activation='relu', padding='same')(inputs)
+            outputs = tf.keras.layers.Conv2D(256, (3, 3), activation='relu', padding='same')(inputs)
             outputs = tf.keras.layers.BatchNormalization()(outputs)
-            outputs = tf.keras.layers.Conv2D(32, (3, 3), activation='relu', padding='valid')(outputs)
+            outputs = tf.keras.layers.Conv2D(256, (3, 3), activation='relu', padding='same')(outputs)
+            outputs = tf.keras.layers.BatchNormalization()(outputs)
+            outputs = tf.keras.layers.Conv2D(256, (3, 3), activation='relu', padding='valid')(outputs)
             outputs = tf.keras.layers.BatchNormalization()(outputs)
             outputs = tf.keras.layers.Flatten()(outputs)
-            outputs = tf.keras.layers.Dense(128, activation='relu')(outputs)
+            outputs = tf.keras.layers.Dense(512, activation='relu')(outputs)
+            outputs = tf.keras.layers.BatchNormalization()(outputs)
             outputs = tf.keras.layers.Dropout(0.3)(outputs)
-            outputs = tf.keras.layers.Dense(128, activation='relu')(outputs)
+            outputs = tf.keras.layers.Dense(256, activation='relu')(outputs)
+            outputs = tf.keras.layers.BatchNormalization()(outputs)
             outputs = tf.keras.layers.Dropout(0.3)(outputs)
             output1 = tf.keras.layers.Dense(size * size, activation='softmax')(outputs)
             output2 = tf.keras.layers.Dense(1, activation='linear')(outputs)
@@ -294,19 +293,17 @@ class Gobang(object):
         self.boardWin = boardWin
         self.savePath = savePath
         self.logName = logName
-        self.env = None
+        self.env = envoriment.Gobang(onGridClick=self.onGridClick)
+        self.env.reshape(self.boardSize, self.boardWin)
         self.lastClick = None
         if self.player != 0:
             self.showProcess = True
 
     def run(self):
         trainPeriod = 50
-        memorySize = trainPeriod * 20 * 10
-        batchSize = memorySize // 3
-        env = envoriment.Gobang(onGridClick=self.onGridClick)
-        env.reshape(self.boardSize, self.boardWin)
-        self.env = env
-        agent = self.agentType(env, memorySize)
+        memorySize = trainPeriod * self.env.ACTION_SIZE * 5
+        batchSize = memorySize // 2
+        agent = self.agentType(self.env, memorySize)
         config = self.load()
         if config is not None:
             agent.model = config['model']
@@ -316,14 +313,14 @@ class Gobang(object):
             episode = 0
             self.winRate = []
         agent.model.summary()
-        agentPre = self.agentType(env, memorySize)
+        agentPre = self.agentType(self.env, memorySize)
         agentPre.model = copyModel(agent.model)
         if self.savePath and hasattr(self, 'logName'):
             self.logFile = open(os.path.join(self.savePath, self.logName), 'a')
             self.logs = []
         win, lose, draw = 0, 0, 0
         while True:
-            state = env.reset()
+            state = self.env.reset()
             self.render(0.5)
             step = 0
             s1 = time.time()
@@ -331,11 +328,11 @@ class Gobang(object):
             currentPlayer = 1
             while True:
                 if currentPlayer == self.player:
-                    action = self.waitPlayerClick()
-                    next_state, player, winner = env.step(action)
+                    action = self.waitPlayerClick(currentPlayer)
+                    next_state, player, winner = self.env.step(action)
                 else:
                     action, prop = agent.chooseAction(state, self.mode)
-                    next_state, player, winner = env.step(action)
+                    next_state, player, winner = self.env.step(action)
                     agent.saveExp(state, prop, player)
                 step += 1
                 state = next_state
@@ -366,28 +363,31 @@ class Gobang(object):
                 winScale = std / win if win > 0 else 1.0
                 loseScale = std / lose if lose > 0 else 1.0
                 drawScale = std / draw if draw > 0 else 1.0
-                agent.saveMemory(scale=[winScale, loseScale, drawScale])
-                for i in range(4):
+                # agent.saveMemory(scale=[math.sqrt(winScale), math.sqrt(loseScale), math.sqrt(drawScale)])
+                # agent.saveMemory(scale=[winScale, loseScale, drawScale])
+                agent.saveMemory(scale=[winScale ** 2, loseScale ** 2, drawScale ** 2])
+                # agent.saveMemory(scale=[1.0, 1.0, 1.0])
+                for i in range(5):
                     s2 = time.time()
                     agent.learn(batchSize)
                     self.log('learn spend {} seconds'.format(time.time() - s2))
                     s3 = time.time()
                     winRate = self.comapreWithPre(agent, agentPre)
                     if winRate < 0.6:
-                        agent.model = self.save(agentPre.model, episode=episode, winRate=self.winRate)
                         self.log('train result: {}, spend {} seconds'.format(0, time.time() - s3))
+                        agent.model = self.save(agentPre.model, episode=episode, winRate=self.winRate)
                     else:
-                        agentPre.model = self.save(agent.model, episode=episode, winRate=self.winRate)
                         self.log('train result: {}, spend {} seconds'.format(1, time.time() - s3))
+                        agentPre.model = self.save(agent.model, episode=episode, winRate=self.winRate)
                         break
-                agent.discountMemoryWeight(0.8)
+                agent.discountMemoryWeight(0.7)
                 win, lose, draw = 0, 0, 0
 
     def onGridClick(self, x, y):
         self.lastClick = y * self.env.SIZE + x
 
-    def waitPlayerClick(self):
-        validActions = self.env.validActions()
+    def waitPlayerClick(self, player):
+        validActions = self.env.validActions(player=player)
         while True:
             self.lastClick = None
             self.render()
@@ -396,34 +396,32 @@ class Gobang(object):
                 return self.lastClick
 
     def comapreWithPre(self, agent, agentPre, battleCount=20):
-        env = self.env
         win, lose = 0, 0
         episode = 0
-        mctsAgent = MCTS(env, agent)
-        mctsAgentPre = MCTS(env, agentPre)
+        agent1 = self.agentType(self.env, 0)
+        agent2 = self.agentType(self.env, 0)
+        agent1.model = agent.model
+        agent2.model = agentPre.model
         agents = [None, None, None]
-        mcts = [None, None, None]
         for i in range(battleCount // 2):
             for agentIdx in range(1, 3):
-                agents[agentIdx] = agent
-                agents[3 - agentIdx] = agentPre
-                mcts[agentIdx] = mctsAgent
-                mcts[3 - agentIdx] = mctsAgentPre
-                state = env.reset()
+                agents[agentIdx] = agent1
+                agents[3 - agentIdx] = agent2
+                state = self.env.reset()
                 player = 1
                 step = []
                 while True:
-                    action, prop = agents[player].chooseAction(state, 1, mcts=mcts[player])
+                    action, prop = agents[player].chooseAction(state, 1)
                     player = 3 - player
-                    state, p, winner = env.step(action)
+                    state, p, winner = self.env.step(action)
                     step.append(action)
                     if winner is not None:
                         break
                 if winner == 0:
                     if agentIdx == 1:
-                        lose += 0.1
+                        lose += 0.01
                     else:
-                        win += 0.1
+                        win += 0.01
                 elif winner == agentIdx:
                     win += 1
                 else:
@@ -499,15 +497,52 @@ class Gobang(object):
             if sleepTime:
                 time.sleep(sleepTime)
 
+    def testAgent(self, a1='', a2=''):
+        agent1 = self.agentType(self.env, 0)
+        agent1.mcts._idx = 1
+        if a1: agent1.model = tf.keras.models.load_model(a1)
+        agent2 = self.agentType(self.env, 0)
+        agent2.mcts._idx = 2
+        if a2: agent2.model = tf.keras.models.load_model(a2)
+        agents = [None, None, None]
+        episode = 0
+        win, lose = 0, 0
+        while True:
+            for agentIdx in range(1, 3):
+                agents[agentIdx] = agent1
+                agents[3 - agentIdx] = agent2
+                state = self.env.reset()
+                player = 1
+                step = []
+                while True:
+                    action, prop = agents[player].chooseAction(state, 1)
+                    player = 3 - player
+                    state, p, winner = self.env.step(action)
+                    step.append(action)
+                    if winner is not None:
+                        break
+                episode += 1
+                if winner == agentIdx:
+                    win += 1
+                elif winner != 0:
+                    lose += 1
+                print('self battle {}: path {}, expect {}, winner {}'.format(episode, step, agentIdx, winner))
+                print('total: {} win, {} lose'.format(win, lose))
+
 
 if __name__ == '__main__':
-    game = Gobang(Agent, showProcess=False, player=0, mode=0,
-                          boardSize=5, boardWin=4,
-                          savePath=getDataFilePath('GoBang_5_4_1'), logName='log.txt')
+    # game = Gobang(Agent, showProcess=False, player=0, mode=0,
+    #                       boardSize=5, boardWin=4,
+    #                       savePath=getDataFilePath('GoBang_5_4_1'), logName='log.txt')
 
-    # game = Gobang(Agent, showProcess=False, player=2, mode=1,
+    game = Gobang(Agent, showProcess=False, player=0, mode=0,
+                          boardSize=3, boardWin=3,
+                          savePath=getDataFilePath('GoBang_3_3_3'), logName='log.txt')
+
+    # game = Gobang(Agent, showProcess=False, player=0, mode=0,
     #                       boardSize=3, boardWin=3,
-    #                       savePath=getDataFilePath('GoBang_3_3_1'), logName='log.txt')
+    #                       savePath=getDataFilePath('GoBang_3_3_2'), logName='log.txt')
     game.run()
+    # game.testAgent(getDataFilePath('GoBang_5_4_1/model_1000-1500.h5'), getDataFilePath('GoBang_5_4_1/model_0-500.h5'))
 
 
