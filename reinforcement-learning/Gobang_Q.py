@@ -59,7 +59,7 @@ class Agent(object):
 
     def chooseAction(self, state, mode=0):
         values = clamp(self.model.predict(np.array([state]))[0], 0, 1)
-        actions = self.env.validActions(state, player=1)
+        actions = self.env.validActions(state, player=2)
         if mode == 0:
             maxA = actions[0]
             for a in actions:
@@ -469,7 +469,7 @@ class Gobang(object):
 if __name__ == '__main__':
     game = Gobang(Agent, showProcess=False, player=0, mode=2,
                           boardSize=5, boardWin=4,
-                          savePath=getDataFilePath('GoBang_5_4_2'), logName='log.txt')
+                          savePath=getDataFilePath('GoBang_5_4_3'), logName='log.txt')
 
     # game = Gobang(Agent, showProcess=False, player=0, mode=2,
     #                       boardSize=3, boardWin=3,
