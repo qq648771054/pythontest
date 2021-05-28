@@ -74,7 +74,7 @@ class Agent(object):
                 values = np.array([values[i] if i in actions else 0 for i in range(self.env.ACTION_SIZE)])
                 return np.random.choice(self.env.ACTION_SIZE, p=normallize(values))
 
-    def learn(self, batch):
+    def learn(self, batch, epochs=10):
         S, A, V = self.sampleMemory(batch)
         P = self.model.predict(np.array(S))
         trainSize = (len(self.env.sameShapes) * len(S))
@@ -91,7 +91,7 @@ class Agent(object):
                 i += 1
         states, props = np.array(states), np.array(props)
         states = self.addAixs(states)
-        self.model.fit(states, props, epochs=5, verbose=1)
+        self.model.fit(states, props, epochs=epochs, verbose=1)
 
     def addAixs(self, data):
         return data.reshape(data.shape + (1, ))
@@ -305,11 +305,13 @@ class Gobang(object):
                 # agent.saveMemory(scale=[1.0, 1.0, 1.0])
                 for i in range(5):
                     s2 = time.time()
-                    agent.learn(batchSize)
-                    self.log('learn spend {} seconds'.format(time.time() - s2))
+                    bs = int(batchSize * (0.5 + random.random()))
+                    es = int(5 + 6 * random.random())
+                    agent.learn(bs, es)
+                    self.log('learn {} memorys, epoches {}, spend {} seconds'.format(bs, es, time.time() - s2))
                     s3 = time.time()
                     winRate = self.comapreWithPre(agent, agentPre)
-                    if winRate < 0.6:
+                    if winRate < 0.65:
                         self.log('train result: {}, spend {} seconds'.format(0, time.time() - s3))
                         agent.model = self.save(agentPre.model, episode=episode, winRate=self.winRate)
                     else:
