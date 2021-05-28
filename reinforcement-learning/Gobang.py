@@ -27,7 +27,7 @@ class MCTS(object):
         s = self.env.board2Str(state)
         for i in range(episode):
             self.search(state, cpuct)
-        actions = self.env.validActions(state, player=1)
+        actions = self.env.validActions(state, player=2)
         counts = [self.Nsa[s].get(i, 0) if i in actions else 0 for i in range(self.env.ACTION_SIZE)]
         counts = normallize(counts)
         if selectMax:
@@ -55,7 +55,7 @@ class MCTS(object):
         if self.Es[s] != 0:
             return self.Es[s]
         if s not in self.As:
-            self.As[s] = self.env.validActions(state, player=1)
+            self.As[s] = self.env.validActions(state, player=2)
         actions = self.As[s]
         if s not in self.Ps:
             self.Ps[s], v = self.agent.model.predict(self.agent.addAixs(np.array([state])))

@@ -91,7 +91,7 @@ class Agent(object):
                 i += 1
         states, props = np.array(states), np.array(props)
         states = self.addAixs(states)
-        self.model.fit(states, props, epochs=10, verbose=1)
+        self.model.fit(states, props, epochs=5, verbose=1)
 
     def addAixs(self, data):
         return data.reshape(data.shape + (1, ))
@@ -137,8 +137,7 @@ class Agent(object):
             outputs = tf.keras.layers.Dense(64, activation='relu')(outputs)
             outputs = tf.keras.layers.BatchNormalization()(outputs)
             outputs = tf.keras.layers.Dropout(0.3)(outputs)
-            outputs = tf.keras.layers.Dense(size * size, activation='linear')(outputs)
-            output1 = tf.keras.layers.BatchNormalization()(outputs)
+            output1 = tf.keras.layers.Dense(size * size, activation='linear')(outputs)
             return tf.keras.Model(inputs=inputs, outputs=output1)
         elif size == 5:
             inputs = tf.keras.Input(shape=(size, size, 1))
@@ -155,8 +154,7 @@ class Agent(object):
             outputs = tf.keras.layers.Dense(256, activation='relu')(outputs)
             outputs = tf.keras.layers.BatchNormalization()(outputs)
             outputs = tf.keras.layers.Dropout(0.3)(outputs)
-            outputs = tf.keras.layers.Dense(size * size, activation='linear')(outputs)
-            output1 = tf.keras.layers.BatchNormalization()(outputs)
+            output1 = tf.keras.layers.Dense(size * size, activation='linear')(outputs)
             return tf.keras.Model(inputs=inputs, outputs=output1)
         elif size == 10:
             inputs = tf.keras.Input(shape=(size, size, 1))
@@ -311,7 +309,7 @@ class Gobang(object):
                     self.log('learn spend {} seconds'.format(time.time() - s2))
                     s3 = time.time()
                     winRate = self.comapreWithPre(agent, agentPre)
-                    if winRate < 0.65:
+                    if winRate < 0.6:
                         self.log('train result: {}, spend {} seconds'.format(0, time.time() - s3))
                         agent.model = self.save(agentPre.model, episode=episode, winRate=self.winRate)
                     else:
