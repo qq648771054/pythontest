@@ -5,6 +5,7 @@ import time
 import sys
 import os
 from collections import deque
+import math
 
 def minInterval(interval):
     """最小调用间隔时间"""
@@ -146,6 +147,9 @@ def normallize(arr):
     else:
         return [1.0 / len(arr)] * len(arr)
 
+def softmax(arr):
+    return normallize([math.exp(a) for a in arr])
+
 def distinct(arr, eq=lambda a, b: a == b):
     res = []
     for a in arr:
@@ -156,7 +160,6 @@ def distinct(arr, eq=lambda a, b: a == b):
             res.append(a)
     return res
 
-
 def sample(arr, size):
     if len(arr) <= size:
         return [a for a in arr]
@@ -164,5 +167,8 @@ def sample(arr, size):
         idx = np.random.choice(len(arr), size=size)
         return [arr[i] for i in idx]
 
-def clamp(x, l, r):
-    return min(max(x, l), r)
+def clamp(arr, l, r):
+    if hasattr(arr, '__iter__'):
+        return [min(max(x, l), r) for x in arr]
+    else:
+        return min(max(arr, l), r)

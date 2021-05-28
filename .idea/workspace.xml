@@ -11,16 +11,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add knn">
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/Snake.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/Gobang_Q.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/GoBang_5_4/config.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/GoBang_5_4/model_0-500.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/GoBang_5_4/model_1000-1500.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/GoBang_5_4/model_1500-2000.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/GoBang_5_4/model_500-1000.h5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/Lib.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reinforcement-learning/Gobang.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/Gobang.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/envoriment.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/envoriment.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +56,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/data" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/reinforcement-learning" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -75,14 +70,14 @@
       <recent name="D:\workspace\pythontest\machine-learning\Tensorflow" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace\pythontest\reinforcement-learning" />
       <recent name="D:\workspace\pythontest\data" />
       <recent name="E:\workspace\pythontest\data\DQN_Maze" />
       <recent name="D:\workspace\pythontest\machine-learning" />
       <recent name="E:\workspace\pythontest\data" />
-      <recent name="D:\workspace\pythontest\spider" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Gobang">
+  <component name="RunManager" selected="Python.Gobang_Q">
     <configuration name="Gobang" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -105,6 +100,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Gobang_Q" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pythontest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/Gobang_Q.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="envoriment" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -119,28 +135,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/envoriment.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pythontest" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../alpha-zero-general" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../alpha-zero-general/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -195,11 +189,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Gobang" />
+        <item itemvalue="Python.Gobang_Q" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.Gobang" />
         <item itemvalue="Python.pit" />
         <item itemvalue="Python.envoriment" />
-        <item itemvalue="Python.main (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -360,42 +354,46 @@
     <option name="LAST_COMMIT_MESSAGE" value="add knn" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1899" height="348" key="GridCell.Tab.0.bottom" timestamp="1622103487804">
+    <state x="677" y="320" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1622121074021">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622103487804" />
-    <state width="1899" height="348" key="GridCell.Tab.0.center" timestamp="1622103487803">
+    <state x="677" y="320" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622121074021" />
+    <state width="1899" height="348" key="GridCell.Tab.0.bottom" timestamp="1622193336094">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622103487803" />
-    <state width="1899" height="348" key="GridCell.Tab.0.left" timestamp="1622103487803">
+    <state width="1899" height="348" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622193336094" />
+    <state width="1899" height="348" key="GridCell.Tab.0.center" timestamp="1622193336094">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622103487803" />
-    <state width="1899" height="348" key="GridCell.Tab.0.right" timestamp="1622103487803">
+    <state width="1899" height="348" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622193336094" />
+    <state width="1899" height="348" key="GridCell.Tab.0.left" timestamp="1622193336094">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622103487803" />
-    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1622103445233">
+    <state width="1899" height="348" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622193336094" />
+    <state width="1899" height="348" key="GridCell.Tab.0.right" timestamp="1622193336094">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622103445233" />
-    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1622103445233">
+    <state width="1899" height="348" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622193336094" />
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1622193336094">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622103445233" />
-    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1622103445233">
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622193336094" />
+    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1622193336094">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622103445233" />
-    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1622103445233">
+    <state width="1899" height="348" key="GridCell.Tab.1.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622193336094" />
+    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1622193336094">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622103445233" />
-    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1621994073977">
+    <state width="1899" height="348" key="GridCell.Tab.1.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622193336094" />
+    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1622193336094">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="968" height="528" key="XDebugger.FullValuePopup/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1621994073977" />
+    <state width="1899" height="348" key="GridCell.Tab.1.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622193336094" />
+    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1622193325327">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="968" height="528" key="XDebugger.FullValuePopup/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622193325327" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -424,6 +422,16 @@
           <url>file://$PROJECT_DIR$/test/Matplotlib.py</url>
           <line>30</line>
           <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/reinforcement-learning/Gobang_Q.py</url>
+          <line>85</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Lib.py</url>
+          <line>170</line>
+          <option name="timeStamp" value="49" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
