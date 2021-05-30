@@ -1,13 +1,8 @@
-import copy
 import json
-
-import numpy as np
-
 from lib import *
 import matplotlib.animation as animation
 import time
 import random
-import Thread
 import envoriment
 import math
 

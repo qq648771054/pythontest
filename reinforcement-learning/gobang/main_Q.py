@@ -1,15 +1,17 @@
-import copy
-import json
-
-import numpy as np
+import math
 
 from lib import *
 import matplotlib.animation as animation
 import time
+import datetime
 import random
-import Thread
-import envoriment
-import math
+import Game
+import json
+
+MODE_GREDDY = 0
+MODE_RANDOM1 = 1
+MODE_RANDOM2 = 2
+
 class Agent(object):
     def __init__(self, env, memroySize):
         self.env = env
@@ -57,22 +59,21 @@ class Agent(object):
                 self.exp.append(((state, action, 1.0 if winner == player else 0.0), resultState))
         self.temp_exp = []
 
-    def chooseAction(self, state, mode=0):
+    def chooseAction(self, state, mode=MODE_GREDDY):
         values = clamp(self.model.predict(np.array([state]))[0], 0, 1)
         actions = self.env.validActions(state, player=2)
-        if mode == 0:
+        if mode == MODE_GREDDY:
             maxA = actions[0]
             for a in actions:
                 if values[a] > values[maxA]:
                     maxA = a
             return maxA
         else:
-            if mode == 2 and random.random() >= 0.9:
+            if mode == MODE_RANDOM2 and random.random() >= 0.9:
                 return random.choice(actions)
             else:
-                values = softmax(values)
-                values = np.array([values[i] if i in actions else 0 for i in range(self.env.ACTION_SIZE)])
-                return np.random.choice(self.env.ACTION_SIZE, p=normallize(values))
+                values = normallize([values[i] ** 2 if i in actions else 0 for i in range(self.env.ACTION_SIZE)])
+                return np.random.choice(self.env.ACTION_SIZE, p=values)
 
     def learn(self, batch, epochs=10):
         S, A, V = self.sampleMemory(batch)
@@ -228,7 +229,7 @@ class Gobang(object):
         self.boardWin = boardWin
         self.savePath = savePath
         self.logName = logName
-        self.env = envoriment.Gobang(onGridClick=self.onGridClick)
+        self.env = Game.Gobang(onGridClick=self.onGridClick)
         self.env.reshape(self.boardSize, self.boardWin)
         self.lastClick = None
         if self.player != 0:
@@ -254,6 +255,7 @@ class Gobang(object):
             self.logFile = open(os.path.join(self.savePath, self.logName), 'a')
             self.logs = []
         win, lose, draw = 0, 0, 0
+        self.log('train start')
         while True:
             state = self.env.reset()
             self.render(0.5)
@@ -301,7 +303,7 @@ class Gobang(object):
                 # agent.saveMemory(scale=[math.sqrt(winScale), math.sqrt(loseScale), math.sqrt(drawScale)])
                 # agent.saveMemory(scale=[winScale, loseScale, drawScale])
                 # scales = [[2, 1, 1], [1, 2, 1], []]
-                agent.saveMemory(scale=[winScale ** 2, loseScale ** 2, drawScale ** 2])
+                agent.saveMemory(scale=[math.sqrt(winScale), math.sqrt(loseScale), math.sqrt(drawScale)])
                 # agent.saveMemory(scale=[1.0, 1.0, 1.0])
                 for i in range(5):
                     s2 = time.time()
@@ -311,7 +313,7 @@ class Gobang(object):
                     self.log('learn {} memorys, epoches {}, spend {} seconds'.format(bs, es, time.time() - s2))
                     s3 = time.time()
                     winRate = self.comapreWithPre(agent, agentPre)
-                    if winRate < 0.65:
+                    if winRate < 0.55:
                         self.log('train result: {}, spend {} seconds'.format(0, time.time() - s3))
                         agent.model = self.save(agentPre.model, episode=episode, winRate=self.winRate)
                     else:
@@ -341,6 +343,7 @@ class Gobang(object):
         agent1.model = agent.model
         agent2.model = agentPre.model
         agents = [None, None, None]
+        mode = MODE_GREDDY
         for i in range(battleCount // 2):
             for agentIdx in range(1, 3):
                 agents[agentIdx] = agent1
@@ -349,7 +352,7 @@ class Gobang(object):
                 player = 1
                 step = []
                 while True:
-                    action = agents[player].chooseAction(state, 1)
+                    action = agents[player].chooseAction(state, mode)
                     player = 3 - player
                     state, p, winner = self.env.step(action)
                     step.append(action)
@@ -365,7 +368,8 @@ class Gobang(object):
                 else:
                     lose += 1
                 episode += 1
-                self.log('self battle {}: path {}, expect {}, winner {}'.format(episode, step, agentIdx, winner))
+                self.log('self battle {} mode {}: path {}, expect {}, winner {}'.format(episode, mode, step, agentIdx, winner))
+            mode = MODE_RANDOM1
         self.log('self battle win rate: {}'.format(win / (win + lose)))
         return win / (win + lose)
 
@@ -424,8 +428,10 @@ class Gobang(object):
         Image(self.winRate)
 
     def log(self, s):
-        print(s)
+        print(str(datetime.datetime.now()), ': ', s)
         if hasattr(self, 'logFile'):
+            self.logs.append(str(datetime.datetime.now()))
+            self.logs.append(': ')
             self.logs.append(s)
             self.logs.append('\n')
 
@@ -451,7 +457,7 @@ class Gobang(object):
                 player = 1
                 step = []
                 while True:
-                    action = agents[player].chooseAction(state, 0)
+                    action = agents[player].chooseAction(state, MODE_GREDDY)
                     player = 3 - player
                     state, p, winner = self.env.step(action)
                     step.append(action)
@@ -467,13 +473,18 @@ class Gobang(object):
 
 
 if __name__ == '__main__':
-    game = Gobang(Agent, showProcess=False, player=0, mode=2,
-                          boardSize=5, boardWin=4,
-                          savePath=getDataFilePath('GoBang_5_4_3'), logName='log.txt')
-
     # game = Gobang(Agent, showProcess=False, player=0, mode=2,
-    #                       boardSize=3, boardWin=3,
-    #                       savePath=getDataFilePath('GoBang_3_3_5'), logName='log.txt')
+    #                       boardSize=5, boardWin=4,
+    #                       savePath=getDataFilePath('GoBang_5_4_3'), logName='log.txt')
+
+    game = Gobang(Agent, showProcess=False, player=0, mode=MODE_RANDOM2,
+                          boardSize=3, boardWin=3,
+
+                          savePath=getDataFilePath('GoBang_3_3_3'), logName='log.txt')
+
+    # game = Gobang(Agent, showProcess=False, player=1, mode=MODE_GREDDY,
+    #               boardSize=3, boardWin=3,
+    #               savePath=getDataFilePath('GoBang_3_3_1'), logName='log.txt')
 
     # game = Gobang(Agent, showProcess=False, player=0, mode=0,
     #                       boardSize=3, boardWin=3,
