@@ -84,6 +84,16 @@ class Gobang(tk.Tk):
         else:
             return all
 
+    # def validActions(self, state=None, player=None):
+    #     if state is None:
+    #         state = self.map
+    #     res = []
+    #     for i in range(self.SIZE):
+    #         for j in range(self.SIZE):
+    #             if not state[i][j]:
+    #                 res.append(i * self.SIZE + j)
+    #     return res
+
     def flip(self, state):
         map = np.zeros((self.SIZE, self.SIZE), dtype=np.int)
         for i in range(self.SIZE):
