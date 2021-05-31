@@ -2,6 +2,8 @@
 import random
 import numpy as np
 import time
+import datetime
+import copy
 import sys
 import os
 from collections import deque
@@ -172,3 +174,17 @@ def clamp(arr, l, r):
         return [min(max(x, l), r) for x in arr]
     else:
         return min(max(arr, l), r)
+
+def vstack(arrs):
+    res = [[] for i in range(len(arrs[0]))]
+    for arr in arrs:
+        for i, a in enumerate(arr):
+            res[i].append(a)
+    return res
+
+def hstack(arrs):
+    res = []
+    for arr in arrs:
+        for a in arr:
+            res.append(a)
+    return res

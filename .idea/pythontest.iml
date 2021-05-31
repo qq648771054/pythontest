@@ -9,6 +9,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/reinforcement-learning" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/reinforcement-learning/OpenAiGym" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../tensorflow2.0" />
     <orderEntry type="jdk" jdkName="Python 3.6" jdkType="Python SDK" />
