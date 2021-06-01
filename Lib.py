@@ -188,3 +188,8 @@ def hstack(arrs):
         for a in arr:
             res.append(a)
     return res
+
+def second2Str(second):
+    m, s = divmod(second, 60)
+    h, m = divmod(m, 60)
+    return "%02d:%02d:%02d" % (h, m, s)

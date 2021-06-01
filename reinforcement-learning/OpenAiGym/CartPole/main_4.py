@@ -49,12 +49,13 @@ class Agent(object):
         next_values = self.model.predict(np.array(next_states))
         for v, nv, a, r in zip(values, next_values, actions, rewards):
             v[a] = r + gamma * nv.max()
-        self.model.fit(np.array(states), values, epochs=10, verbose=0)
+        self.model.fit(np.array(states), values, epochs=1, verbose=0)
 
     def _createModel(self):
         input1 = tf.keras.Input(shape=(self.env.stateLen, ))
-        output = tf.keras.layers.Dense(100, activation='relu')(input1)
-        output1 = tf.keras.layers.Dense(self.env.actionLen, activation='linear')(output)
+        x = tf.keras.layers.Dense(30, activation='relu')(input1)
+        x = tf.keras.layers.Dense(30, activation='relu')(x)
+        output1 = tf.keras.layers.Dense(self.env.actionLen, activation='linear')(x)
         model = tf.keras.Model(inputs=input1, outputs=output1)
         model.compile(
             optimizer=tf.keras.optimizers.Adam(),
@@ -72,22 +73,17 @@ class CartPole(Game):
     stateLen = 4
 
     def step(self, action):
-        # next_state, reward, done, info = self.env.step(action)
-        # if done:
-        #     reward = -10000
-        # return next_state, reward, done
-
         next_state, reward, done, info = self.env.step(action)
-        x, x_dot, theta, theta_dot = next_state
-        r1 = (self.env.x_threshold - abs(x)) / self.env.x_threshold - 0.8
-        r2 = (self.env.theta_threshold_radians - abs(theta)) / self.env.theta_threshold_radians - 0.5
-        reward = r1 + r2
+        reward = -1 if done else 0
         return next_state, reward, done
 
     def train(self, showProcess=False):
+        startTime = time.time()
         agent = Agent(self, memorySize=300)
+        agent.model.summary()
         episode = 0
         config = self.load()
+        steps = [0] * 10
         if config:
             episode = config['episode']
             if config['model']:
@@ -103,17 +99,43 @@ class CartPole(Game):
                 agent.saveMemory(state, action, reward, next_state)
                 step += 1
                 state = next_state
+                agent.learn()
                 showProcess and self.render(0.016)
                 if done:
                     break
-            agent.learn()
-            agent.memory.clear()
             self.log(f'episode {episode}: step {step}')
+            self.save(agent.model, episode=episode)
+            self.saveLog()
+            steps[episode % 10] = step
+            if sum(steps) >= 1600:
+                break
+        return time.time() - startTime, episode
 
     def play(self):
         thread = threading.Thread()
         thread.start()
 
+'''
+与main_2的主要不同:
+改为每步学习一次
+统计:
+    收敛次数        时间
+1     31        00:03:59
+2     92        00:14:20
+3     39        00:04:59
+4     32        00:04:18
+5     28        00:03:01
+all   222       00:30:40
+'''
 if __name__ == '__main__':
-    cartPole = CartPole('CartPole-v1', getDataFilePath('CartPole_1'))
-    cartPole.train(showProcess=False)
+    root = getDataFilePath(f'CartPole/CartPole_4/')
+    if not os.path.exists(root):
+        os.mkdir(root)
+    startTime = time.time()
+    totalEpisode = 0
+    for i in range(5):
+        cartPole = CartPole('CartPole-v0', os.path.join(root, f'CartPole_4_{i + 1}'))
+        spendTime, episode = cartPole.train(showProcess=False)
+        totalEpisode += episode
+        print(f'train {i + 1}, spendTime {second2Str(int(spendTime))}, episode {episode}')
+    print(f'testFinish spend {second2Str(int(time.time() - startTime))}, episode {totalEpisode}')
