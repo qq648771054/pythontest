@@ -144,15 +144,15 @@ class CartPole(Game):
 改变网络结构,变成avalue和svalue的结构(dueling dqn)
 统计:
     收敛次数        时间
-1     45        00:02:10
-2     65        00:03:23
-3     36        00:01:55
-4     20        00:01:30
-5     51        00:02:37
-all   217       00:11:38
+1     40        00:01:45
+2     56        00:02:20
+3     35        00:01:27
+4     43        00:02:46
+5     44        00:02:30
+all   218       00:10:50
 '''
 if __name__ == '__main__':
-    root = getDataFilePath(f'CartPole/CartPole_10_1/')
+    root = getDataFilePath(f'CartPole/CartPole_10/')
     if not os.path.exists(root):
         os.mkdir(root)
     startTime = time.time()
