@@ -1,5 +1,5 @@
-from OpenAiGym.lib import *
-import threading
+from lib import *
+from OpenAiGym.CartPole.CartPoleBase import CartPoleBase
 
 class Memory(object):
     def __init__(self, size):
@@ -63,15 +63,7 @@ class Agent(object):
         )
         return model
 
-class CartPole(Game):
-    saveType = {
-        'episode': (str, int, 0)
-    }
-    bakFrequence = 500
-
-    actionLen = 2
-    stateLen = 4
-
+class CartPole(CartPoleBase):
     def step(self, action):
         next_state, reward, done, info = self.env.step(action)
         reward = -1 if done else 0
@@ -112,10 +104,6 @@ class CartPole(Game):
             if sum(steps) >= 1600:
                 break
         return time.time() - startTime, episode
-
-    def play(self):
-        thread = threading.Thread()
-        thread.start()
 
 '''
 与main_2的主要不同:
