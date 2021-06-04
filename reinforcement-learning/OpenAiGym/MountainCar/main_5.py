@@ -120,11 +120,11 @@ class MountainCar(MountainCarBase):
                 step += 1
                 state = next_state
                 if step % 5 == 0:
-                    agent.learn(128)
+                    agent.learn(512)
                 showProcess and self.render()
                 if done:
                     break
-            agent.learn(128)
+            agent.learn(512)
             agent.syncModel()
             self.log(f'episode {episode}: step {step}, position {next_state[0]}, max height {maxHeight}')
             self.save(agent.model, episode=episode, spendTime=spendTime)
@@ -136,25 +136,25 @@ class MountainCar(MountainCarBase):
         return spendTime, episode
 
 '''
-与main_3的主要不同:
-改造memory,每次取必定取出新加入的再加上部分权重高的数据,并减小记忆库至3000,每次学习数量增加至128
+与main_4的主要不同:
+每次学习数量增加至512
 统计:
     收敛次数        时间
-1     30        00:03:31
-2     48        00:05:39
-3     84        00:09:52
-4     100       00:12:09
-5     72        00:08:38
-all   334       00:39:51
+1     99        00:12:28
+2     62        00:08:09
+3     55        00:07:23
+4     92        00:11:42
+5     63        00:08:17
+all   371       00:48:02
 '''
 if __name__ == '__main__':
-    root = getDataFilePath(f'MountainCar/MountainCar_4/')
+    root = getDataFilePath(f'MountainCar/MountainCar_5/')
     if not os.path.exists(root):
         os.mkdir(root)
     startTime = time.time()
     totalEpisode = 0
     for i in range(5):
-        cartPole = MountainCar('MountainCar-v0', os.path.join(root, f'MountainCar_4_{i + 1}'))
+        cartPole = MountainCar('MountainCar-v0', os.path.join(root, f'MountainCar_5_{i + 1}'))
         spendTime, episode = cartPole.train(showProcess=False)
         totalEpisode += episode
         print(f'train {i + 1}, spendTime {second2Str(int(spendTime))}, episode {episode}')
