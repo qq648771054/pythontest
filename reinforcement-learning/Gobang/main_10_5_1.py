@@ -51,7 +51,6 @@ class Agent(object):
             values = self.model.predict(self.addAxis(np.array([board])))[0]
             return self.findIndex(actions, values, lambda a, b: a > b)
         else:
-            print('random choice')
             return np.random.choice(actions)
 
     def findIndex(self, actions, values, func=lambda a, b: a > b):
@@ -181,5 +180,5 @@ class Gobang(GobangBase):
 
 if __name__ == '__main__':
     game = Gobang(3, 3, savePath=getDataFilePath('Gobang/Gobang_3_3/Gobang_3_3_3'))
-    # game.play(1, Agent)
-    game.train(showProcess=False)
+    game.play(1, Agent)
+    # game.train(showProcess=False)
