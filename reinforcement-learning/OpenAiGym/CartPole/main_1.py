@@ -106,6 +106,7 @@ class CartPole(CartPoleBase):
 
 
 '''
+使用 DQN
 统计:
     收敛次数        时间
 1     152        00:03:19

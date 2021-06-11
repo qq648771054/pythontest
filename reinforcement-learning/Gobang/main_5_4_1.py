@@ -1,5 +1,9 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 from lib import *
 from Gobang.GobangBase import GobangBase
+
+
 
 class Memory(object):
     def __init__(self, size):
@@ -45,7 +49,7 @@ class Agent(object):
         self.modelPre = copyModel(self.model)
         self.memory = Memory(memorySize)
 
-    def chooseAction(self, board, greedy=0.95):
+    def chooseAction(self, board, greedy=0.99):
         actions = self.env.validActions(board)
         if random.random() < greedy:
             values = self.model.predict(self.addAxis(np.array([board])))[0]
@@ -89,20 +93,21 @@ class Agent(object):
             r_values.extend(v)
             r_weights.extend([w] * len(s))
         self.model.fit(np.array(r_states), np.array(r_values), sample_weight=np.array(r_weights), epochs=epochs, verbose=0)
-        # p = self.model.predict(np.array(r_states))
+        p = self.model.predict(np.array(r_states))
         self.memory.updateErrors(idxs, errors)
 
     def _createModel(self):
         input1 = tf.keras.Input(shape=self.env.stateSize)
-        x = tf.keras.layers.Conv2D(32, (3, 3), activation='relu', padding='same')(input1)
+        x = tf.keras.layers.Conv2D(64, (3, 3), activation='relu', padding='same')(input1)
         # x = tf.keras.layers.BatchNormalization()(x)
-        x = tf.keras.layers.Conv2D(32, (3, 3), activation='relu', padding='same')(x)
+        x = tf.keras.layers.Conv2D(64, (3, 3), activation='relu', padding='same')(x)
         # x = tf.keras.layers.BatchNormalization()(x)
+        x = tf.keras.layers.Conv2D(128, (3, 3), activation='relu', padding='valid')(x)
         x = tf.keras.layers.Flatten()(x)
-        x = tf.keras.layers.Dense(128, activation='relu')(x)
+        x = tf.keras.layers.Dense(256, activation='relu')(x)
         # x = tf.keras.layers.Dropout(0.2)(x)
         # x = tf.keras.layers.BatchNormalization()(x)
-        x = tf.keras.layers.Dense(64, activation='relu')(x)
+        x = tf.keras.layers.Dense(128, activation='relu')(x)
         # x = tf.keras.layers.Dropout(0.2)(x)
         # x = tf.keras.layers.BatchNormalization()(x)
         output1 = tf.keras.layers.Dense(self.env.actionSize)(x)
@@ -138,7 +143,7 @@ class Gobang(GobangBase):
 
     def train(self, showProcess=False):
         self.env.rendering = showProcess
-        agent = Agent(self, memorySize=300)
+        agent = Agent(self, memorySize=1000)
         agent.model.summary()
         spendTime = 0
         episode = 0
@@ -166,7 +171,7 @@ class Gobang(GobangBase):
                 # agent.learn(batch=128, epochs=2)
                 if done:
                     break
-            agent.learn(batch=128, epochs=10)
+            agent.learn(batch=300, epochs=10)
             self.log(f'episode {episode}: step {step}, path {path}, winner {player if step < self.env.actionSize else 0}')
             if episode % 10 == 0:
                 self.save(agent.model, episode=episode, spendTime=spendTime)
@@ -179,6 +184,6 @@ class Gobang(GobangBase):
         # return spendTime, episode
 
 if __name__ == '__main__':
-    game = Gobang(3, 3, savePath=getDataFilePath('Gobang/Gobang_3_3/Gobang_3_3_3'))
-    game.play(1, Agent)
-    # game.train(showProcess=False)
+    game = Gobang(5, 4, savePath=getDataFilePath('Gobang/Gobang_5_4/Gobang_5_4_1'))
+    # game.play(2, Agent)
+    game.train(showProcess=False)

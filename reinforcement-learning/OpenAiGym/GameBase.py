@@ -6,9 +6,11 @@ class GameBase(object):
     saveType = {
         'episode': (str, int, 0)
     }
+    modelNames = ['model']
     bakFrequence = 500
 
     def __init__(self, name, savePath=''):
+        self.gameName = name
         self.env = gym.make(name)
         self.savePath = savePath
         if self.savePath:
@@ -51,15 +53,17 @@ class GameBase(object):
         config = None
         if self.savePath:
             config = self.readConfig()
-            modelPath = os.path.join(self.savePath, 'model_{}-{}.h5'.format(
-                (config['episode'] // self.bakFrequence) * self.bakFrequence,
-                ((config['episode'] // self.bakFrequence) + 1) * self.bakFrequence,
-            ))
-            if os.path.exists(modelPath):
-                model = tf.keras.models.load_model(modelPath)
-                config['model'] = model
-            else:
-                config['model'] = None
+            for modelName in self.modelNames:
+                modelPath = os.path.join(self.savePath, '{}_{}-{}.h5'.format(
+                    modelName,
+                    (config['episode'] // self.bakFrequence) * self.bakFrequence,
+                    ((config['episode'] // self.bakFrequence) + 1) * self.bakFrequence,
+                ))
+                if os.path.exists(modelPath):
+                    model = tf.keras.models.load_model(modelPath)
+                    config[modelName] = model
+                else:
+                    config[modelName] = None
         return config
 
     def readConfig(self):
@@ -78,20 +82,21 @@ class GameBase(object):
                 config[k] = self.saveType[k][2]
         return config
 
-    def save(self, model, episode, **kwargs):
+    def save(self, models, episode, **kwargs):
         if self.savePath:
-            modelPath = os.path.join(self.savePath, 'model_{}-{}.h5'.format(
-                (episode // self.bakFrequence) * self.bakFrequence,
-                ((episode // self.bakFrequence) + 1) * self.bakFrequence,
-            ))
-            model.save(modelPath)
+            if not isinstance(models, (tuple, list)):
+                models = (models, )
+            for model, modelName in zip(models, self.modelNames):
+                modelPath = os.path.join(self.savePath, '{}_{}-{}.h5'.format(
+                    modelName,
+                    (episode // self.bakFrequence) * self.bakFrequence,
+                    ((episode // self.bakFrequence) + 1) * self.bakFrequence,
+                ))
+                model.save(modelPath)
             kwargs['episode'] = episode
             with open(self.configPath, 'w') as f:
                 for k, v in kwargs.items():
                     f.write('{}={}\n'.format(k, self.saveType[k][0](v)))
-            return tf.keras.models.load_model(modelPath)
-        else:
-            return copyModel(model)
 
     def log(self, s):
         currentTime = str(datetime.datetime.now())
