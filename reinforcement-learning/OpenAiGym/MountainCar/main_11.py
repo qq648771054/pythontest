@@ -12,23 +12,24 @@ class Memory(object):
     def append(self, m):
         if len(self.arr) < self.size:
             self.arr.append(m)
-            self.weight.append(0)
+            self.weight.append(1)
         else:
             self.arr[self.iter] = m
-            self.weight[self.iter] = 0
+            self.weight[self.iter] = 1
         self.newly.append(self.iter)
         self.iter = (self.iter + 1) % self.size
 
     def sample(self, batch):
-        idx = self.newly[:]
+        maxW = max(self.weight)
+        for n in self.newly:
+            self.weight[n] = maxW
         self.newly = []
-        if len(idx) < batch:
-            idx.extend(np.random.choice(len(self.arr), size=batch - len(idx), p=normallize(self.weight)))
-        random.shuffle(idx)
-        return idx, [self.arr[x] for x in idx]
+        idx = sorted([i for i in range(len(self.arr))], key=lambda a: random.random())[:batch]
+        return idx, [self.arr[x] for x in idx], [self.weight[x] for x in idx]
 
     def updateErrors(self, idx, errors):
         for x, e in zip(idx, errors):
+            assert not math.isnan(e)
             self.weight[x] = abs(e) ** 0.5
 
     def clear(self):
@@ -36,6 +37,9 @@ class Memory(object):
         self.weight = []
         self.newly = []
         self.iter = 0
+
+    def empty(self):
+        return len(self.arr) == 0
 
 class Agent(object):
     def __init__(self, env, memorySize=1000):
@@ -57,18 +61,19 @@ class Agent(object):
         self.modelPre = copyModel(self.model)
 
     def learn(self, batch=32, gamma=0.95):
-        idxs, sample = self.memory.sample(batch)
+        idxs, sample, weight = self.memory.sample(batch)
         states, actions, rewards, next_states = vstack(sample)
         values = self.model.predict(np.array(states))
         next_values = self.model.predict(np.array(next_states))
         next_values_p = self.modelPre.predict(np.array(next_states))
         errors = []
         for v, nv, nvp, a, r in zip(values, next_values, next_values_p, actions, rewards):
-            idx = nv.argmax()
-            q = r + gamma * nvp[idx]
+            # idx = nv.argmax()
+            # q = r + gamma * nvp[idx]
+            q = r + gamma * nv.max()
             errors.append(v[a] - q)
             v[a] = q
-        self.model.fit(np.array(states), values, epochs=1, verbose=0)
+        self.model.fit(np.array(states), values, sample_weight=np.array(weight), epochs=1, verbose=0)
         self.memory.updateErrors(idxs, errors)
 
     def _createModel(self):
@@ -148,13 +153,13 @@ class MountainCar(MountainCarBase):
 all   284       00:39:41
 '''
 if __name__ == '__main__':
-    root = getDataFilePath(f'MountainCar/MountainCar_6/')
+    root = getDataFilePath(f'MountainCar/MountainCar_11/')
     if not os.path.exists(root):
         os.mkdir(root)
     startTime = time.time()
     totalEpisode = 0
     for i in range(5):
-        cartPole = MountainCar('MountainCar-v0', os.path.join(root, f'MountainCar_7_{i + 1}'))
+        cartPole = MountainCar('MountainCar-v0', os.path.join(root, f'MountainCar_12_{i + 1}'))
         spendTime, episode = cartPole.train(showProcess=False)
         totalEpisode += episode
         print(f'train {i + 1}, spendTime {second2Str(int(spendTime))}, episode {episode}')

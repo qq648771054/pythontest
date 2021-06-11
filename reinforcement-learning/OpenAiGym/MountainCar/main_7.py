@@ -1,5 +1,5 @@
 from lib import *
-from OpenAiGym.CartPole.CartPoleBase import CartPoleBase
+from OpenAiGym.MountainCar.MountainCarBase import MountainCarBase
 import threading
 import gym
 
@@ -47,7 +47,8 @@ class Agent(object):
 
     def _createModel(self, learning_rate=0.001):
         input1 = tf.keras.Input(shape=(self.env.stateLen, ))
-        x = tf.keras.layers.Dense(100, activation='relu')(input1)
+        x = tf.keras.layers.Dense(50, activation='relu')(input1)
+        x = tf.keras.layers.Dense(50, activation='relu')(x)
         x = tf.keras.layers.Dropout(0.1)(x)
         output1 = tf.keras.layers.Dense(self.env.actionLen, activation='softmax')(x)
         actor = tf.keras.Model(inputs=input1, outputs=output1)
@@ -56,7 +57,8 @@ class Agent(object):
             loss=tf.losses.categorical_crossentropy,
         )
         input2 = tf.keras.Input(shape=(self.env.stateLen, ))
-        x = tf.keras.layers.Dense(100, activation='relu')(input2)
+        x = tf.keras.layers.Dense(50, activation='relu')(input2)
+        x = tf.keras.layers.Dense(50, activation='relu')(x)
         x = tf.keras.layers.Dropout(0.1)(x)
         output2 = tf.keras.layers.Dense(1, activation='linear')(x)
         critic = tf.keras.Model(inputs=input2, outputs=output2)
@@ -81,6 +83,7 @@ class Worker(threading.Thread):
         while True:
             step = 0
             paths = []
+            maxHeight = 0
             state = self.game.reset()
             while True:
                 action = self.agent.chooseAction(state)
@@ -88,6 +91,7 @@ class Worker(threading.Thread):
                 self.agent.save_exp(state, action, reward, next_state, done)
                 step += 1
                 paths.append(action)
+                maxHeight = max(maxHeight, abs(next_state[0] + 0.5))
                 state = next_state
                 if done:
                     break
@@ -95,14 +99,16 @@ class Worker(threading.Thread):
             copyModel(self.agent.actor, self.parentAgent.actor)
             copyModel(self.agent.critic, self.parentAgent.critic)
             self.env.episode += 1
-            self.env.log(f'agent {self.idx}, episode {self.env.episode}: step {step}, paths: {paths}')
+            self.env.log(f'agent {self.idx}, episode {self.env.episode}: step {step}, max height {maxHeight}, paths: {paths}')
             if self.env.episode % 30 == 0:
                 self.env.saveModel()
 
-class CartPole(CartPoleBase):
+class MountainCar(MountainCarBase):
     modelNames = ['actor', 'critic']
 
     def warpper(self, next_state, reward, done, info):
+        # reward = abs(next_state[0] + 0.5) ** 2.0
+        reward = abs(next_state[0] + 0.5)
         return next_state, reward, done
 
     def train(self, childCnt=8):
@@ -147,11 +153,11 @@ class CartPole(CartPoleBase):
             step = 0
             paths = []
             state = self.env.reset()
+            episode += 1
             self.render(0.5)
             while True:
                 action = self.agent.chooseAction(state)
                 next_state, reward, done = self.warpper(*self.env.step(action))
-                self.agent.save_exp(state, action, reward, next_state, done)
                 step += 1
                 paths.append(action)
                 state = next_state
@@ -168,13 +174,12 @@ class CartPole(CartPoleBase):
         self.saveLog()
 
 '''
-与main_21主要不同:
-改变reward算法,变成得分
+使用A3C算法
 '''
 if __name__ == '__main__':
-    root = getDataFilePath(f'CartPole/CartPole_22/')
+    root = getDataFilePath(f'MountainCar/MountainCar_7/')
     if not os.path.exists(root):
         os.mkdir(root)
-    cartPole = CartPole('CartPole-v0', os.path.join(root, f'CartPole_22_1'))
-    # cartPole.train()
-    cartPole.display()
+    game = MountainCar('MountainCar-v0', os.path.join(root, f'MountainCar_7_1'))
+    game.train()
+    # game.display()

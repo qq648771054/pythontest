@@ -1,5 +1,3 @@
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 from lib import *
 from Gobang.GobangBase import GobangBase
 
@@ -68,7 +66,7 @@ class Agent(object):
         self.memory.append((state, action, reward, next_state))
 
     def syncModel(self):
-        self.modelPre = copyModel(self.model)
+         copyModel(self.modelPre, self.model)
 
     def learn(self, batch=32, epochs=10, gamma=1.1):
         idxs, samples, weights = self.memory.sample(batch)
@@ -105,20 +103,20 @@ class Agent(object):
         x = tf.keras.layers.Conv2D(128, (3, 3), activation='relu', padding='valid')(x)
         x = tf.keras.layers.Flatten()(x)
         x = tf.keras.layers.Dense(256, activation='relu')(x)
-        # x = tf.keras.layers.Dropout(0.2)(x)
+        x = tf.keras.layers.Dropout(0.2)(x)
         # x = tf.keras.layers.BatchNormalization()(x)
         x = tf.keras.layers.Dense(128, activation='relu')(x)
-        # x = tf.keras.layers.Dropout(0.2)(x)
+        x = tf.keras.layers.Dropout(0.2)(x)
         # x = tf.keras.layers.BatchNormalization()(x)
-        output1 = tf.keras.layers.Dense(self.env.actionSize)(x)
-        model = tf.keras.Model(inputs=input1, outputs=output1)
-
-        # svalue = tf.keras.layers.Dense(1)(x)
-        # avalue = tf.keras.layers.Dense(self.env.actionSize)(x)
-        # mean = tf.keras.layers.Lambda(lambda x: tf.reduce_mean(x, axis=1, keepdims=True))(avalue)
-        # avalue = tf.keras.layers.Lambda(lambda x: x[0] - x[1])([avalue, mean])
-        # output1 = tf.keras.layers.Lambda(lambda x: x[0] + x[1])([svalue, avalue])
+        # output1 = tf.keras.layers.Dense(self.env.actionSize)(x)
         # model = tf.keras.Model(inputs=input1, outputs=output1)
+
+        svalue = tf.keras.layers.Dense(1)(x)
+        avalue = tf.keras.layers.Dense(self.env.actionSize)(x)
+        mean = tf.keras.layers.Lambda(lambda x: tf.reduce_mean(x, axis=1, keepdims=True))(avalue)
+        avalue = tf.keras.layers.Lambda(lambda x: x[0] - x[1])([avalue, mean])
+        output1 = tf.keras.layers.Lambda(lambda x: x[0] + x[1])([svalue, avalue])
+        model = tf.keras.Model(inputs=input1, outputs=output1)
         model.compile(
             optimizer=tf.keras.optimizers.Adam(),
             loss=tf.losses.mse,
@@ -126,8 +124,8 @@ class Agent(object):
         return model
 
     def addAxis(self, board):
-        return board
-        # return board.reshape(board.shape + (1, ))
+        # return board
+        return board.reshape(board.shape + (1, ))
 
 class Gobang(GobangBase):
     def step(self, action):
@@ -168,10 +166,10 @@ class Gobang(GobangBase):
                 path.append(action)
                 state = next_state
                 showProcess and self.render(0.5)
-                # agent.learn(batch=128, epochs=2)
+                agent.learn(batch=128, epochs=2)
                 if done:
                     break
-            agent.learn(batch=300, epochs=10)
+            agent.learn(batch=300, epochs=2)
             self.log(f'episode {episode}: step {step}, path {path}, winner {player if step < self.env.actionSize else 0}')
             if episode % 10 == 0:
                 self.save(agent.model, episode=episode, spendTime=spendTime)
@@ -184,6 +182,6 @@ class Gobang(GobangBase):
         # return spendTime, episode
 
 if __name__ == '__main__':
-    game = Gobang(5, 4, savePath=getDataFilePath('Gobang/Gobang_5_4/Gobang_5_4_1'))
+    game = Gobang(5, 4, savePath=getDataFilePath('Gobang/Gobang_5_4/Gobang_5_4_2'))
     # game.play(2, Agent)
     game.train(showProcess=False)

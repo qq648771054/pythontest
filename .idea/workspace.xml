@@ -11,28 +11,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add knn">
-      <change afterPath="$PROJECT_DIR$/data/CartPole/CartPole_13/CartPole_13_1/config.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/CartPole/CartPole_13/CartPole_13_1/log.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/CartPole/CartPole_13/CartPole_13_1/model_0-500.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/CartPole/CartPole_13/CartPole_13_1/model_500-1000.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/CartPole/CartPole_13/CartPole_13_1/temp_log.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_13.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_14.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_15.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_16.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_17.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_18.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_19.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_20.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_21.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_22.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/a3c.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_10.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_11.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_7.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_8.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_9.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/Gobang/main_10_5_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/Gobang/main_10_5_1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/GameBase.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/GameBase.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/lib.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/Gobang/main_3_3_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/Gobang/main_3_3_1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/Gobang/main_5_4_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/Gobang/main_5_4_1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_20.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_20.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_22.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_22.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_6.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_6.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,19 +63,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\workspace\pythontest\reinforcement-learning\OpenAiGym\CartPole" />
-      <recent name="D:\workspace\pythontest\reinforcement-learning\Gobang" />
-      <recent name="D:\workspace\pythontest\data\Gobang\Gobang_3_3" />
-      <recent name="D:\workspace\pythontest\reinforcement-learning\OpenAiGym\MountainCar" />
-      <recent name="D:\workspace\pythontest\reinforcement-learning" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\workspace\pythontest\data\CartPole\CartPole_17" />
       <recent name="D:\workspace\pythontest\data\CartPole\CartPole_8" />
@@ -93,9 +76,16 @@
       <recent name="D:\workspace\pythontest\data\CartPole_7" />
       <recent name="D:\workspace\pythontest\data\CartPole_6" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace\pythontest\reinforcement-learning\OpenAiGym\MountainCar" />
+      <recent name="D:\workspace\pythontest\reinforcement-learning\OpenAiGym\CartPole" />
+      <recent name="D:\workspace\pythontest\reinforcement-learning\Gobang" />
+      <recent name="D:\workspace\pythontest\data\Gobang\Gobang_3_3" />
+      <recent name="D:\workspace\pythontest\reinforcement-learning" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.main_22">
-    <configuration name="a3c" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.main_5_4_1">
+    <configuration name="main_10" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -103,11 +93,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/a3c.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_10.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -116,7 +106,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main_11" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -124,11 +114,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_11.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -137,7 +127,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_19" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main_3_3_1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -145,11 +135,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/Gobang" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_19.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/Gobang/main_3_3_1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -158,7 +148,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_21" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main_5_4_1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -166,11 +156,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/Gobang" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_21.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/Gobang/main_5_4_1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -179,7 +169,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_22" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main_6" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -187,11 +177,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_22.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_6.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -201,19 +191,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main_19" />
-      <item itemvalue="Python.main_21" />
-      <item itemvalue="Python.a3c" />
-      <item itemvalue="Python.main" />
-      <item itemvalue="Python.main_22" />
+      <item itemvalue="Python.main_10" />
+      <item itemvalue="Python.main_6" />
+      <item itemvalue="Python.main_11" />
+      <item itemvalue="Python.main_5_4_1" />
+      <item itemvalue="Python.main_3_3_1" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main_22" />
-        <item itemvalue="Python.main_19" />
-        <item itemvalue="Python.main_21" />
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.a3c" />
+        <item itemvalue="Python.main_5_4_1" />
+        <item itemvalue="Python.main_3_3_1" />
+        <item itemvalue="Python.main_11" />
+        <item itemvalue="Python.main_10" />
+        <item itemvalue="Python.main_6" />
       </list>
     </recent_temporary>
   </component>
@@ -391,38 +381,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623289815103" />
-    <state width="1899" height="325" key="GridCell.Tab.0.bottom" timestamp="1623335552148">
+    <state width="1362" height="417" key="GridCell.Tab.0.bottom" timestamp="1623417534739">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="325" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623335552148" />
-    <state width="1899" height="325" key="GridCell.Tab.0.center" timestamp="1623335552148">
+    <state width="1362" height="417" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623417534739" />
+    <state width="1362" height="417" key="GridCell.Tab.0.center" timestamp="1623417534738">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="325" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623335552148" />
-    <state width="1899" height="325" key="GridCell.Tab.0.left" timestamp="1623335552148">
+    <state width="1362" height="417" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623417534738" />
+    <state width="1362" height="417" key="GridCell.Tab.0.left" timestamp="1623417534738">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="325" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623335552148" />
-    <state width="1899" height="325" key="GridCell.Tab.0.right" timestamp="1623335552148">
+    <state width="1362" height="417" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623417534738" />
+    <state width="1362" height="417" key="GridCell.Tab.0.right" timestamp="1623417534739">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="325" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623335552148" />
-    <state width="1899" height="301" key="GridCell.Tab.1.bottom" timestamp="1623332311572">
+    <state width="1362" height="417" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623417534739" />
+    <state width="1362" height="417" key="GridCell.Tab.1.bottom" timestamp="1623417534740">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="301" key="GridCell.Tab.1.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623332311572" />
-    <state width="1899" height="301" key="GridCell.Tab.1.center" timestamp="1623332311572">
+    <state width="1362" height="417" key="GridCell.Tab.1.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623417534740" />
+    <state width="1362" height="417" key="GridCell.Tab.1.center" timestamp="1623417534740">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="301" key="GridCell.Tab.1.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623332311572" />
-    <state width="1899" height="301" key="GridCell.Tab.1.left" timestamp="1623332311572">
+    <state width="1362" height="417" key="GridCell.Tab.1.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623417534740" />
+    <state width="1362" height="417" key="GridCell.Tab.1.left" timestamp="1623417534739">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="301" key="GridCell.Tab.1.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623332311572" />
-    <state width="1899" height="301" key="GridCell.Tab.1.right" timestamp="1623332311572">
+    <state width="1362" height="417" key="GridCell.Tab.1.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623417534739" />
+    <state width="1362" height="417" key="GridCell.Tab.1.right" timestamp="1623417534740">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="301" key="GridCell.Tab.1.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623332311572" />
+    <state width="1362" height="417" key="GridCell.Tab.1.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623417534740" />
     <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1623241925035">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -431,6 +421,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="727" y="263" width="596" height="536" key="find.popup/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623327332665" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1623396923944">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623396923944" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -471,29 +465,9 @@
           <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/reinforcement-learning/Gobang/GobangBase.py</url>
-          <line>62</line>
-          <option name="timeStamp" value="104" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/reinforcement-learning/Gobang/main_10_5_1.py</url>
-          <line>173</line>
-          <option name="timeStamp" value="160" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$USER_HOME$/AppData/Roaming/Python/Python36/site-packages/tensorflow/python/keras/losses.py</url>
-          <line>1631</line>
-          <option name="timeStamp" value="166" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_20.py</url>
-          <line>54</line>
-          <option name="timeStamp" value="169" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>329</line>
-          <option name="timeStamp" value="170" />
+          <url>file://$PROJECT_DIR$/reinforcement-learning/Gobang/main_5_4_1.py</url>
+          <line>52</line>
+          <option name="timeStamp" value="172" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -508,6 +482,8 @@
       <configuration name="PythonConfigurationType">
         <watch expression="self.critic.predict(state)" language="Python" />
         <watch expression="self.actor.predict(state)" language="Python" />
+        <watch expression="self.addAxis(np.array([board]))" language="Python" />
+        <watch expression="self.addAxis(np.array([board]))" language="Python" />
       </configuration>
     </watches-manager>
   </component>

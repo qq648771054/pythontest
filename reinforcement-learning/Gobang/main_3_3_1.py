@@ -180,5 +180,5 @@ class Gobang(GobangBase):
 
 if __name__ == '__main__':
     game = Gobang(3, 3, savePath=getDataFilePath('Gobang/Gobang_3_3/Gobang_3_3_3'))
-    game.play(1, Agent)
-    # game.train(showProcess=False)
+    # game.play(1, Agent)
+    game.train(showProcess=False)

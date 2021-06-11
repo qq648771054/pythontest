@@ -90,8 +90,8 @@ class CartPole(CartPoleBase):
 
     def step(self, action):
         next_state, reward, done, info = self.env.step(action)
-        reward = -1 if done else 0.01
-        return next_state, reward, done
+        # reward = -1 if done else 0.01
+        return next_state, reward * 0.01, done
 
     def train(self, showProcess=False):
         agent = Agent(self, memorySize=1000)
@@ -156,7 +156,7 @@ if __name__ == '__main__':
     startTime = time.time()
     totalEpisode = 0
     for i in range(5):
-        cartPole = CartPole('CartPole-v0', os.path.join(root, f'CartPole_20_{i + 1}'))
+        cartPole = CartPole('CartPole-v0', os.path.join(root, f'CartPole_21_{i + 1}'))
         spendTime, episode = cartPole.train(showProcess=False)
         totalEpisode += episode
         print(f'train {i + 1}, spendTime {second2Str(int(spendTime))}, episode {episode}')
