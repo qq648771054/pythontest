@@ -107,7 +107,7 @@ class Worker(threading.Thread):
 class CartPole(CartPoleBase):
     modelNames = ['actor', 'critic']
 
-    def train(self, showProcess=False, childCnt=16):
+    def train(self, childCnt=8):
         self.agent = Agent(self)
         self.agent.actor.summary()
         self.agent.critic.summary()
@@ -145,14 +145,6 @@ class CartPole(CartPoleBase):
 '''
 与main_18主要不同:
 使用a3c算法
-统计:
-    收敛次数        时间
-1     283       00:08:00
-2     257       00:06:10
-3     
-4     
-5     
-all   540       00:14:10
 '''
 if __name__ == '__main__':
     root = getDataFilePath(f'CartPole/CartPole_21/')

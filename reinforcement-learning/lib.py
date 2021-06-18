@@ -23,3 +23,61 @@ def copyModel(model0, model1=None):
         model0 = tf.keras.models.load_model(path)
         os.remove(path)
         return model0
+
+def analyzeStr(str, format):
+    def isNum(c):
+        return ord(c) >= ord('0') and ord(c) <= ord('9')
+
+    def getFormat(str, ps, type, num):
+        if type == 'd':
+            n = 0
+            assert isNum(str[ps]), 'not a number'
+            while ps < len(str) and isNum(str[ps]):
+                n = n * 10 + ord(str[ps]) - ord('0')
+                ps += 1
+            return int(n), ps
+        elif type == 'f':
+            n = 0
+            assert isNum(str[ps]) or str[ps] == '.', 'not a number'
+            while ps < len(str) and isNum(str[ps]):
+                n = n * 10 + ord(str[ps]) - ord('0')
+                ps += 1
+            if str[ps] == '.':
+                ps += 1
+            scale = 0.1
+            while ps < len(str) and isNum(str[ps]):
+                n += scale * (ord(str[ps]) - ord('0'))
+                scale *= 0.1
+                ps += 1
+            return float(n), ps
+        elif type == 's':
+            if num > 0:
+                return str[ps: ps + num], ps + num
+            else:
+                pb = ps
+                while ps < len(str) and not isNum(str[ps]):
+                    ps += 1
+                return str[pb: ps], ps
+        elif type == '*':
+            num = num if num > 0 else 1
+            return None, ps + num
+        elif type == ' ':
+            return None, ps
+        else:
+            assert False, 'unknown type ' + type
+
+    res = []
+    ps = 0
+    num = 0
+    for i, c in enumerate(format):
+        if isNum(c):
+            num = num * 10 + ord(c) - ord('0')
+        else:
+            r, ps = getFormat(str, ps, c, num)
+            if r is not None:
+                res.append(r)
+            num = 0
+    return res
+
+
+

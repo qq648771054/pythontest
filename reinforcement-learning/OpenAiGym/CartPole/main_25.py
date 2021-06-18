@@ -1,12 +1,12 @@
 from lib import *
-from OpenAiGym.MountainCar.MountainCarBase import MountainCarBase
+from OpenAiGym.CartPole.CartPoleBase import CartPoleBase
 import tensorflow_probability as tfp
 import multiprocessing
 import gym
 import threading
 
 class Agent(object):
-    GAMMA = 1.0
+    GAMMA = 0.95
 
     def __init__(self, env):
         self.env = env
@@ -49,21 +49,19 @@ class Agent(object):
 
     def _createModel(self):
         input1 = tf.keras.Input(shape=(self.env.stateLen, ))
-        x = tf.keras.layers.Dense(30, activation='relu')(input1)
-        x = tf.keras.layers.Dense(30, activation='relu')(x)
-        # x = tf.keras.layers.Dropout(0.1)(x)
+        x = tf.keras.layers.Dense(100, activation='relu')(input1)
+        x = tf.keras.layers.Dropout(0.1)(x)
         output1 = tf.keras.layers.Dense(self.env.actionLen, activation='softmax')(x)
         actor = tf.keras.Model(inputs=input1, outputs=output1)
         actor.compile()
-        actor_opt = tf.keras.optimizers.Adam(0.0001)
+        actor_opt = tf.keras.optimizers.Adam(0.001)
         input2 = tf.keras.Input(shape=(self.env.stateLen, ))
-        x = tf.keras.layers.Dense(30, activation='relu')(input2)
-        x = tf.keras.layers.Dense(30, activation='relu')(x)
-        # x = tf.keras.layers.Dropout(0.1)(x)
+        x = tf.keras.layers.Dense(100, activation='relu')(input2)
+        x = tf.keras.layers.Dropout(0.1)(x)
         output2 = tf.keras.layers.Dense(1, activation='linear')(x)
         critic = tf.keras.Model(inputs=input2, outputs=output2)
         critic.compile(
-            optimizer=tf.keras.optimizers.Adam(0.0002),
+            optimizer=tf.keras.optimizers.Adam(0.002),
             loss=tf.losses.mse,
         )
         return actor, actor_opt, critic
@@ -83,7 +81,6 @@ class Worker(threading.Thread):
         exp = []
         while True:
             step = 0
-            maxHeight = 0
             paths = []
             state = self.game.reset()
             while True:
@@ -91,7 +88,6 @@ class Worker(threading.Thread):
                 action = self.parentAgent.chooseAction(state)
                 next_state, reward, done = self.env.warpper(*self.game.step(action))
                 exp.append((state, action, reward))
-                maxHeight = max(maxHeight, abs(next_state[0] + 0.5))
                 step += 1
                 self.env.totalSteps += 1
                 paths.append(action)
@@ -111,7 +107,7 @@ class Worker(threading.Thread):
                     if done:
                         break
             self.env.episode += 1
-            self.env.log(f'agent {self.idx}, episode {self.env.episode} step {step}, totalSteps {self.env.totalSteps}, max height {maxHeight}, paths {paths}')
+            self.env.log(f'agent {self.idx}, episode {self.env.episode} step {step}, totalSteps {self.env.totalSteps}, paths {paths}')
 
 class Learner(threading.Thread):
     def __init__(self, env, workEvents, updateEvent, agent):
@@ -140,12 +136,12 @@ class Learner(threading.Thread):
             if learnCount % 50 == 0:
                 self.env.saveModel()
 
-class MountainCar(MountainCarBase):
+class CartPole(CartPoleBase):
     modelNames = ['actor', 'critic']
     BATCH = 64
 
     def warpper(self, next_state, reward, done, info):
-        reward = abs(next_state[0] + 0.5) * 0.1 - 0.5
+        reward = -1 if done else 0.01
         return next_state, reward, done
 
     def train(self, childCnt=multiprocessing.cpu_count()):
@@ -219,12 +215,13 @@ class MountainCar(MountainCarBase):
         self.saveLog()
 
 '''
-与main_6的主要不同:
-使用dppo算法
+与main_24主要不同:
+使用dppo
 '''
 if __name__ == '__main__':
-    root = getDataFilePath(f'MountainCar/MountainCar_8/')
+    root = getDataFilePath(f'CartPole/CartPole_25/')
     if not os.path.exists(root):
         os.mkdir(root)
-    mountainCar = MountainCar('MountainCar-v0', os.path.join(root, f'MountainCar_8_1'))
-    mountainCar.train()
+    cartPole = CartPole('CartPole-v0', os.path.join(root, f'CartPole_25_1'))
+    cartPole.train()
+

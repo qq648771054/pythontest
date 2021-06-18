@@ -151,7 +151,6 @@ class CartPole(CartPoleBase):
             while True:
                 action = self.agent.chooseAction(state)
                 next_state, reward, done = self.warpper(*self.env.step(action))
-                self.agent.save_exp(state, action, reward, next_state, done)
                 step += 1
                 paths.append(action)
                 state = next_state

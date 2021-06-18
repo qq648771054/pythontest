@@ -193,3 +193,9 @@ def second2Str(second):
     m, s = divmod(second, 60)
     h, m = divmod(m, 60)
     return "%02d:%02d:%02d" % (h, m, s)
+
+def min_to_zero(a, b):
+    return a if abs(a) < abs(b) else b
+
+def max_to_zero(a, b):
+    return a if abs(a) > abs(b) else b
