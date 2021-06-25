@@ -1,67 +1,60 @@
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 import math
-import tensorflow as tf
 import numpy as np
 import time
 import threading
+import os
+import random
+from distutils import sysconfig
+import matplotlib.pyplot as plt
+import tensorflow as tf
 
-def analyzeStr(str, format):
-    def isNum(c):
-        return ord(c) >= ord('0') and ord(c) <= ord('9')
+# 降低tensorflow警告等级
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
-    def getFormat(str, ps, type, num):
-        if type == 'd':
-            n = 0
-            assert isNum(str[ps]), 'not a number'
-            while ps < len(str) and isNum(str[ps]):
-                n = n * 10 + ord(str[ps]) - ord('0')
-                ps += 1
-            return int(n), ps
-        elif type == 'f':
-            n = 0
-            assert isNum(str[ps]) or str[ps] == '.', 'not a number'
-            while ps < len(str) and isNum(str[ps]):
-                n = n * 10 + ord(str[ps]) - ord('0')
-                ps += 1
-            if str[ps] == '.':
-                ps += 1
-            scale = 0.1
-            while ps < len(str) and isNum(str[ps]):
-                n += scale * (ord(str[ps]) - ord('0'))
-                scale *= 0.1
-                ps += 1
-            return float(n), ps
-        elif type == 's':
-            assert num > 0, 'num must > 0'
-            s = ps[ps: ps + num]
-            return s, ps + num
-        elif type == '*':
-            num = num if num > 0 else 1
-            return None, ps + num
-        elif type == ' ':
-            return None, ps
-        else:
-            assert False, 'unknown type ' + type
+# 配置GPU内存
+config = tf.compat.v1.ConfigProto()
+config.gpu_options.allow_growth = True
+session = tf.compat.v1.InteractiveSession(config=config)
 
-    res = []
-    ps = 0
-    num = 0
-    for i, c in enumerate(format):
-        if isNum(c):
-            num = num * 10 + ord(c) - ord('0')
-        else:
-            r, ps = getFormat(str, ps, c, num)
-            if r is not None:
-                res.append(r)
-            num = 0
-    return res
+def copyModel(model0, model1=None):
+    if model1:
+        model0.set_weights(model1.get_weights())
+    else:
+        path = '_temp.h5'
+        model0.save(path)
+        model0 = tf.keras.models.load_model(path)
+        os.remove(path)
+        return model0
 
+def normallize(arr):
+    total = 0
+    for a in arr:
+        total += a
+    if total > 0.0:
+        scale = 1.0 / total
+        n = []
+        for a in arr:
+            n.append(a * scale)
+        return n
+    else:
+        return [1.0 / len(arr)] * len(arr)
 
-
-
-
-print(
-analyzeStr('2021-06-17 15:05:36.847446:agent 4, episode 1 step 999, totalStep 5526, max height 0.3082425895602159',
-           '*********************************d**********d  ****d  ************d     ***********f                 ')
+m1 = tf.keras.Sequential([
+    tf.keras.layers.Dense(10, activation='relu', input_shape=(2, )),
+    tf.keras.layers.Dense(10, activation='relu'),
+    tf.keras.layers.Dense(2, activation='softmax')
+])
+m1.compile(
+    optimizer=tf.keras.optimizers.Adam(),
+    loss=tf.keras.losses.categorical_crossentropy
 )
+m2 = copyModel(m1)
+m3 = copyModel(m1)
+size = 100
+x = [normallize([i, i + 1]) for i in range(size)]
+y = [normallize([i * 2, i - 1]) for i in range(size)]
+m2.fit(np.array(x), np.array(y), sample_weight=np.array([0.5] * size), epochs=1, verbose=0)
+m3.fit(np.array(x), np.array(y) * 0.5, epochs=1, verbose=0)
+print(m1.predict(np.array(x)))
+print(m2.predict(np.array(x)))

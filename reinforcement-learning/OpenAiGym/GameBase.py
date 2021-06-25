@@ -11,7 +11,7 @@ class GameBase(object):
 
     def __init__(self, name, savePath=''):
         self.gameName = name
-        self.env = gym.make(name)
+        self.env = self.makeEnv(name)
         self.savePath = savePath
         if self.savePath:
             self.logPath = os.path.join(self.savePath, 'log.txt')
@@ -26,6 +26,9 @@ class GameBase(object):
                 f = open(self.configPath, 'w')
                 f.close()
             self.logs = []
+
+    def makeEnv(self, name):
+        return gym.make(name)
 
     def __getattr__(self, item):
         return getattr(self.env, item)

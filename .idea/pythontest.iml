@@ -10,8 +10,10 @@
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/reinforcement-learning" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/reinforcement-learning/OpenAiGym" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/PyGame-Learning-Environment" />
     </content>
     <content url="file://$MODULE_DIR$/../tensorflow2.0" />
+    <content url="file://$MODULE_DIR$/../tensorpack" />
     <content url="file://$MODULE_DIR$/../tf2rl" />
     <orderEntry type="jdk" jdkName="Python 3.6" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

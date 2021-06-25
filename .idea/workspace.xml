@@ -11,35 +11,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ad1969c-ec49-4040-a739-601c7ac57aad" name="Default Changelist" comment="add knn">
-      <change afterPath="$PROJECT_DIR$/data/CartPole/CartPole_22/CartPole_22_1/actor_1000-1500.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/CartPole/CartPole_22/CartPole_22_1/actor_500-1000.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/CartPole/CartPole_22/CartPole_22_1/critic_1000-1500.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/CartPole/CartPole_22/CartPole_22_1/critic_500-1000.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/MountainCar/MountainCar_7/MountainCar_7_1/actor_0-500.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/MountainCar/MountainCar_7/MountainCar_7_1/config.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/MountainCar/MountainCar_7/MountainCar_7_1/critic_0-500.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/MountainCar/MountainCar_7/MountainCar_7_1/log.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/MountainCar/MountainCar_7/MountainCar_7_1/temp_log.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_23.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_24.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_25.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar_Continuous/MountainCar_ContinuousBase.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar_Continuous/main_1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar_Continuous/main_1_analyze.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/mountaincar_continuous.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/ppo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/BreakOut/BreakOutBase.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/BreakOut/main_1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/BreakOut/main_1_analyze.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/SpaceInvaders/SpaceInvadersBase.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/SpaceInvaders/main_1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/SpaceInvaders/main_1_analyze.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/SpaceInvaders/main_2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/SpaceInvaders/main_2_analyze.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/SpaceInvaders/main_3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/SpaceInvaders/main_3_analyze.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/SpaceInvader.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/xxx.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/xxxx.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/pythontest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pythontest.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/Lib.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/Gobang/main_5_4_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/Gobang/main_5_4_1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_21.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_21.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_22.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/CartPole/main_22.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_10.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_11.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_8.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_9.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/GameBase.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/GameBase.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reinforcement-learning/lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement-learning/lib.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,19 +70,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar_Continuous" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/test" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\workspace\pythontest\reinforcement-learning\OpenAiGym\MountainCar_Continuous" />
-      <recent name="D:\workspace\pythontest\reinforcement-learning\OpenAiGym\MountainCar" />
-      <recent name="D:\workspace\pythontest\reinforcement-learning\OpenAiGym\CartPole" />
-      <recent name="D:\workspace\pythontest\reinforcement-learning\Gobang" />
-      <recent name="D:\workspace\pythontest\data\Gobang\Gobang_3_3" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\workspace\pythontest\data\CartPole\CartPole_17" />
       <recent name="D:\workspace\pythontest\data\CartPole\CartPole_8" />
@@ -101,8 +83,15 @@
       <recent name="D:\workspace\pythontest\data\CartPole_7" />
       <recent name="D:\workspace\pythontest\data\CartPole_6" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace\pythontest\test" />
+      <recent name="D:\workspace\pythontest\reinforcement-learning\OpenAiGym\SpaceInvaders" />
+      <recent name="D:\workspace\pythontest\reinforcement-learning\OpenAiGym\MountainCar_Continuous" />
+      <recent name="D:\workspace\pythontest\reinforcement-learning\OpenAiGym\MountainCar" />
+      <recent name="D:\workspace\pythontest\reinforcement-learning\OpenAiGym\CartPole" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.mountaincar_continuous">
+  <component name="RunManager" selected="Python.main_1">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -115,7 +104,6 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -133,12 +121,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar_Continuous" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/BreakOut" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar_Continuous/main_1.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/BreakOut/main_1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -155,12 +142,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar_Continuous" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/BreakOut" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar_Continuous/main_1_analyze.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/BreakOut/main_1_analyze.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -169,29 +155,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_8" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pythontest" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/reinforcement-learning/OpenAiGym/MountainCar/main_8.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="mountaincar_continuous" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="xxx" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythontest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -203,7 +167,28 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/mountaincar_continuous.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/xxx.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="xxxx" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pythontest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/xxxx.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -213,19 +198,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main" />
-      <item itemvalue="Python.main_8" />
       <item itemvalue="Python.main_1" />
       <item itemvalue="Python.main_1_analyze" />
-      <item itemvalue="Python.mountaincar_continuous" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.xxx" />
+      <item itemvalue="Python.xxxx" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.mountaincar_continuous" />
         <item itemvalue="Python.main_1" />
+        <item itemvalue="Python.xxxx" />
+        <item itemvalue="Python.xxx" />
         <item itemvalue="Python.main_1_analyze" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.main_8" />
       </list>
     </recent_temporary>
   </component>
@@ -356,6 +341,7 @@
       <workItem from="1622033873156" duration="13000" />
       <workItem from="1623209561587" duration="21000" />
       <workItem from="1623980196478" duration="58000" />
+      <workItem from="1624261643637" duration="6000" />
     </task>
     <task id="LOCAL-00001" summary="add readme">
       <created>1612144585810</created>
@@ -392,66 +378,81 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="561" y="292" width="1092" height="694" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623030886852" />
-    <state x="677" y="320" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1622121074021">
+    <state x="677" y="320" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1624356072603">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="677" y="320" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1622121074021" />
-    <state width="1296" height="466" key="DebuggerActiveHint" timestamp="1623827114095">
+    <state x="677" y="320" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624356072603" />
+    <state width="1296" height="466" key="DebuggerActiveHint" timestamp="1624525387314">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1296" height="466" key="DebuggerActiveHint/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623827114095" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1623726514074">
+    <state width="1296" height="466" key="DebuggerActiveHint/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624525387314" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1624413536918">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623726514074" />
-    <state width="1899" height="267" key="GridCell.Tab.0.bottom" timestamp="1624007513484">
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624413536918" />
+    <state width="1899" height="360" key="GridCell.Tab.0.bottom" timestamp="1624611405886">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="267" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624007513484" />
-    <state width="1899" height="267" key="GridCell.Tab.0.center" timestamp="1624007513484">
+    <state width="1899" height="267" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624246315223" />
+    <state width="1899" height="360" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624611405886" />
+    <state width="1899" height="360" key="GridCell.Tab.0.center" timestamp="1624611405886">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="267" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624007513484" />
-    <state width="1899" height="267" key="GridCell.Tab.0.left" timestamp="1624007513484">
+    <state width="1899" height="267" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624246315223" />
+    <state width="1899" height="360" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624611405886" />
+    <state width="1899" height="360" key="GridCell.Tab.0.left" timestamp="1624611405886">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="267" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624007513484" />
-    <state width="1899" height="267" key="GridCell.Tab.0.right" timestamp="1624007513484">
+    <state width="1899" height="267" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624246315223" />
+    <state width="1899" height="360" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624611405886" />
+    <state width="1899" height="360" key="GridCell.Tab.0.right" timestamp="1624611405886">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="267" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624007513484" />
-    <state width="1899" height="329" key="GridCell.Tab.1.bottom" timestamp="1623922033202">
+    <state width="1899" height="267" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624246315223" />
+    <state width="1899" height="360" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624611405886" />
+    <state width="1899" height="305" key="GridCell.Tab.1.bottom" timestamp="1624611344395">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="329" key="GridCell.Tab.1.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623922033202" />
-    <state width="1899" height="329" key="GridCell.Tab.1.center" timestamp="1623922033202">
+    <state width="1899" height="329" key="GridCell.Tab.1.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624245217447" />
+    <state width="1899" height="305" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624611344395" />
+    <state width="1899" height="305" key="GridCell.Tab.1.center" timestamp="1624611344395">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="329" key="GridCell.Tab.1.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623922033202" />
-    <state width="1899" height="329" key="GridCell.Tab.1.left" timestamp="1623922033202">
+    <state width="1899" height="329" key="GridCell.Tab.1.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624245217447" />
+    <state width="1899" height="305" key="GridCell.Tab.1.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624611344395" />
+    <state width="1899" height="305" key="GridCell.Tab.1.left" timestamp="1624611344395">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="329" key="GridCell.Tab.1.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623922033202" />
-    <state width="1899" height="329" key="GridCell.Tab.1.right" timestamp="1623922033202">
+    <state width="1899" height="329" key="GridCell.Tab.1.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624245217447" />
+    <state width="1899" height="305" key="GridCell.Tab.1.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624611344395" />
+    <state width="1899" height="305" key="GridCell.Tab.1.right" timestamp="1624611344395">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="329" key="GridCell.Tab.1.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623922033202" />
-    <state x="461" y="164" key="SettingsEditor" timestamp="1623726515700">
+    <state width="1899" height="329" key="GridCell.Tab.1.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1624245217447" />
+    <state width="1899" height="305" key="GridCell.Tab.1.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624611344395" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1624328117929">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623726515700" />
-    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1623756176279">
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624328117929" />
+    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1624611321212">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="968" height="528" key="XDebugger.FullValuePopup/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623756176279" />
-    <state x="590" y="286" width="900" height="536" key="find.popup" timestamp="1623982151414">
+    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624611321212" />
+    <state x="590" y="286" width="900" height="536" key="find.popup" timestamp="1624453765712">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="590" y="286" width="900" height="536" key="find.popup/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623982151414" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1623396923944">
+    <state x="590" y="286" width="900" height="536" key="find.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624453765712" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1624453754724">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1623396923944" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1624453754724" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -505,6 +506,51 @@
           <line>136</line>
           <option name="timeStamp" value="189" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test/SpaceInvader.py</url>
+          <line>108</line>
+          <option name="timeStamp" value="215" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../tensorpack/examples/A3C-Gym/train-atari.py</url>
+          <line>196</line>
+          <option name="timeStamp" value="225" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/reinforcement-learning/OpenAiGym/SpaceInvaders/main_3.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="234" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/reinforcement-learning/OpenAiGym/BreakOut/main_1_analyze.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="239" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/reinforcement-learning/OpenAiGym/BreakOut/main_1_analyze.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="240" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Lib.py</url>
+          <line>262</line>
+          <option name="timeStamp" value="241" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>56</line>
+          <option name="timeStamp" value="249" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test/xxxx.py</url>
+          <line>113</line>
+          <option name="timeStamp" value="256" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/reinforcement-learning/OpenAiGym/BreakOut/main_1.py</url>
+          <line>36</line>
+          <option name="timeStamp" value="257" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -516,12 +562,7 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="float(a)" language="Python" />
-        <watch expression="str[ps]" language="Python" />
-        <watch expression="ord(c) &gt;= ord('0') and ord(c) &lt;= ord('9')" language="Python" />
-        <watch expression="str[ps:]" language="Python" />
-        <watch expression="len(str)" language="Python" />
-        <watch expression="len('***********************************')" language="Python" />
+        <watch expression="losses" language="Python" />
       </configuration>
     </watches-manager>
   </component>
