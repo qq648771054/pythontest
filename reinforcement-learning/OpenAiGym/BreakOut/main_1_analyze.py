@@ -26,7 +26,7 @@ def analyzeRewards():
         if res[0]:
             steps.append(res[0][9])
 
-    showPltByStep(steps, 5, 'scatter')
+    showPltByStep(steps, 10, 'scatter')
 
 if __name__ == '__main__':
     analyzeRewards()

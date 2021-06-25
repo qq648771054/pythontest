@@ -16,10 +16,10 @@ class Agent(object):
         self.actor, self.actor_opt, self.critic = self._createModel()
 
     def chooseAction(self, state):
-        # prop = np.array(tf.nn.softmax(self.actor(np.array([state])))[0])
-        # return np.random.choice(self.env.actionLen, p=prop), prop
-        prop = self.actor.predict(np.array([state]))[0]
+        prop = np.array(tf.nn.softmax(self.actor(np.array([state])))[0])
         return np.random.choice(self.env.actionLen, p=prop), prop
+        # prop = self.actor.predict(np.array([state]))[0]
+        # return np.random.choice(self.env.actionLen, p=prop), prop
 
     def learn(self, samples, gamma=0.95):
         batch = 1000
@@ -33,29 +33,29 @@ class Agent(object):
             self.critic.fit(states, np.array(v_predicts), epochs=1, verbose=0)
             with tf.GradientTape() as tape:
                 td_errors = [vp[0] - v[0] for vp, v in zip(v_predicts, values)]
-                # actions = [[1 if i == a else 0 for i in range(self.env.actionLen)] for a in actions]
-                props = self.actor(states)
-                props = [max(p[a], 1e-8) for a, p in zip(actions, props)]
-                losses = td_errors * tf.math.log(props)
-                grad = tape.gradient(-tf.reduce_mean(losses), self.actor.trainable_weights)
+                actions = [[1 if i == a else 0 for i in range(self.env.actionLen)] for a in actions]
+                logits = self.actor(states)
+                losses = td_errors * tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=actions)
+                grad = tape.gradient(tf.reduce_mean(losses), self.actor.trainable_weights)
                 self.actor_opt.apply_gradients(zip(grad, self.actor.trainable_weights))
+            print(np.array(losses))
             # self.actor.fit(states, np.array(actions), epochs=1, verbose=0)
 
     def _createModel(self):
         input1 = tf.keras.Input(shape=self.env.stateSize)
-        x = tf.keras.layers.Dense(512, activation='relu')(input1)
-        x = tf.keras.layers.Dense(256, activation='relu')(x)
-        output1 = tf.keras.layers.Dense(self.env.actionLen, activation='softmax')(x)
+        x = tf.keras.layers.Dense(1024, activation='relu')(input1)
+        x = tf.keras.layers.Dense(512, activation='relu')(x)
+        output1 = tf.keras.layers.Dense(self.env.actionLen, activation='linear')(x)
         actor = tf.keras.Model(inputs=input1, outputs=output1)
         actor.compile()
         actor_opt = tf.keras.optimizers.Adam(0.0001)
         input2 = tf.keras.Input(shape=self.env.stateSize)
-        x = tf.keras.layers.Dense(512, activation='relu')(input2)
-        x = tf.keras.layers.Dense(256, activation='relu')(x)
+        x = tf.keras.layers.Dense(1024, activation='relu')(input2)
+        x = tf.keras.layers.Dense(512, activation='relu')(x)
         output2 = tf.keras.layers.Dense(1, activation='linear')(x)
         critic = tf.keras.Model(inputs=input2, outputs=output2)
         critic.compile(
-            optimizer=tf.keras.optimizers.Adam(0.001),
+            optimizer=tf.keras.optimizers.Adam(0.0001),
             loss=tf.keras.losses.mse
         )
         return actor, actor_opt, critic
@@ -78,10 +78,10 @@ class Worker(threading.Thread):
             state = self.game.reset() / 255.0
             memory = []
             actions = []
-            while True:
+            while step < 1000:
                 action, prop = self.agent.chooseAction(state)
                 if step == 0:
-                    print(prop)
+                    print(prop, self.agent.critic.predict(np.array([state]))[0])
                 next_state, reward, done = self.env.step(self.game, action)
                 next_state = next_state / 255.0
                 memory.append((state, action, reward, next_state, done))
